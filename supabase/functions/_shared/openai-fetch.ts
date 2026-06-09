@@ -12,6 +12,7 @@ interface CallArgs {
   // deno-lint-ignore no-explicit-any
   messages: any[]
   temperature?: number
+  reasoning_effort?: string // gpt-5/o-modellen: 'minimal' | 'low' | 'medium' | 'high'
   attribution: { edgeFunction: string; profileSlug?: string; skillName?: string }
 }
 
@@ -33,9 +34,15 @@ export async function callOpenAI(args: CallArgs) {
       // GPT-5-modellen gebruiken max_completion_tokens i.p.v. max_tokens.
       max_completion_tokens: args.max_tokens,
     }
-    // Temperature alleen meesturen als die expliciet gezet is. GPT-5-modellen
-    // accepteren vaak alleen de default (1); laat 'm dan weg om 400-fouten te vermijden.
-    if (typeof args.temperature === "number" && !/^(gpt-5|o\d)/.test(args.model)) {
+    const isReasoning = /^(gpt-5|o\d)/.test(args.model)
+    // Reasoning-modellen verbruiken een deel van het token-budget aan reasoning;
+    // zonder reasoning_effort kan de zichtbare output leeg blijven. Default 'low'.
+    if (isReasoning) {
+      body.reasoning_effort = args.reasoning_effort || "low"
+    }
+    // Temperature alleen meesturen voor niet-reasoning-modellen (gpt-5/o accepteren
+    // vaak alleen de default 1 → 400-fout anders).
+    if (typeof args.temperature === "number" && !isReasoning) {
       body.temperature = args.temperature
     }
 

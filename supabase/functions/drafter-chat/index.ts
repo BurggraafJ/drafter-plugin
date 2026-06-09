@@ -74,6 +74,7 @@ mét de toevoeging. Verzin nooit bronnen. Laat het JSON-blok weg als je geen wij
       model: settings.model,
       max_tokens: settings.max_tokens,
       temperature: settings.temperature,
+      reasoning_effort: settings.reasoning_effort,
       system: systemMsg,
       messages: [{ role: "user", content: userMsg }],
       attribution: { edgeFunction: "drafter-chat", profileSlug: profile, skillName: "legalmind-word-addin" },
@@ -116,8 +117,10 @@ async function getSettings() {
   const map = new Map((data || []).map((r: { key: string; value: unknown }) => [r.key, r.value]))
   return {
     model: (map.get("model") as string) || "gpt-5.5",
-    max_tokens: (map.get("max_tokens") as number) || 2048,
+    // Reasoning-modellen verbruiken budget aan reasoning → ruim genoeg voor zichtbare output.
+    max_tokens: (map.get("max_tokens") as number) || 4000,
     temperature: (map.get("temperature") as number) ?? 0.3,
+    reasoning_effort: (map.get("reasoning_effort") as string) || "low",
   }
 }
 
