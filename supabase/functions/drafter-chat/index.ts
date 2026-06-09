@@ -1,13 +1,13 @@
 // drafter-chat — kern-Edge Function van Drafter.
 // Ontvangt { question, context, profile, mode } van de taskpane, haalt de gepubliceerde
-// system-message + model-instellingen uit de DB (service-role), roept Claude aan via de
-// callAnthropic-wrapper en geeft { reply, suggestions } terug.
+// system-message + model-instellingen uit de DB (service-role), roept OpenAI aan via de
+// callOpenAI-wrapper en geeft { reply, suggestions, citations } terug.
 //
 // suggestions = herschrijf-voorstellen die de taskpane als Track Changes toepast. We vragen
 // het model die in een strikt JSON-blok te leveren zodat de client ze veilig kan parsen.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.0"
-import { callAnthropic } from "../_shared/anthropic-fetch.ts"
+import { callOpenAI } from "../_shared/openai-fetch.ts"
 
 const supabase = createClient(
   Deno.env.get("SUPABASE_URL")!,
@@ -36,8 +36,8 @@ Deno.serve(async (req) => {
       .eq("slug", profile)
       .single()
     const settings = await getSettings()
-    const apiKey = await getSecret("anthropic_api_key")
-    if (!apiKey) return json({ error: "anthropic_api_key ontbreekt in Vault" }, 500)
+    const apiKey = await getSecret("openai_api_key")
+    if (!apiKey) return json({ error: "OPENAI_API_KEY ontbreekt (zet als Edge Function secret in Supabase)" }, 500)
 
     const systemMsg = `${prof?.published_text || "Je bent Legal Mind, een juridische AI-assistent in Word."}
 
@@ -68,7 +68,7 @@ mét de toevoeging. Verzin nooit bronnen. Laat het JSON-blok weg als je geen wij
 
     const userMsg = buildUserMessage(question, context)
 
-    const reply = await callAnthropic({
+    const reply = await callOpenAI({
       supabase,
       apiKey,
       model: settings.model,
@@ -79,7 +79,7 @@ mét de toevoeging. Verzin nooit bronnen. Laat het JSON-blok weg als je geen wij
       attribution: { edgeFunction: "drafter-chat", profileSlug: profile, skillName: "legalmind-word-addin" },
     })
 
-    const text = reply?.content?.[0]?.text || ""
+    const text = reply?.choices?.[0]?.message?.content || ""
     const { prose, suggestions, citations } = splitSuggestions(text)
     return json({ reply: prose, suggestions, citations })
   } catch (e) {
@@ -115,19 +115,15 @@ async function getSettings() {
   const { data } = await supabase.from("drafter_settings").select("key, value")
   const map = new Map((data || []).map((r: { key: string; value: unknown }) => [r.key, r.value]))
   return {
-    model: (map.get("model") as string) || "claude-opus-4-8",
+    model: (map.get("model") as string) || "gpt-5.5",
     max_tokens: (map.get("max_tokens") as number) || 2048,
     temperature: (map.get("temperature") as number) ?? 0.3,
   }
 }
 
-async function getSecret(key: string): Promise<string | null> {
-  // Vault → env fallback. Pas p_skill_name aan op de werkelijke Vault-conventie.
-  const { data } = await supabase.rpc("get_skill_secret_service", {
-    p_skill_name: "legalmind-word-addin",
-    p_secret_key: key,
-  }).catch(() => ({ data: null }))
-  return (data as string) || Deno.env.get("ANTHROPIC_API_KEY") || null
+async function getSecret(_key: string): Promise<string | null> {
+  // De OpenAI-key komt uit de Edge Function secrets (Supabase → Edge Functions → Secrets).
+  return Deno.env.get("OPENAI_API_KEY") || null
 }
 
 function json(body: unknown, status = 200) {

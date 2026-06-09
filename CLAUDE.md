@@ -33,12 +33,14 @@ Gebruik NOOIT `supabase.channel('vaste-naam')` direct. Altijd via `createRealtim
 
 Pre-flight: `grep -rn "\.channel(" src/ | grep -v createRealtimeChannel | grep -v lib/supabase.js` → leeg.
 
-## ⛔ HARD-RULE: Anthropic-calls via centrale wrapper
+## ⛔ HARD-RULE: AI-calls via centrale wrapper
 
-Vanuit Edge Functions NOOIT direct `fetch('https://api.anthropic.com/v1/messages')`. Altijd via
-`callAnthropic()` uit `supabase/functions/_shared/anthropic-fetch.ts` (logt naar `drafter_api_calls`).
+De AI-provider is **OpenAI** (model via `drafter_settings.model`, default `gpt-5.5`). Vanuit Edge
+Functions NOOIT direct `fetch('https://api.openai.com/...')`. Altijd via `callOpenAI()` uit
+`supabase/functions/_shared/openai-fetch.ts` (logt naar `drafter_api_calls`). Key = Edge Function
+secret `OPENAI_API_KEY` (Supabase → Edge Functions → Secrets).
 
-Pre-flight: `node scripts/audit-anthropic-calls.cjs` → exit 0.
+Pre-flight: `node scripts/audit-anthropic-calls.cjs` → exit 0 (dekt OpenAI + Anthropic; naam is historisch).
 
 ## ⛔ HARD-RULE: Versiebeheer
 
