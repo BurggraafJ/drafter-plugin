@@ -1,0 +1,30 @@
+{
+  "name": "drafter-plugin",
+  "private": true,
+  "version": "0.01",
+  "type": "module",
+  "description": "Drafter — Legal Mind legal-AI Word add-in (taskpane + admin). Vite + React + Office.js.",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "office-addin-debugging start manifest.local.xml",
+    "stop": "office-addin-debugging stop manifest.local.xml",
+    "sideload": "office-addin-debugging start manifest.local.xml desktop",
+    "validate": "office-addin-manifest validate manifest.xml",
+    "validate:local": "office-addin-manifest validate manifest.local.xml"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "office-addin-debugging": "^6.0.0",
+    "office-addin-dev-certs": "^2.0.0",
+    "office-addin-manifest": "^2.0.0",
+    "vite": "^5.4.0"
+  }
+}

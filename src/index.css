@@ -1,0 +1,63 @@
+:root {
+  /* Kleuren — donker thema met Legal Mind oranje accent */
+  --bg-base: #1a1a1a;
+  --bg-surface: #232323;
+  --bg-elevated: #2c2c2c;
+  --border: #3a3a3a;
+  --fg-primary: #ffffff;
+  --fg-secondary: #b0b0b0;
+  --fg-muted: #707070;
+  --accent: #ff6b35;
+  --accent-hover: #ff8252;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --danger: #ef4444;
+  /* Track-changes accenten */
+  --tc-insert: #4ade80;
+  --tc-delete: #ef4444;
+
+  /* Spacing */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
+  --s-5: 20px; --s-6: 24px; --s-7: 32px; --s-8: 40px;
+
+  /* Radii */
+  --r-sm: 4px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px;
+
+  /* Typografie */
+  --font-sans: 'Segoe UI', -apple-system, system-ui, sans-serif;
+  --font-mono: 'Cascadia Code', 'SF Mono', Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+
+html, body, #root {
+  margin: 0;
+  height: 100%;
+  background: var(--bg-base);
+  color: var(--fg-primary);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Utility: primaire knop */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: var(--s-2) var(--s-4);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  background: var(--bg-elevated);
+  color: var(--fg-primary);
+  font-size: 13px;
+}
+.btn:hover { background: var(--bg-surface); }
+.btn-accent { background: var(--accent); border-color: var(--accent); color: #1a1a1a; font-weight: 600; }
+.btn-accent:hover { background: var(--accent-hover); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }

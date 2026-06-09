@@ -1,0 +1,10 @@
+node_modules
+dist
+.env
+.env.local
+.vercel
+.claude
+*.log
+.DS_Store
+# Office add-in dev certs (generated locally per machine)
+.office-addin-dev-certs
