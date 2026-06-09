@@ -33,7 +33,8 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
       setMessages((m) => [...m, { role: 'assistant', text: res.reply || '', citations: res.citations, suggestions: sug }])
       if (sug.length) { setSuggestions(sug); setApplied(false); setStatuses({}) }
     } catch (e) {
-      setMessages((m) => [...m, { role: 'assistant', text: `Er ging iets mis: ${e.message}` }])
+      // askDrafter levert al een nette, gebruikersgerichte melding.
+      setMessages((m) => [...m, { role: 'assistant', text: e?.message || 'Er ging iets mis. Probeer het opnieuw.', error: true }])
     } finally {
       setBusy(false)
     }
@@ -46,16 +47,23 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
     suggestions.forEach((c) => { st[c.id] = 'pending' })
     setStatuses(st)
     setActiveId(suggestions[0]?.id || null)
+    const total = suggestions.length
     if (inWord) {
       let placed = 0
-      for (const c of suggestions) { if (await applyChange(c)) placed++ }
-      showToast(`${placed} van ${suggestions.length} wijziging${suggestions.length === 1 ? '' : 'en'} als track change in het document gezet.`)
+      // Per wijziging afzonderlijk afvangen: één onplaatsbare suggestie mag de rest niet blokkeren.
+      for (const c of suggestions) {
+        try { if (await applyChange(c)) placed++ } catch { /* niet plaatsbaar — overslaan */ }
+      }
+      const skipped = total - placed
+      showToast(skipped > 0
+        ? `${placed} van ${total} wijziging${total === 1 ? '' : 'en'} geplaatst; ${skipped} kon${skipped === 1 ? '' : 'den'} niet automatisch worden geplaatst.`
+        : `${placed} wijziging${placed === 1 ? '' : 'en'} als track change in het document gezet.`)
     } else {
-      showToast(`${suggestions.length} wijzigingen voorgesteld — open in Word om ze toe te passen.`)
+      showToast(`${total} wijziging${total === 1 ? '' : 'en'} voorgesteld — open in Word om ze toe te passen.`)
     }
     setMessages((m) => [...m, {
       role: 'assistant', confirm: true,
-      text: `Ik heb ${suggestions.length} wijziging${suggestions.length === 1 ? '' : 'en'} als voorstel in het document gezet. Bekijk ze in het tabblad Wijzigingen en accepteer of wijs ze af.`,
+      text: `Ik heb ${total} wijziging${total === 1 ? '' : 'en'} als voorstel in het document gezet. Bekijk ze in het tabblad Wijzigingen en accepteer of wijs ze af.`,
     }])
   }, [applied, suggestions, inWord, showToast])
 

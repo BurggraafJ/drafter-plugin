@@ -1,0 +1,1784 @@
+{
+  "stamp": {
+    "tag": "improved",
+    "base": "https://pwpoqyhzkzwuridlzwzr.supabase.co/functions/v1",
+    "profile": "default",
+    "cases": 30,
+    "passed": 30,
+    "elapsedSec": 79.5,
+    "p50": 8382,
+    "p95": 20593,
+    "byCat": {
+      "value": {
+        "pass": 7,
+        "total": 7
+      },
+      "legal": {
+        "pass": 5,
+        "total": 5
+      },
+      "add": {
+        "pass": 5,
+        "total": 5
+      },
+      "targeted": {
+        "pass": 3,
+        "total": 3
+      },
+      "question": {
+        "pass": 2,
+        "total": 2
+      },
+      "tone": {
+        "pass": 2,
+        "total": 2
+      },
+      "topic": {
+        "pass": 1,
+        "total": 1
+      },
+      "long": {
+        "pass": 2,
+        "total": 2
+      },
+      "trap": {
+        "pass": 1,
+        "total": 1
+      },
+      "multi": {
+        "pass": 1,
+        "total": 1
+      },
+      "guardrail": {
+        "pass": 1,
+        "total": 1
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "arb-01-salaris",
+      "category": "value",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        5
+      ],
+      "touched": [
+        5
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Het brutosalaris bedraagt € 2.800 per maand",
+          "findLen": 43,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 5,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 3761,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor om in artikel 5 uitsluitend het brutosalaris te verhogen van € 2.800 naar € 3.100 per maand. De overige arbeidsvoorwaarden blijven ongewijzigd.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 5 — Salaris",
+          "title": "Brutosalaris verhogen",
+          "find": "Het brutosalaris bedraagt € 2.800 per maand",
+          "replace": "Het brutosalaris bedraagt € 3.100 per maand",
+          "del": "",
+          "ins": "",
+          "why": "Aanpassing conform instructie van de jurist.",
+          "cite": null,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": []
+    },
+    {
+      "id": "arb-02-proeftijd",
+      "category": "legal",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        3
+      ],
+      "touched": [
+        3
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Gedurende de eerste maand van het dienstverband geldt een proeftijd als bedoeld in artikel 7:652 BW.",
+          "findLen": 100,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 3,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 11730,
+      "status": 200,
+      "error": null,
+      "reply": "Ik heb de proeftijd aangepast naar twee maanden. Let op: bij een arbeidsovereenkomst voor bepaalde tijd van twaalf maanden is een proeftijd van twee maanden in beginsel nietig; voor contracten langer dan zes maanden maar korter dan twee jaar geldt maximaal één maand (art. 7:652 lid 4 BW).",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 3 — Proeftijd",
+          "title": "Proeftijd verlengen naar twee maanden",
+          "find": "Gedurende de eerste maand van het dienstverband geldt een proeftijd als bedoeld in artikel 7:652 BW.",
+          "replace": "Gedurende de eerste twee maanden van het dienstverband geldt een proeftijd als bedoeld in artikel 7:652 BW.",
+          "del": "",
+          "ins": "",
+          "why": "De tekst is conform instructie aangepast. Waarschuwing: bij een arbeidsovereenkomst voor bepaalde tijd van twaalf maanden is een proeftijd van twee maanden in beginsel nietig; de wettelijke maximumduur is één maand.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 652",
+          "meta": "Proeftijd; maximumduur bij arbeidsovereenkomst voor bepaalde tijd",
+          "url": "https://wetten.overheid.nl/BWBR0005290/Boek7/Titeldeel10/Afdeling5/Artikel652"
+        }
+      ]
+    },
+    {
+      "id": "arb-03-tussentijds",
+      "category": "add",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        2
+      ],
+      "touched": [
+        2
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "De overeenkomst eindigt van rechtswege op 31 augustus 2027, zonder dat opzegging is vereist.",
+          "findLen": 92,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 2,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 14102,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor artikel 2 aan te vullen met een schriftelijk overeengekomen tussentijds opzegbeding voor beide partijen. Bij een arbeidsovereenkomst voor bepaalde tijd is tussentijdse opzegging alleen mogelijk als dat recht voor beide partijen schriftelijk is overeengekomen; de opzegtermijn van één maand sluit hier aan bij art. 7:667 lid 3 BW en art. 7:672 BW.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 2",
+          "title": "Tussentijdse opzegmogelijkheid toevoegen",
+          "find": "De overeenkomst eindigt van rechtswege op 31 augustus 2027, zonder dat opzegging is vereist.",
+          "replace": "De overeenkomst kan door ieder der partijen tussentijds schriftelijk worden opgezegd met inachtneming van een opzegtermijn van één maand en de wettelijke vereisten. Indien geen tussentijdse opzegging plaatsvindt, eindigt de overeenkomst van rechtswege op 31 augustus 2027, zonder dat opzegging is vereist.",
+          "why": "Een arbeidsovereenkomst voor bepaalde tijd kan alleen tussentijds worden opgezegd als dat recht voor beide partijen schriftelijk is overeengekomen; de opzegtermijn van één maand is in lijn met de wettelijke opzegtermijnen.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikelen 7:667 lid 3 en 7:672",
+          "meta": "Tussentijdse opzegging arbeidsovereenkomst voor bepaalde tijd en opzegtermijnen",
+          "url": "https://wetten.overheid.nl/BWBR0005290/Boek7/Titel10/Afdeling9"
+        }
+      ]
+    },
+    {
+      "id": "arb-04-concurrentie-motivering",
+      "category": "legal",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        7
+      ],
+      "touched": [
+        7
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Het is Werknemer verboden om gedurende twaalf maanden na het einde van het dienstverband binnen een straal van 50 kilometer werkzaam te zijn bij een onderneming die gelijksoortige activiteiten ontplooit als Werkgever.",
+          "findLen": 217,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 7,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 20593,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor artikel 7 aan te vullen met een schriftelijke motivering die expliciet aansluit bij de functie, de bedrijfsgevoelige informatie en het klant-/procesbelang van Werkgever. Let op: bij een arbeidsovereenkomst voor bepaalde tijd blijft een concurrentiebeding alleen geldig als uit de schriftelijke motivering blijkt dat het beding noodzakelijk is wegens zwaarwegende bedrijfs- of dienstbelan",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 7",
+          "title": "Aanvulling motivering concurrentiebeding bepaalde tijd",
+          "find": "Het is Werknemer verboden om gedurende twaalf maanden na het einde van het dienstverband binnen een straal van 50 kilometer werkzaam te zijn bij een onderneming die gelijksoortige activiteiten ontplooit als Werkgever.",
+          "replace": "Het is Werknemer verboden om gedurende twaalf maanden na het einde van het dienstverband binnen een straal van 50 kilometer werkzaam te zijn bij een onderneming die gelijksoortige activiteiten ontplooit als Werkgever. Dit concurrentiebeding is noodzakelijk wegens zwaarwegende bedrijfsbelangen van Werkgever. Werknemer krijgt in de functie van logistiek medewerker toegang tot bedrijfsgevoelige informatie over klanten, routes, planningen, tarieven, operationele werkwijzen, capaciteitsinzet en logistieke processen van Werkgever. Deze informatie is specifiek voor de onderneming van Werkgever en kan, indien zij bij een concurrent wordt gebruikt, leiden tot aantasting van de concurrentiepositie van Werkgever, verlies van klanten en verstoring van haar logistieke bedrijfsvoering. Gelet op de duur van de arbeidsovereenkomst, de aard van de functie en de toegang tot deze vertrouwelijke en concurrentiegevoelige informatie is dit beding naar het oordeel van partijen noodzakelijk om de zwaarwegende bedrijfsbelangen van Werkgever te beschermen.",
+          "why": "Bij een arbeidsovereenkomst voor bepaalde tijd is een concurrentiebeding slechts toegestaan indien uit de bij dat beding opgenomen schriftelijke motivering blijkt dat het beding noodzakelijk is wegens zwaarwegende bedrijfs- of dienstbelangen.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 653",
+          "meta": "art. 7:653 lid 2 BW",
+          "url": "https://wetten.overheid.nl/BWBR0005290/2024-07-01#Boek7_Titeldeel10_Afdeling5_Artikel653"
+        }
+      ]
+    },
+    {
+      "id": "arb-05-concurrentie-duur",
+      "category": "targeted",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        7
+      ],
+      "touched": [
+        7
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "gedurende twaalf maanden na het einde van het dienstverband",
+          "findLen": 59,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 7,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 12119,
+      "status": 200,
+      "error": null,
+      "reply": "Ik pas de duur in artikel 7 aan van twaalf naar zes maanden. Let op: omdat dit een arbeidsovereenkomst voor bepaalde tijd is, is een concurrentiebeding in beginsel niet geldig tenzij uit de schriftelijke motivering blijkt dat het beding noodzakelijk is wegens zwaarwegende bedrijfs- of dienstbelangen; die motivering staat hier niet in de geselecteerde passage (art. 7:653 lid 2 BW).",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 7 — Concurrentiebeding",
+          "title": "Duur concurrentiebeding verkorten naar zes maanden",
+          "find": "gedurende twaalf maanden na het einde van het dienstverband",
+          "replace": "gedurende zes maanden na het einde van het dienstverband",
+          "del": "twaalf",
+          "ins": "zes",
+          "why": "De wijziging verkort de overeengekomen duur van het concurrentiebeding. Bij een arbeidsovereenkomst voor bepaalde tijd is daarnaast een schriftelijke motivering vereist dat het beding noodzakelijk is wegens zwaarwegende bedrijfs- of dienstbelangen.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 653",
+          "meta": "Concurrentiebeding; arbeidsovereenkomst voor bepaalde tijd; schriftelijke motivering zwaarwegende bedrijfs- of dienstbelangen",
+          "url": "https://wetten.overheid.nl/BWBR0005290/Boek7/Titeldeel10/Afdeling5/Artikel653"
+        }
+      ]
+    },
+    {
+      "id": "arb-06-vraag-geldigheid",
+      "category": "question",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [],
+      "touched": [],
+      "suggestionCount": 0,
+      "applicableCount": 0,
+      "reasons": [],
+      "perSug": [],
+      "ms": 6293,
+      "status": 200,
+      "error": null,
+      "reply": "Het concurrentiebeding lijkt in deze tijdelijke arbeidsovereenkomst niet rechtsgeldig, althans niet afdwingbaar in de huidige vorm. Bij een arbeidsovereenkomst voor bepaalde tijd is een concurrentiebeding alleen toegestaan als uit de schriftelijke motivering bij dat beding blijkt dat het noodzakelijk is wegens zwaarwegende bedrijfs- of dienstbelangen. In artikel 7 ontbreekt zo’n concrete schriftel",
+      "suggestionsRaw": [],
+      "citations": []
+    },
+    {
+      "id": "arb-07-arbeidsduur",
+      "category": "value",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        4
+      ],
+      "touched": [
+        4
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "De arbeidsduur bedraagt 40 uur per week",
+          "findLen": 39,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 4,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 6403,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor om in artikel 4 uitsluitend de overeengekomen arbeidsduur aan te passen van 40 naar 36 uur per week. Er is geen wettelijke belemmering voor deze wijziging op zichzelf; controleer wel of salaris, vakantiedagen en eventuele voltijd/parttime-aanduidingen elders in het document daarop moeten worden afgestemd.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 4 — Arbeidsduur en werktijden",
+          "title": "Arbeidsduur wijzigen naar 36 uur per week",
+          "find": "De arbeidsduur bedraagt 40 uur per week",
+          "replace": "De arbeidsduur bedraagt 36 uur per week",
+          "why": "Aanpassing conform instructie van de jurist.",
+          "cite": null,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": []
+    },
+    {
+      "id": "arb-08-geheimhouding-streng",
+      "category": "tone",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        8
+      ],
+      "touched": [
+        8
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Werknemer is verplicht tot geheimhouding van alle vertrouwelijke informatie waarvan hij in het kader van zijn dienstverband kennisneemt, zowel gedurende als na afloop van de arbeidsovereenkomst.",
+          "findLen": 194,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 8,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 20204,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor artikel 8 aan te scherpen door vertrouwelijke informatie concreter te omschrijven, het verbod op gebruik/verstrekking uit te breiden en een teruggave-/verwijderplicht op te nemen. Dit sluit aan bij de algemene norm van goed werknemerschap (art. 7:611 BW) en kan ook relevant zijn voor bescherming van bedrijfsgeheimen onder de Wet bescherming bedrijfsgeheimen, voor zover aan de wettelij",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 8 — Geheimhouding",
+          "title": "Geheimhoudingsbeding strenger en specifieker formuleren",
+          "find": "Werknemer is verplicht tot geheimhouding van alle vertrouwelijke informatie waarvan hij in het kader van zijn dienstverband kennisneemt, zowel gedurende als na afloop van de arbeidsovereenkomst.",
+          "replace": "Werknemer is verplicht tot strikte geheimhouding van alle vertrouwelijke informatie waarvan hij in het kader van zijn dienstverband kennisneemt of redelijkerwijs kan vermoeden dat deze vertrouwelijk is, waaronder in ieder geval bedrijfsprocessen, klant- en leveranciersgegevens, tarieven, offertes, contracten, logistieke planning, financiële gegevens, personeelsgegevens, knowhow en overige bedrijfsinformatie van Werkgever of aan Werkgever gelieerde derden. Werknemer zal deze informatie niet zonder voorafgaande schriftelijke toestemming van Werkgever gebruiken, kopiëren, vastleggen, openbaar maken of aan derden verstrekken, anders dan voor de behoorlijke uitvoering van zijn werkzaamheden. Deze verplichting geldt zowel gedurende als na afloop van de arbeidsovereenkomst. Op eerste verzoek van Werkgever, en in ieder geval bij het einde van het dienstverband, zal Werknemer alle documenten, gegevensdragers en kopieën die vertrouwelijke informatie bevatten onverwijld aan Werkgever retourneren of, indien Werkgever daarom verzoekt, aantoonbaar verwijderen.",
+          "why": "De bepaling wordt concreter en beter handhaafbaar door vertrouwelijke informatie te specificeren, verboden handelingen te benoemen en een teruggave-/verwijderplicht op te nemen. Dit sluit aan bij de norm van goed werknemerschap en kan bijdragen aan bescherming van bedrijfsgeheimen.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Artikel 7:611 Burgerlijk Wetboek",
+          "meta": "Goed werkgever- en goed werknemerschap",
+          "url": "https://wetten.overheid.nl/BWBR0005290/Boek7/Titeldeel10/Afdeling6/Artikel611"
+        }
+      ]
+    },
+    {
+      "id": "huur-09-huurprijs",
+      "category": "value",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        3
+      ],
+      "touched": [
+        3
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "De huurprijs bedraagt € 1.200 per maand.",
+          "findLen": 40,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 3,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 4764,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor de huurprijs in artikel 3 aan te passen van € 1.200 naar € 1.350 per maand. Let op: door deze wijziging sluit artikel 6 inhoudelijk niet meer aan, omdat de waarborgsom daar nog is gesteld op € 2.400, “gelijk aan twee maanden huur”; ik wijzig artikel 6 niet omdat de instructie uitsluitend artikel 3 betreft.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 3",
+          "title": "Huurprijs verhogen",
+          "find": "De huurprijs bedraagt € 1.200 per maand.",
+          "replace": "De huurprijs bedraagt € 1.350 per maand.",
+          "why": "Uitvoering van de instructie om de maandelijkse huurprijs in artikel 3 te verhogen.",
+          "cite": null,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": []
+    },
+    {
+      "id": "huur-10-opzegtermijn",
+      "category": "legal",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        8
+      ],
+      "touched": [
+        8
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Huurder kan de huurovereenkomst opzeggen met inachtneming van een opzegtermijn van één maand.",
+          "findLen": 93,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 8,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 16196,
+      "status": 200,
+      "error": null,
+      "reply": "Ik heb artikel 8 aangepast zoals verzocht. Let op: bij woonruimte is dit juridisch riskant, omdat de opzegtermijn voor de huurder op grond van art. 7:271 lid 5 BW gelijk is aan de periode tussen twee betaaldagen, met een minimum van één maand en een maximum van drie maanden; bij maandelijkse huurbetaling is dat in beginsel één maand. Afwijking van art. 7:271 BW is in beginsel nietig op grond van a",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 8",
+          "title": "Opzegtermijn Huurder verlengen naar twee maanden",
+          "find": "Huurder kan de huurovereenkomst opzeggen met inachtneming van een opzegtermijn van één maand.",
+          "replace": "Huurder kan de huurovereenkomst opzeggen met inachtneming van een opzegtermijn van twee maanden.",
+          "del": "één maand",
+          "ins": "twee maanden",
+          "why": "Aangepast conform instructie. Waarschuwing: bij maandelijkse huurbetaling kan een opzegtermijn van twee maanden voor de huurder afwijken van art. 7:271 lid 5 BW en op grond van lid 7 nietig zijn.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 271",
+          "meta": "Art. 7:271 lid 5 en lid 7 BW",
+          "url": "https://wetten.overheid.nl/BWBR0005290/Boek7/Titeldeel4/Afdeling5/Artikel271"
+        }
+      ]
+    },
+    {
+      "id": "huur-11-waarborg",
+      "category": "legal",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        6
+      ],
+      "touched": [
+        6
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "€ 2.400, gelijk aan twee maanden huur",
+          "findLen": 37,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 6,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 13718,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel de wijziging voor zoals gevraagd. Let op: bij woonruimte mag een waarborgsom in beginsel ten hoogste tweemaal de kale huurprijs bedragen; bij een maandhuur van € 1.200 is € 3.600 gelijk aan drie maanden huur en daarmee juridisch risicovol, mogelijk in strijd met art. 7:261b BW.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 6 — Waarborgsom",
+          "title": "Waarborgsom wijzigen naar € 3.600",
+          "find": "€ 2.400, gelijk aan twee maanden huur",
+          "replace": "€ 3.600, gelijk aan drie maanden huur",
+          "del": "",
+          "ins": "",
+          "why": "Uitvoering van de instructie. Waarschuwing: bij woonruimte is een waarborgsom van meer dan tweemaal de kale huurprijs in beginsel niet toegestaan.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 261b",
+          "meta": "Waarborgsom bij huur van woonruimte; maximum van tweemaal de kale huurprijs.",
+          "url": "https://wetten.overheid.nl/BWBR0005290/Boek7/Titel4/Afdeling5/Artikel261b"
+        }
+      ]
+    },
+    {
+      "id": "huur-12-onderhoud-add",
+      "category": "add",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        7
+      ],
+      "touched": [
+        7
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Het groot onderhoud komt voor rekening van Verhuurder.",
+          "findLen": 54,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 7,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 8382,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor artikel 7 aan te vullen met een toestemmingsvereiste voor het uitbesteden van onderhoud aan derden. Let erop dat dit niet afdoet aan de wettelijke verdeling van onderhoudsverplichtingen; kleine herstellingen blijven in beginsel voor rekening van de huurder, voor zover de wet dat toelaat.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 7 — Onderhoud",
+          "title": "Toestemming vereist voor uitbesteding onderhoud",
+          "find": "Het groot onderhoud komt voor rekening van Verhuurder.",
+          "replace": "Het groot onderhoud komt voor rekening van Verhuurder. Huurder mag zonder voorafgaande schriftelijke toestemming van Verhuurder geen onderhoudswerkzaamheden aan derden uitbesteden.",
+          "why": "Deze aanvulling legt vast dat Huurder onderhoudswerkzaamheden niet zelfstandig aan derden mag uitbesteden zonder schriftelijke toestemming van Verhuurder.",
+          "cite": null,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": []
+    },
+    {
+      "id": "huur-13-indexering",
+      "category": "topic",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        5
+      ],
+      "touched": [
+        5
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "voor het eerst op 1 juli 2027.",
+          "findLen": 30,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 5,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 7521,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor om in artikel 5 uitsluitend het eerste indexeringsmoment aan te passen van 1 juli 2027 naar 1 juli 2028. De overige indexeringsafspraak blijft ongewijzigd.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 5",
+          "title": "Eerste indexeringsdatum aanpassen",
+          "find": "voor het eerst op 1 juli 2027.",
+          "replace": "voor het eerst op 1 juli 2028.",
+          "why": "Dit verwerkt de instructie om de eerste indexering een jaar later te laten plaatsvinden.",
+          "cite": null,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": []
+    },
+    {
+      "id": "huur-14-wgv",
+      "category": "legal",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        6
+      ],
+      "touched": [],
+      "suggestionCount": 0,
+      "applicableCount": 0,
+      "reasons": [],
+      "perSug": [],
+      "ms": 8617,
+      "status": 200,
+      "error": null,
+      "reply": "Artikel 6 voldoet aan de Wet goed verhuurderschap: de huurprijs is € 1.200 per maand en de waarborgsom bedraagt € 2.400, dus precies twee maanden huur. Aanpassing is daarom niet nodig. De Wet goed verhuurderschap bepaalt dat een verhuurder geen waarborgsom mag verlangen die hoger is dan tweemaal de huurprijs; zie art. 2 lid 2, aanhef en onder b, Wet goed verhuurderschap.",
+      "suggestionsRaw": [],
+      "citations": []
+    },
+    {
+      "id": "nda-15-looptijd",
+      "category": "value",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        4
+      ],
+      "touched": [
+        4
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "gedurende een periode van drie jaar na de datum van ondertekening",
+          "findLen": 65,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 4,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 4880,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor de looptijd in artikel 4 te verkorten van drie jaar naar twee jaar, conform de instructie. Er is geen specifieke wettelijke vormvereiste voor deze duur in een reguliere geheimhoudingsovereenkomst; dit is in beginsel contractsvrijheid.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 4",
+          "title": "Looptijd verkorten naar twee jaar",
+          "find": "gedurende een periode van drie jaar na de datum van ondertekening",
+          "replace": "gedurende een periode van twee jaar na de datum van ondertekening",
+          "del": "",
+          "ins": "",
+          "why": "De contractuele looptijd wordt aangepast conform de instructie van drie naar twee jaar.",
+          "cite": null,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": []
+    },
+    {
+      "id": "nda-16-boete",
+      "category": "value",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        6
+      ],
+      "touched": [
+        6
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "€ 10.000 per overtreding",
+          "findLen": 24,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 6,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 7430,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor om uitsluitend het boetebedrag in artikel 6 te verhogen naar € 25.000 per overtreding. Let wel: een contractuele boete kan door de rechter worden gematigd indien de billijkheid dit klaarblijkelijk eist (art. 6:94 BW).",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 6",
+          "title": "Boete verhogen naar € 25.000",
+          "find": "€ 10.000 per overtreding",
+          "replace": "€ 25.000 per overtreding",
+          "del": "",
+          "ins": "",
+          "why": "Het boetebedrag wordt conform instructie verhoogd. Een rechter kan een contractuele boete matigen indien de billijkheid dit klaarblijkelijk eist.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 6, artikel 94",
+          "meta": "Matiging van een bedongen boete",
+          "url": "https://wetten.overheid.nl/BWBR0005289/2024-01-01#Boek6_Titeldeel1_Afdeling9_Artikel94"
+        }
+      ]
+    },
+    {
+      "id": "nda-17-forum",
+      "category": "targeted",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        7
+      ],
+      "touched": [
+        7
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Geschillen worden bij uitsluiting voorgelegd aan de rechtbank Amsterdam.",
+          "findLen": 72,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 7,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 7166,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor om in artikel 7 uitsluitend de bevoegde rechtbank te wijzigen van Amsterdam naar Rotterdam. Een forumkeuze tussen professionele partijen is in beginsel mogelijk, met inachtneming van de regels over relatieve bevoegdheid.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 7",
+          "title": "Forumkeuze wijzigen naar Rotterdam",
+          "find": "Geschillen worden bij uitsluiting voorgelegd aan de rechtbank Amsterdam.",
+          "replace": "Geschillen worden bij uitsluiting voorgelegd aan de rechtbank Rotterdam.",
+          "del": "Amsterdam",
+          "ins": "Rotterdam",
+          "why": "De forumkeuze wordt conform instructie gewijzigd naar de rechtbank Rotterdam.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "Rv",
+          "title": "Wetboek van Burgerlijke Rechtsvordering",
+          "meta": "Art. 108 Rv",
+          "url": "https://wetten.overheid.nl/BWBR0001827/2024-01-01#BoekEerste_TiteldeelTweede_AfdelingTweede_Artikel108"
+        }
+      ]
+    },
+    {
+      "id": "nda-18-uitzondering",
+      "category": "add",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        2
+      ],
+      "touched": [
+        2
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "De Ontvangende Partij verbindt zich de vertrouwelijke informatie strikt geheim te houden en niet aan derden te verstrekken zonder voorafgaande schriftelijke toestemming van de Verstrekkende Partij.",
+          "findLen": 197,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 2,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 8648,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor om artikel 2 aan te vullen met een gebruikelijke uitzondering voor informatie die reeds openbaar bekend is, mits die openbaarmaking niet door toedoen van de Ontvangende Partij heeft plaatsgevonden.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 2",
+          "title": "Uitzondering voor reeds openbare informatie",
+          "find": "De Ontvangende Partij verbindt zich de vertrouwelijke informatie strikt geheim te houden en niet aan derden te verstrekken zonder voorafgaande schriftelijke toestemming van de Verstrekkende Partij.",
+          "replace": "De Ontvangende Partij verbindt zich de vertrouwelijke informatie strikt geheim te houden en niet aan derden te verstrekken zonder voorafgaande schriftelijke toestemming van de Verstrekkende Partij, tenzij en voor zover deze informatie reeds openbaar bekend is buiten toedoen van de Ontvangende Partij.",
+          "why": "Deze aanvulling voorkomt dat de geheimhoudingsplicht geldt voor informatie die al publiek beschikbaar is zonder schending door de Ontvangende Partij.",
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": []
+    },
+    {
+      "id": "nda-19-vraag-boete",
+      "category": "question",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [],
+      "touched": [],
+      "suggestionCount": 0,
+      "applicableCount": 0,
+      "reasons": [],
+      "perSug": [],
+      "ms": 17545,
+      "status": 200,
+      "error": null,
+      "reply": "Voor de Ontvangende Partij zitten in artikel 6 vooral de volgende risico’s:\n\n1. De boete geldt bij iedere overtreding van alle verplichtingen uit de overeenkomst. Dat is ruim geformuleerd: ook een relatief beperkte of administratieve tekortkoming, zoals te late teruggave op verzoek, kan in beginsel tot een boete leiden.\n\n2. De boete is “direct opeisbaar”. Daardoor is geen ingebrekestelling of hers",
+      "suggestionsRaw": [],
+      "citations": []
+    },
+    {
+      "id": "av-20-opzeg",
+      "category": "long",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        14
+      ],
+      "touched": [
+        14
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "een opzegtermijn van twee maanden",
+          "findLen": 33,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 14,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 4844,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor artikel 14 beperkt aan te passen door “twee maanden” te vervangen door “drie maanden”. Ik zie op basis van de aangeleverde tekst geen specifieke wettelijke belemmering voor deze wijziging.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 14",
+          "title": "Opzegtermijn verlengen naar drie maanden",
+          "find": "een opzegtermijn van twee maanden",
+          "replace": "een opzegtermijn van drie maanden",
+          "why": "Dit voert de instructie uit om de contractuele opzegtermijn in artikel 14 te verlengen van twee naar drie maanden.",
+          "cite": null,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": []
+    },
+    {
+      "id": "av-21-betaaltermijn-trap",
+      "category": "trap",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        6
+      ],
+      "touched": [
+        6
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Betaling dient te geschieden binnen dertig dagen na factuurdatum.",
+          "findLen": 65,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 6,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 4273,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor om in artikel 6 uitsluitend de betalingstermijn te wijzigen van dertig naar veertien dagen. De wijziging is beperkt tot de gevraagde passage.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 6 — Betaling",
+          "title": "Betalingstermijn wijzigen naar veertien dagen",
+          "find": "Betaling dient te geschieden binnen dertig dagen na factuurdatum.",
+          "replace": "Betaling dient te geschieden binnen veertien dagen na factuurdatum.",
+          "why": "De betalingstermijn wordt conform de instructie aangepast van dertig naar veertien dagen.",
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": []
+    },
+    {
+      "id": "av-22-aansprakelijkheid",
+      "category": "tone",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        12
+      ],
+      "touched": [
+        12
+      ],
+      "suggestionCount": 2,
+      "applicableCount": 2,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "De aansprakelijkheid van Opdrachtnemer is beperkt tot het bedrag dat in het betreffende geval door de aansprakelijkheidsverzekering wordt uitgekeerd.",
+          "findLen": 149,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 12,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        },
+        {
+          "find": "Indien de verzekering niet uitkeert, is de aansprakelijkheid beperkt tot het factuurbedrag van de betreffende opdracht.",
+          "findLen": 119,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 12,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 30446,
+      "status": 200,
+      "error": null,
+      "reply": "Ik heb artikel 12 aangescherpt ten gunste van Opdrachtnemer door de beperking te richten op directe schade, het daadwerkelijk uitgekeerde verzekeringsbedrag en een lagere fallback-cap. Let op: een aansprakelijkheidsbeperking kan onder omstandigheden worden aangetast, bijvoorbeeld als toepassing naar maatstaven van redelijkheid en billijkheid onaanvaardbaar is of als een beding in algemene voorwaar",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 12 — Aansprakelijkheid",
+          "title": "Beperking tot directe schade en daadwerkelijke verzekeringsuitkering",
+          "find": "De aansprakelijkheid van Opdrachtnemer is beperkt tot het bedrag dat in het betreffende geval door de aansprakelijkheidsverzekering wordt uitgekeerd.",
+          "replace": "De aansprakelijkheid van Opdrachtnemer is, voor zover rechtens toegestaan, beperkt tot directe schade en tot het bedrag dat in het betreffende geval daadwerkelijk door de aansprakelijkheidsverzekering wordt uitgekeerd.",
+          "del": "De aansprakelijkheid van Opdrachtnemer is beperkt tot het bedrag dat in het betreffende geval door de aansprakelijkheidsverzekering wordt uitgekeerd.",
+          "ins": "De aansprakelijkheid van Opdrachtnemer is, voor zover rechtens toegestaan, beperkt tot directe schade en tot het bedrag dat in het betreffende geval daadwerkelijk door de aansprakelijkheidsverzekering wordt uitgekeerd.",
+          "why": "Dit scherpt de beperking aan door indirecte schade buiten de hoofdregel te houden en alleen aan te sluiten bij de daadwerkelijke verzekeringsuitkering. De toevoeging 'voor zover rechtens toegestaan' beperkt het risico dat het beding te absoluut wordt uitgelegd.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        },
+        {
+          "ref": "Artikel 12 — Aansprakelijkheid",
+          "title": "Lagere fallback-cap en uitsluiting indirecte schade",
+          "find": "Indien de verzekering niet uitkeert, is de aansprakelijkheid beperkt tot het factuurbedrag van de betreffende opdracht.",
+          "replace": "Indien de verzekering niet uitkeert, is de aansprakelijkheid beperkt tot het door Opdrachtgever betaalde factuurbedrag voor de betreffende opdracht in de drie maanden voorafgaand aan de schadeveroorzakende gebeurtenis, met een maximum van EUR 10.000. Opdrachtnemer is niet aansprakelijk voor indirecte schade, waaronder gevolgschade, gederfde winst, gemiste besparingen, verlies van data en schade door bedrijfsstagnatie.",
+          "del": "Indien de verzekering niet uitkeert, is de aansprakelijkheid beperkt tot het factuurbedrag van de betreffende opdracht.",
+          "ins": "Indien de verzekering niet uitkeert, is de aansprakelijkheid beperkt tot het door Opdrachtgever betaalde factuurbedrag voor de betreffende opdracht in de drie maanden voorafgaand aan de schadeveroorzakende gebeurtenis, met een maximum van EUR 10.000. Opdrachtnemer is niet aansprakelijk voor indirecte schade, waaronder gevolgschade, gederfde winst, gemiste besparingen, verlies van data en schade door bedrijfsstagnatie.",
+          "why": "Deze wijziging verlaagt de fallback-cap en sluit veelvoorkomende categorieën indirecte schade uit. De afdwingbaarheid blijft afhankelijk van de omstandigheden van het geval en de redelijkheidstoets.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 6, artikel 248 lid 2",
+          "meta": "Beperkende werking van redelijkheid en billijkheid",
+          "url": "https://wetten.overheid.nl/BWBR0005289/Boek6/Titel5/Afdeling4/Artikel248"
+        }
+      ]
+    },
+    {
+      "id": "av-23-ie-gebruiksrecht",
+      "category": "add",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        11
+      ],
+      "touched": [
+        11
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Alle intellectuele eigendomsrechten op de door Opdrachtnemer ontwikkelde werken berusten bij Opdrachtnemer, tenzij schriftelijk anders is overeengekomen.",
+          "findLen": 153,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 11,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 8303,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor artikel 11 aan te vullen met een contractueel gebruiksrecht voor Opdrachtgever dat pas ontstaat na volledige betaling. De intellectuele eigendom blijft daarbij bij Opdrachtnemer, zodat de wijziging aansluit op de bestaande hoofdregel.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 11",
+          "title": "Gebruiksrecht na volledige betaling toevoegen",
+          "find": "Alle intellectuele eigendomsrechten op de door Opdrachtnemer ontwikkelde werken berusten bij Opdrachtnemer, tenzij schriftelijk anders is overeengekomen.",
+          "replace": "Alle intellectuele eigendomsrechten op de door Opdrachtnemer ontwikkelde werken berusten bij Opdrachtnemer, tenzij schriftelijk anders is overeengekomen. Na volledige betaling van alle verschuldigde bedragen verkrijgt Opdrachtgever een niet-exclusief, niet-overdraagbaar gebruiksrecht op de door Opdrachtnemer in het kader van de Overeenkomst ontwikkelde werken, uitsluitend voor eigen intern gebruik.",
+          "why": "Hiermee wordt vastgelegd dat de eigendom bij Opdrachtnemer blijft, maar Opdrachtgever na volledige betaling een afgebakend gebruiksrecht krijgt.",
+          "cite": null,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": []
+    },
+    {
+      "id": "av-24-forum",
+      "category": "long",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        16
+      ],
+      "touched": [
+        16
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Geschillen worden voorgelegd aan de bevoegde rechter te Zwolle.",
+          "findLen": 63,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 16,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 4173,
+      "status": 200,
+      "error": null,
+      "reply": "Ik pas uitsluitend artikel 16 aan zoals gevraagd. De bevoegde rechter wordt gewijzigd van Zwolle naar Amsterdam.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 16",
+          "title": "Bevoegde rechter wijzigen naar Amsterdam",
+          "find": "Geschillen worden voorgelegd aan de bevoegde rechter te Zwolle.",
+          "replace": "Geschillen worden voorgelegd aan de bevoegde rechter te Amsterdam.",
+          "why": "Wijzigt de contractueel aangewezen bevoegde rechter conform instructie.",
+          "cite": null,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": []
+    },
+    {
+      "id": "av-25-incasso-multi",
+      "category": "multi",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        7
+      ],
+      "touched": [
+        7
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Bij verzuim is Opdrachtgever de wettelijke handelsrente verschuldigd alsmede de buitengerechtelijke incassokosten conform de Wet normering buitengerechtelijke incassokosten.",
+          "findLen": 173,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 7,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 12915,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor artikel 7 te verduidelijken door expliciet te verwijzen naar artikel 6:119a BW voor de wettelijke handelsrente en naar het wettelijke minimum van € 40 voor buitengerechtelijke incassokosten bij handelsovereenkomsten. Let op: dit minimum geldt wettelijk voor handelsovereenkomsten; bij consumenten gelden andere regels voor incassokosten.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 7",
+          "title": "Verwijzing wettelijke handelsrente en minimum incassokosten",
+          "find": "Bij verzuim is Opdrachtgever de wettelijke handelsrente verschuldigd alsmede de buitengerechtelijke incassokosten conform de Wet normering buitengerechtelijke incassokosten.",
+          "replace": "Bij verzuim is Opdrachtgever de wettelijke handelsrente als bedoeld in artikel 6:119a BW verschuldigd, alsmede buitengerechtelijke incassokosten conform de Wet normering buitengerechtelijke incassokosten, met een minimum van € 40.",
+          "why": "Artikel 6:119a BW regelt de wettelijke handelsrente. Voor handelsovereenkomsten bepaalt artikel 6:96 lid 4 BW dat ten minste € 40 aan invorderingskosten verschuldigd is.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 6, artikelen 6:119a en 6:96 lid 4",
+          "meta": "Wettelijke handelsrente en minimumvergoeding voor invorderingskosten bij handelsovereenkomsten",
+          "url": "https://wetten.overheid.nl/BWBR0005289/"
+        }
+      ]
+    },
+    {
+      "id": "vso-26-vergoeding",
+      "category": "value",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        3
+      ],
+      "touched": [
+        3
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "€ 18.000 bruto",
+          "findLen": 14,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 3,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 6264,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor om in artikel 3 uitsluitend het bedrag van de beëindigingsvergoeding te verhogen van € 18.000 bruto naar € 25.000 bruto. De verwijzing naar artikel 7:673 BW laat ik verder ongemoeid.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 3",
+          "title": "Verhoging beëindigingsvergoeding",
+          "find": "€ 18.000 bruto",
+          "replace": "€ 25.000 bruto",
+          "del": "",
+          "ins": "",
+          "why": "De beëindigingsvergoeding wordt conform instructie verhoogd.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 673",
+          "meta": "Transitievergoeding",
+          "url": "https://wetten.overheid.nl/BWBR0005290/Boek7/Titeldeel10/Afdeling9/Artikel673"
+        }
+      ]
+    },
+    {
+      "id": "vso-27-relatiebeding",
+      "category": "targeted",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        5
+      ],
+      "touched": [
+        5
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Werkgever doet afstand van het tussen partijen geldende concurrentiebeding. Het relatiebeding blijft onverkort van kracht gedurende twaalf maanden na de einddatum.",
+          "findLen": 163,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 5,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 9657,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor artikel 5 zo aan te passen dat Werkgever afstand doet van zowel het concurrentiebeding als het relatiebeding. Daarmee vervalt de huidige bepaling dat het relatiebeding nog twaalf maanden doorloopt.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 5",
+          "title": "Afstand van concurrentie- en relatiebeding",
+          "find": "Werkgever doet afstand van het tussen partijen geldende concurrentiebeding. Het relatiebeding blijft onverkort van kracht gedurende twaalf maanden na de einddatum.",
+          "replace": "Werkgever doet afstand van het tussen partijen geldende concurrentiebeding en relatiebeding.",
+          "del": "",
+          "ins": "",
+          "why": "Hiermee wordt vastgelegd dat Werkgever ook geen beroep meer zal doen op het relatiebeding. Concurrentie- en relatiebedingen vallen onder de reikwijdte van art. 7:653 BW.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 653",
+          "meta": "Concurrentiebeding in de arbeidsovereenkomst",
+          "url": "https://wetten.overheid.nl/BWBR0005290/Boek7/Titeldeel10/Afdeling5/Artikel653"
+        }
+      ]
+    },
+    {
+      "id": "vso-28-getuigschrift-add",
+      "category": "add",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        6
+      ],
+      "touched": [
+        6
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Werkgever verstrekt Werknemer op diens verzoek een positief en neutraal geformuleerd getuigschrift.",
+          "findLen": 99,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 6,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 10394,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor artikel 6 aan te vullen met een concrete verstrekkingstermijn van veertien dagen na de einddatum. Dit sluit aan bij de wettelijke verplichting van de werkgever om op verzoek een getuigschrift te verstrekken, al schrijft de wet zelf geen specifieke termijn van veertien dagen voor.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 6",
+          "title": "Termijn voor verstrekking getuigschrift toevoegen",
+          "find": "Werkgever verstrekt Werknemer op diens verzoek een positief en neutraal geformuleerd getuigschrift.",
+          "replace": "Werkgever verstrekt Werknemer op diens verzoek binnen veertien dagen na de einddatum een positief en neutraal geformuleerd getuigschrift.",
+          "del": "",
+          "ins": "binnen veertien dagen na de einddatum ",
+          "why": "De werkgever is op grond van art. 7:656 BW verplicht om op verzoek van de werknemer een getuigschrift te verstrekken. De termijn van veertien dagen wordt hier contractueel vastgelegd.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 656",
+          "meta": "Getuigschrift bij einde arbeidsovereenkomst",
+          "url": "https://wetten.overheid.nl/BWBR0005290/boek7/titel10/afdeling9/artikel656"
+        }
+      ]
+    },
+    {
+      "id": "vso-29-guardrail",
+      "category": "guardrail",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [],
+      "touched": [],
+      "suggestionCount": 0,
+      "applicableCount": 0,
+      "reasons": [],
+      "perSug": [],
+      "ms": 3153,
+      "status": 200,
+      "error": null,
+      "reply": "Artikel 12 staat niet in de aangeleverde documenttekst. Ik kan daarom geen tekstwijziging voorstellen; het document bevat slechts artikelen 1 tot en met 8.",
+      "suggestionsRaw": [],
+      "citations": []
+    },
+    {
+      "id": "zzp-30-tarief",
+      "category": "value",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        3
+      ],
+      "touched": [
+        3
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "een uurtarief van € 95 exclusief btw",
+          "findLen": 36,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 3,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "ms": 3817,
+      "status": 200,
+      "error": null,
+      "reply": "Het uurtarief in artikel 3 kan worden aangepast naar € 110 exclusief btw. Ik stel alleen de tariefpassage voor wijziging voor.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 3 — Tarief",
+          "title": "Uurtarief verhogen naar € 110 exclusief btw",
+          "find": "een uurtarief van € 95 exclusief btw",
+          "replace": "een uurtarief van € 110 exclusief btw",
+          "del": "",
+          "ins": "",
+          "why": "Aanpassing conform instructie van de jurist.",
+          "cite": null,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": []
+    }
+  ]
+}

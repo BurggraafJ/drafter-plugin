@@ -12,14 +12,14 @@ function UserMessage({ text }) {
 }
 
 // Rendert de (platte-tekst) reply als alinea's + eventuele bronkaarten + acties.
-function AssistantMessage({ text, citations, onCite, showActions = true }) {
+function AssistantMessage({ text, citations, onCite, showActions = true, error = false }) {
   const paras = String(text || '').split(/\n{2,}/).filter(Boolean)
   return (
     <div className="lm-msg">
       <LMMark size={26} />
       <div className="lm-msg-body">
         <div className="lm-msg-author">Legal Mind</div>
-        <div className="lm-msg-text">
+        <div className={`lm-msg-text${error ? ' is-error' : ''}`}>
           {paras.length ? paras.map((p, i) => <p key={i}>{p}</p>) : <p>{text}</p>}
         </div>
         {citations && citations.length > 0 && (
@@ -77,7 +77,7 @@ export default function Thread({ flow, onCite }) {
           if (m.role === 'user') return <UserMessage key={i} text={m.text} />
           return (
             <div key={i}>
-              <AssistantMessage text={m.text} citations={m.citations} onCite={onCite} showActions={!m.confirm} />
+              <AssistantMessage text={m.text} citations={m.citations} onCite={onCite} showActions={!m.confirm && !m.error} error={m.error} />
               {m.suggestions?.length > 0 && (
                 <div style={{ marginTop: 12 }}>
                   <ProposalCard suggestions={m.suggestions} onApply={flow.applyChanges} applied={flow.applied} />

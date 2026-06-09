@@ -8,3 +8,9 @@ dist
 .DS_Store
 # Office add-in dev certs (generated locally per machine)
 .office-addin-dev-certs
+
+# Eval-run-artefacten (regenereerbaar) + tijdelijke scratch-bestanden
+evals/report/latest.*
+evals/report/*.console.txt
+_deploy_files.json
+_check.mjs

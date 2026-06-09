@@ -29,6 +29,12 @@ export default function ChangeCard({ change, status, active, onAccept, onReject,
         {done ? <StatusChip status={status} /> : <Icon name="maximize" size={13} style={{ color: '#94a3b8' }} />}
       </div>
       <DiffPreview change={change} />
+      {change.applicable === false && (
+        <div className="lm-change-warn">
+          <Icon name="alert-triangle" size={12} />
+          <span>Kon niet automatisch in het document worden geplaatst{change.findIssue ? ` (${change.findIssue})` : ''}. Pas deze passage handmatig aan.</span>
+        </div>
+      )}
       {change.why && (
         <div className="lm-change-why">
           {change.cite ? <span className="lm-cite">{change.cite}</span> : null}

@@ -128,6 +128,9 @@ export async function insertAtSelection(text, { location = 'After', track = true
  * het model de te-vervangen passage letterlijk teruggeeft.
  */
 export async function replacePassage(find, replace, { track = true } = {}) {
+  // Word's body.search() gooit een GeneralException bij zoekstrings > 255 tekens of met
+  // alinea-einden. We vangen dat af zodat één onplaatsbare suggestie de hele apply-lus niet breekt.
+  if (!find || find.length > 255 || /[\r\n]/.test(find)) return false
   return Word.run(async (context) => {
     if (track && isTrackChangesSupported()) {
       context.document.changeTrackingMode = Word.ChangeTrackingMode.trackAll
@@ -139,7 +142,7 @@ export async function replacePassage(find, replace, { track = true } = {}) {
     results.items[0].insertText(replace, Word.InsertLocation.replace)
     await context.sync()
     return true
-  })
+  }).catch(() => false)
 }
 
 /** Accepteer alle herzieningen in het document. */
@@ -170,9 +173,12 @@ export async function rejectAllChanges() {
 // `replace` (nieuwe tekst). Toepassen = vervangen onder Track Changes; accepteren/
 // weigeren = de tracked change(s) rondom de nieuwe tekst finaliseren of terugdraaien.
 
-/** Pas één suggestie toe als tracked change. Geeft false als `find` niet gevonden is. */
+/**
+ * Pas één suggestie toe als tracked change. Geeft false als de wijziging niet plaatsbaar is.
+ * De server markeert onplaatsbare suggesties met `applicable === false`; die slaan we over.
+ */
 export async function applyChange(change) {
-  if (!change?.find) return false
+  if (!change?.find || change.applicable === false) return false
   return replacePassage(change.find, change.replace ?? '', { track: true })
 }
 

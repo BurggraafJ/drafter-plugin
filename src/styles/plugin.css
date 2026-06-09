@@ -90,6 +90,7 @@
 .lm-msg-body { flex: 1; min-width: 0; }
 .lm-msg-author { font-size: 11px; font-weight: 600; color: var(--color-text-muted); margin-bottom: 3px; }
 .lm-msg-text { font-size: 13.5px; line-height: 1.62; color: #1a1a1a; }
+.lm-msg-text.is-error { color: #92400e; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; padding: 9px 11px; }
 .lm-msg-text p { margin: 0 0 9px; }
 .lm-msg-text p:last-child { margin: 0; }
 .lm-msg-text strong { font-weight: 700; }
@@ -175,6 +176,8 @@
 .lm-diff-preview .i { color: #b3551f; }
 .lm-change-why { padding: 0 12px 10px; font-size: 11.5px; line-height: 1.5; color: var(--color-text-secondary); display: flex; gap: 6px; }
 .lm-change-why .lm-cite { flex-shrink: 0; }
+.lm-change-warn { margin: 0 12px 10px; padding: 7px 9px; font-size: 11.5px; line-height: 1.45; color: #92400e; background: #fff7ed; border: 1px solid #fed7aa; border-radius: 7px; display: flex; gap: 6px; align-items: flex-start; }
+.lm-change-warn svg { flex-shrink: 0; margin-top: 1px; color: #d97706; }
 .lm-change-foot { display: flex; gap: 7px; padding: 0 12px 12px; }
 .lm-change-foot .lm-btn-accept { flex: 1; }
 .lm-change-foot .lm-btn-reject { flex: 1; }
