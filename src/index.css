@@ -1,63 +1,43 @@
-:root {
-  /* Kleuren — donker thema met Legal Mind oranje accent */
-  --bg-base: #1a1a1a;
-  --bg-surface: #232323;
-  --bg-elevated: #2c2c2c;
-  --border: #3a3a3a;
-  --fg-primary: #ffffff;
-  --fg-secondary: #b0b0b0;
-  --fg-muted: #707070;
-  --accent: #ff6b35;
-  --accent-hover: #ff8252;
-  --success: #4ade80;
-  --warning: #fbbf24;
-  --danger: #ef4444;
-  /* Track-changes accenten */
-  --tc-insert: #4ade80;
-  --tc-delete: #ef4444;
-
-  /* Spacing */
-  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px;
-  --s-5: 20px; --s-6: 24px; --s-7: 32px; --s-8: 40px;
-
-  /* Radii */
-  --r-sm: 4px; --r-md: 8px; --r-lg: 12px; --r-xl: 16px;
-
-  /* Typografie */
-  --font-sans: 'Segoe UI', -apple-system, system-ui, sans-serif;
-  --font-mono: 'Cascadia Code', 'SF Mono', Menlo, monospace;
-}
+/* Legal Mind Word-plugin — globale stijl.
+   Het ontwerp-systeem (huisstijl-tokens + paneel-stijlen) komt uit het design;
+   hier alleen de reset, taskpane-sizing en een lichte compat-laag voor de admin-views. */
+@import './styles/tokens.css';
+@import './styles/plugin.css';
 
 * { box-sizing: border-box; }
+html, body, #root { margin: 0; padding: 0; height: 100%; }
+body { background: var(--color-bg-default); }
 
-html, body, #root {
-  margin: 0;
-  height: 100%;
-  background: var(--bg-base);
-  color: var(--fg-primary);
-  font-family: var(--font-sans);
-  font-size: 14px;
-  -webkit-font-smoothing: antialiased;
+#root { display: flex; flex-direction: column; }
+.lm-root { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+
+/* ── Compat-aliassen: de admin-views gebruiken nog generieke token-namen.
+      Mappen naar de huisstijl-tokens (light-thema). ── */
+:root {
+  --bg-base: var(--color-bg-default);
+  --bg-surface: var(--slate-50);
+  --bg-elevated: var(--neutral-100);
+  --border: var(--color-border-default);
+  --fg-primary: var(--color-text-primary);
+  --fg-secondary: var(--color-text-secondary);
+  --fg-muted: var(--color-text-muted);
+  --accent: var(--brand-orange);
+  --accent-hover: var(--brand-orange-hover);
+  --danger: var(--status-error);
+  --warning: var(--status-warning);
+  --s-2: var(--space-2); --s-3: var(--space-3); --s-4: var(--space-4);
+  --s-5: var(--space-5); --s-6: var(--space-6);
+  --r-md: var(--radius-md);
 }
 
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
-
-/* Utility: primaire knop */
+/* Knop-utilities voor de admin-views (light). */
 .btn {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--s-2);
-  padding: var(--s-2) var(--s-4);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  background: var(--bg-elevated);
-  color: var(--fg-primary);
-  font-size: 13px;
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  padding: var(--s-2) var(--s-4); border: 1px solid var(--border);
+  border-radius: var(--r-md); background: #fff; color: var(--fg-primary);
+  font-size: 13px; font-family: var(--font-sans); cursor: pointer;
 }
-.btn:hover { background: var(--bg-surface); }
-.btn-accent { background: var(--accent); border-color: var(--accent); color: #1a1a1a; font-weight: 600; }
-.btn-accent:hover { background: var(--accent-hover); }
+.btn:hover { background: var(--slate-50); }
+.btn-accent { background: #121212; border-color: #121212; color: #fff; font-weight: 600; }
+.btn-accent:hover { background: #333; }
 .btn:disabled { opacity: 0.5; cursor: not-allowed; }

@@ -15,15 +15,19 @@ export async function listPublishedProfiles() {
   return data || []
 }
 
-/** Volledig profiel incl. gepubliceerde + draft-tekst (admin). */
-export async function getProfile(slug) {
-  const { data, error } = await supabase
-    .from('system_message_profiles')
-    .select('*')
-    .eq('slug', slug)
-    .single()
+/** Alle profielen (incl. inactief) voor de admin-dropdown — via definer-RPC (admin-only). */
+export async function listAllProfiles() {
+  const { data, error } = await supabase.rpc('list_system_message_profiles')
   if (error) throw error
-  return data
+  return data || []
+}
+
+/** Volledig profiel incl. gepubliceerde + draft-tekst (admin) — via definer-RPC. */
+export async function getProfile(slug) {
+  const { data, error } = await supabase.rpc('get_system_message_profile', { p_slug: slug })
+  if (error) throw error
+  // RPC die een composiet-rij teruggeeft levert een array met één element.
+  return Array.isArray(data) ? data[0] : data
 }
 
 /** Sla de draft op (admin) — raakt de gepubliceerde versie niet. */

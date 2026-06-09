@@ -164,3 +164,42 @@ export async function rejectAllChanges() {
     return true
   })
 }
+
+// ── Per-suggestie wiring voor het Wijzigingen-tabblad ────────────────────────
+// Het herschrijf-contract: elke suggestie heeft `find` (huidige passage) en
+// `replace` (nieuwe tekst). Toepassen = vervangen onder Track Changes; accepteren/
+// weigeren = de tracked change(s) rondom de nieuwe tekst finaliseren of terugdraaien.
+
+/** Pas één suggestie toe als tracked change. Geeft false als `find` niet gevonden is. */
+export async function applyChange(change) {
+  if (!change?.find) return false
+  return replacePassage(change.find, change.replace ?? '', { track: true })
+}
+
+/** Accepteer/weiger de tracked changes die overlappen met de eerste match van `text`. */
+async function resolveChangesNear(text, mode) {
+  if (!text || !isTrackChangesSupported()) return false
+  return Word.run(async (context) => {
+    const results = context.document.body.search(text, { matchCase: false, ignorePunct: false })
+    results.load('items')
+    await context.sync()
+    if (!results.items.length) return false
+    // getTrackedChanges() op een Range vereist WordApi 1.6; val anders stil terug.
+    const range = results.items[0]
+    let changes
+    try { changes = range.getTrackedChanges() } catch { return false }
+    changes.load('items')
+    await context.sync()
+    changes.items?.forEach((c) => (mode === 'accept' ? c.accept() : c.reject()))
+    await context.sync()
+    return true
+  })
+}
+
+export async function acceptChange(change) {
+  return resolveChangesNear(change?.replace || change?.ins, 'accept')
+}
+
+export async function rejectChange(change) {
+  return resolveChangesNear(change?.replace || change?.ins, 'reject')
+}

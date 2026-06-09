@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-import { supabase } from '../../../lib/supabase.js'
-import { getProfile, saveDraft, publishProfile } from '../../../lib/systemMessages.js'
+import { listAllProfiles, getProfile, saveDraft, publishProfile } from '../../../lib/systemMessages.js'
 
 // Bewerk de system-messages per profiel volgens het draft → published → history-patroon.
 // De admin bewerkt de DRAFT, publiceert naar productie (+ history-snapshot). De taskpane
@@ -13,8 +12,9 @@ export default function SystemMessageEditor() {
   const [status, setStatus] = useState('')
 
   useEffect(() => {
-    supabase.from('system_message_profiles').select('slug, label').order('sort_order')
-      .then(({ data }) => { setProfiles(data || []); if (data?.[0]) setSlug(data[0].slug) })
+    listAllProfiles()
+      .then((data) => { setProfiles(data || []); if (data?.[0]) setSlug(data[0].slug) })
+      .catch(() => {})
   }, [])
 
   useEffect(() => {

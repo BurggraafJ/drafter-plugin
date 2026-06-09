@@ -12,7 +12,7 @@
   xsi:type="TaskPaneApp">
 
   <Id>d3a7f1e2-9b4c-4e6a-8f2d-1c5b7a9e0d34</Id>
-  <Version>0.0.1.0</Version>
+  <Version>1.0.0.0</Version>
   <ProviderName>Legal Mind</ProviderName>
   <DefaultLocale>nl-NL</DefaultLocale>
   <DisplayName DefaultValue="Drafter — Legal Mind"/>

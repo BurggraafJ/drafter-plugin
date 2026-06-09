@@ -39,13 +39,32 @@ Deno.serve(async (req) => {
     const apiKey = await getSecret("anthropic_api_key")
     if (!apiKey) return json({ error: "anthropic_api_key ontbreekt in Vault" }, 500)
 
-    const systemMsg = `${prof?.published_text || "Je bent Drafter, een juridische AI-assistent in Word."}
+    const systemMsg = `${prof?.published_text || "Je bent Legal Mind, een juridische AI-assistent in Word."}
 
-Als je concrete tekstwijzigingen voorstelt, sluit je antwoord dan af met exact één JSON-blok:
+Schrijf je antwoord in gewone tekst (geen markdown-koppen). Als je concrete tekstwijzigingen
+voorstelt, sluit je antwoord dan af met exact één JSON-blok in dit formaat:
 \`\`\`json
-{"suggestions":[{"find":"<letterlijke huidige passage>","replace":"<nieuwe tekst>","rationale":"<korte reden>"}]}
+{
+  "suggestions": [
+    {
+      "ref": "<artikel- of paragraafverwijzing, bv. 'Artikel 9.1'>",
+      "title": "<korte titel van de wijziging>",
+      "find": "<LETTERLIJKE huidige passage uit het document die vervangen moet worden>",
+      "replace": "<de volledige nieuwe tekst die ervoor in de plaats komt>",
+      "del": "<alleen het weg te halen deel, voor de compacte diff-weergave>",
+      "ins": "<alleen het toe te voegen deel, voor de compacte diff-weergave>",
+      "why": "<korte juridische onderbouwing>",
+      "cite": <nummer dat verwijst naar een bron hieronder, of laat weg>
+    }
+  ],
+  "citations": [
+    { "idx": 1, "badge": "<BW|HR|RB|EU|...>", "title": "<bron-titel>", "meta": "<vindplaats>", "url": "<optionele link>" }
+  ]
+}
 \`\`\`
-Laat het JSON-blok weg als je geen wijziging voorstelt.`
+Belangrijk: \`find\` MOET letterlijk in het document voorkomen (anders kan de wijziging niet worden
+geplaatst). Voor een pure toevoeging: laat \`find\` de bestaande zin zijn en \`replace\` diezelfde zin
+mét de toevoeging. Verzin nooit bronnen. Laat het JSON-blok weg als je geen wijziging voorstelt.`
 
     const userMsg = buildUserMessage(question, context)
 
@@ -61,8 +80,8 @@ Laat het JSON-blok weg als je geen wijziging voorstelt.`
     })
 
     const text = reply?.content?.[0]?.text || ""
-    const { prose, suggestions } = splitSuggestions(text)
-    return json({ reply: prose, suggestions })
+    const { prose, suggestions, citations } = splitSuggestions(text)
+    return json({ reply: prose, suggestions, citations })
   } catch (e) {
     return json({ error: (e as Error).message }, 500)
   }
@@ -75,16 +94,21 @@ function buildUserMessage(question: string, context: { selection?: string; body?
   return parts.join("\n")
 }
 
-// Haalt het optionele JSON-suggestieblok los van de prozatekst.
+// Haalt het optionele JSON-blok (suggesties + citaties) los van de prozatekst.
 function splitSuggestions(text: string) {
   const m = text.match(/```json\s*([\s\S]*?)```/)
   let suggestions: unknown[] = []
+  let citations: unknown[] = []
   let prose = text
   if (m) {
-    try { suggestions = JSON.parse(m[1])?.suggestions ?? [] } catch { /* negeer ongeldige JSON */ }
+    try {
+      const parsed = JSON.parse(m[1])
+      suggestions = parsed?.suggestions ?? []
+      citations = parsed?.citations ?? []
+    } catch { /* negeer ongeldige JSON */ }
     prose = text.replace(m[0], "").trim()
   }
-  return { prose, suggestions }
+  return { prose, suggestions, citations }
 }
 
 async function getSettings() {
