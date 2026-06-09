@@ -126,7 +126,19 @@ async function getSettings() {
 
 async function getSecret(_key: string): Promise<string | null> {
   // De OpenAI-key komt uit de Edge Function secrets (Supabase → Edge Functions → Secrets).
-  return Deno.env.get("OPENAI_API_KEY") || null
+  // Tolerant t.o.v. de naam waaronder de secret is opgeslagen: eerst de canonieke naam,
+  // dan veelvoorkomende varianten, en als laatste redmiddel scannen we de env op een waarde
+  // met de OpenAI-key-vorm (sk-...). Zo werkt het ook als de secret bv. als "OpenAI API KEY"
+  // is gezet i.p.v. OPENAI_API_KEY.
+  const candidates = ["OPENAI_API_KEY", "OPENAI_KEY", "OpenAI API KEY", "OPENAI API KEY"]
+  for (const name of candidates) {
+    const v = Deno.env.get(name)
+    if (v?.trim()) return v.trim()
+  }
+  for (const [, v] of Object.entries(Deno.env.toObject())) {
+    if (typeof v === "string" && /^sk-[A-Za-z0-9_-]{20,}/.test(v.trim())) return v.trim()
+  }
+  return null
 }
 
 function json(body: unknown, status = 200) {
