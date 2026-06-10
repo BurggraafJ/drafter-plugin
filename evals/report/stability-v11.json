@@ -1,0 +1,690 @@
+{
+  "stamp": {
+    "tag": "stability-v11",
+    "base": "https://pwpoqyhzkzwuridlzwzr.supabase.co/functions/v1",
+    "profile": "default",
+    "cases": 5,
+    "repeat": 3,
+    "passed": 5,
+    "flaky": 0,
+    "elapsedSec": 97.2,
+    "p50": 21331,
+    "p95": 43181,
+    "byCat": {
+      "legal": {
+        "pass": 1,
+        "total": 1
+      },
+      "tone": {
+        "pass": 3,
+        "total": 3
+      },
+      "add": {
+        "pass": 1,
+        "total": 1
+      }
+    },
+    "byMode": {
+      "juridische-volledigheid": {
+        "pass": 1,
+        "total": 1
+      },
+      "herformulering-scope": {
+        "pass": 2,
+        "total": 2
+      },
+      "dwingend-recht": {
+        "pass": 1,
+        "total": 1
+      },
+      "multi-alinea-lengte": {
+        "pass": 1,
+        "total": 1
+      }
+    },
+    "judge": null
+  },
+  "results": [
+    {
+      "id": "arb-04-concurrentie-motivering",
+      "category": "legal",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        7
+      ],
+      "touched": [
+        7
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Het is Werknemer verboden om gedurende twaalf maanden na het einde van het dienstverband binnen een straal van 50 kilometer werkzaam te zijn bij een onderneming die gelijksoortige activiteiten ontplooit als Werkgever.",
+          "findLen": 217,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 7,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "juridische-volledigheid",
+      "attempt": 0,
+      "ms": 20009,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor artikel 7 aan te vullen met een schriftelijke motivering van de zwaarwegende bedrijfs- of dienstbelangen. Let op: bij een arbeidsovereenkomst voor bepaalde tijd is een concurrentiebeding alleen geldig als uit de schriftelijke motivering blijkt dat het beding noodzakelijk is wegens zwaarwegende bedrijfs- of dienstbelangen; de rechter kan het beding bovendien geheel of gedeeltelijk vern",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 7",
+          "title": "Aanvulling motivering concurrentiebeding bepaalde tijd",
+          "find": "Het is Werknemer verboden om gedurende twaalf maanden na het einde van het dienstverband binnen een straal van 50 kilometer werkzaam te zijn bij een onderneming die gelijksoortige activiteiten ontplooit als Werkgever.",
+          "replace": "Het is Werknemer verboden om gedurende twaalf maanden na het einde van het dienstverband binnen een straal van 50 kilometer werkzaam te zijn bij een onderneming die gelijksoortige activiteiten ontplooit als Werkgever. Dit concurrentiebeding is noodzakelijk wegens zwaarwegende bedrijfsbelangen van Werkgever. Werknemer krijgt in zijn functie toegang tot operationele werkwijzen, klant- en route-informatie, planningsgegevens, tariefafspraken en logistieke processen van Werkgever. Deze informatie is commercieel gevoelig en kan, indien zij bij een concurrerende onderneming wordt gebruikt, leiden tot aantasting van de concurrentiepositie, verlies van klanten en verstoring van de bedrijfsvoering van Werkgever. Gelet op de aard van de functie, de kennis waartoe Werknemer toegang krijgt en de regionale markt waarin Werkgever actief is, is beperking van concurrerende werkzaamheden gedurende twaalf maanden binnen een straal van 50 kilometer noodzakelijk om deze zwaarwegende bedrijfsbelangen te beschermen.",
+          "why": "Bij een arbeidsovereenkomst voor bepaalde tijd moet het concurrentiebeding schriftelijk zijn gemotiveerd met zwaarwegende bedrijfs- of dienstbelangen; zonder die motivering is het beding in beginsel niet geldig.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 653",
+          "meta": "Concurrentiebeding in arbeidsovereenkomst; schriftelijke motivering bij bepaalde tijd",
+          "url": "https://wetten.overheid.nl/BWBR0005290/Boek7/Titeldeel10/Afdeling5/Artikel653"
+        }
+      ],
+      "judge": null,
+      "passCount": 3,
+      "attemptCount": 3,
+      "attempts": [
+        {
+          "attempt": 0,
+          "pass": true,
+          "ms": 20009,
+          "reasons": []
+        },
+        {
+          "attempt": 1,
+          "pass": true,
+          "ms": 17733,
+          "reasons": []
+        },
+        {
+          "attempt": 2,
+          "pass": true,
+          "ms": 20600,
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "arb-08-geheimhouding-streng",
+      "category": "tone",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        8
+      ],
+      "touched": [
+        8
+      ],
+      "suggestionCount": 2,
+      "applicableCount": 2,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Werknemer is verplicht tot geheimhouding van alle vertrouwelijke informatie waarvan hij in het kader van zijn dienstverband kennisneemt",
+          "findLen": 135,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 8,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        },
+        {
+          "find": "na afloop van de arbeidsovereenkomst.",
+          "findLen": 37,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 8,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "herformulering-scope",
+      "attempt": 0,
+      "ms": 38453,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor artikel 8 aan te scherpen door de kring van vertrouwelijke informatie concreter te omschrijven, gebruik en verstrekking aan derden expliciet te verbieden, en zorgplichten rond beveiliging en teruggave op te nemen. Dit sluit aan bij de contractuele verplichting tot goed werknemerschap van artikel 7:611 BW; voor bescherming van bedrijfsgeheimen blijft daarnaast van belang dat Werkgever ",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 8",
+          "title": "Geheimhoudingsplicht verbreden",
+          "find": "Werknemer is verplicht tot geheimhouding van alle vertrouwelijke informatie waarvan hij in het kader van zijn dienstverband kennisneemt",
+          "replace": "Werknemer is verplicht tot strikte geheimhouding van alle vertrouwelijke informatie die hem in het kader van zijn dienstverband bekend wordt of waartoe hij toegang heeft",
+          "why": "De formulering wordt strenger en omvat ook informatie waartoe Werknemer toegang heeft, ook als hij daarvan niet actief kennisneemt.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        },
+        {
+          "ref": "Artikel 8",
+          "title": "Vertrouwelijke informatie specificeren en verplichtingen concretiseren",
+          "find": "na afloop van de arbeidsovereenkomst.",
+          "replace": "na afloop van de arbeidsovereenkomst. Onder vertrouwelijke informatie wordt in ieder geval verstaan: bedrijfsgegevens, klant- en leveranciersgegevens, tarieven, routes, planningen, werkwijzen, financiële gegevens, persoonsgegevens, inloggegevens en overige niet-openbare informatie van of over Werkgever, haar klanten of relaties. Werknemer zal vertrouwelijke informatie uitsluitend gebruiken voor de behoorlijke uitvoering van zijn werkzaamheden, deze niet aan derden verstrekken en passende maatregelen nemen om ongeoorloofde kennisneming, kopiëren, verlies of verspreiding te voorkomen. Op eerste verzoek van Werkgever en in ieder geval bij het einde van de arbeidsovereenkomst zal Werknemer alle dragers en kopieën met vertrouwelijke informatie aan Werkgever retourneren of, indien Werkgever dat verlangt, vernietigen.",
+          "why": "De bepaling wordt specifieker door voorbeelden, een gebruiksbeperking, een verbod op verstrekking aan derden en verplichtingen tot beveiliging en teruggave op te nemen.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 611",
+          "meta": "Goed werkgeverschap en goed werknemerschap",
+          "url": "https://wetten.overheid.nl/BWBR0005290/2024-07-01#Boek7_Titeldeel10_Afdeling1_Artikel611"
+        }
+      ],
+      "judge": null,
+      "passCount": 3,
+      "attemptCount": 3,
+      "attempts": [
+        {
+          "attempt": 0,
+          "pass": true,
+          "ms": 38453,
+          "reasons": []
+        },
+        {
+          "attempt": 1,
+          "pass": true,
+          "ms": 31646,
+          "reasons": []
+        },
+        {
+          "attempt": 2,
+          "pass": true,
+          "ms": 21331,
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "av-22-aansprakelijkheid",
+      "category": "tone",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        12
+      ],
+      "touched": [
+        12
+      ],
+      "suggestionCount": 2,
+      "applicableCount": 2,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "De aansprakelijkheid van Opdrachtnemer is beperkt tot het bedrag dat in het betreffende geval door de aansprakelijkheidsverzekering wordt uitgekeerd.",
+          "findLen": 149,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 12,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        },
+        {
+          "find": "Indien de verzekering niet uitkeert, is de aansprakelijkheid beperkt tot het factuurbedrag van de betreffende opdracht.",
+          "findLen": 119,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 12,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "herformulering-scope",
+      "attempt": 0,
+      "ms": 43181,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor artikel 12 aan te scherpen door de aansprakelijkheid te beperken tot directe schade, indirecte schade uit te sluiten en een absoluut maximum op te nemen voor het geval de verzekering niet uitkeert. Let op: een te vergaande aansprakelijkheidsuitsluiting kan onder omstandigheden worden aangetast, met name via art. 6:233 BW, art. 6:248 lid 2 BW en bij consumenten via art. 6:237 onder f B",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 12",
+          "title": "Aansprakelijkheid beperken tot directe schade en verzekeringsuitkering",
+          "find": "De aansprakelijkheid van Opdrachtnemer is beperkt tot het bedrag dat in het betreffende geval door de aansprakelijkheidsverzekering wordt uitgekeerd.",
+          "replace": "De aansprakelijkheid van Opdrachtnemer is beperkt tot directe schade en tot het bedrag dat in het betreffende geval daadwerkelijk door de aansprakelijkheidsverzekering wordt uitgekeerd.",
+          "why": "Deze formulering maakt de beperking strenger doordat alleen directe schade voor vergoeding in aanmerking komt en alleen voor zover daadwerkelijk dekking wordt uitgekeerd.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        },
+        {
+          "ref": "Artikel 12",
+          "title": "Lager maximum en uitsluiting indirecte schade opnemen",
+          "find": "Indien de verzekering niet uitkeert, is de aansprakelijkheid beperkt tot het factuurbedrag van de betreffende opdracht.",
+          "replace": "Indien de verzekering niet uitkeert, is de aansprakelijkheid beperkt tot het door Opdrachtgever betaalde factuurbedrag van de betreffende opdracht, met een maximum van EUR 10.000. Opdrachtnemer is niet aansprakelijk voor indirecte schade, gevolgschade, gederfde winst, gemiste besparingen, verlies van gegevens, reputatieschade of schade door bedrijfsstagnatie. De beperkingen in dit artikel gelden niet voor schade die het gevolg is van opzet of bewuste roekeloosheid van de leiding van Opdrachtnemer.",
+          "why": "Dit beperkt de fallback-aansprakelijkheid tot betaalde bedragen met een absoluut maximum en sluit gebruikelijke categorieën indirecte schade uit, met een uitzondering voor opzet of bewuste roekeloosheid om de bepaling beter verdedigbaar te houden.",
+          "cite": 2,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 6, artikel 233",
+          "meta": "Vernietigbaarheid van een beding in algemene voorwaarden indien dit onredelijk bezwarend is.",
+          "url": "https://wetten.overheid.nl/BWBR0005289/Boek6/Titel5/Afdeling3/Artikel233"
+        },
+        {
+          "idx": 2,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 6, artikel 248 lid 2",
+          "meta": "Een tussen partijen geldende regel is niet van toepassing voor zover dit naar maatstaven van redelijkheid en billijkheid onaanvaardbaar zou zijn.",
+          "url": "https://wetten.overheid.nl/BWBR0005289/Boek6/Titel5/Afdeling4/Artikel248"
+        }
+      ],
+      "judge": null,
+      "passCount": 3,
+      "attemptCount": 3,
+      "attempts": [
+        {
+          "attempt": 0,
+          "pass": true,
+          "ms": 43181,
+          "reasons": []
+        },
+        {
+          "attempt": 1,
+          "pass": true,
+          "ms": 20558,
+          "reasons": []
+        },
+        {
+          "attempt": 2,
+          "pass": true,
+          "ms": 25403,
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "ahv-36-dragalong",
+      "category": "add",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        6
+      ],
+      "touched": [
+        6
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Indien Bloemendaal haar Aandelen geheel of gedeeltelijk aan een Derde verkoopt, heeft Van Galen het recht om haar Aandelen onder dezelfde voorwaarden en tegen dezelfde prijs per aandeel mee te verkopen.",
+          "findLen": 202,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 6,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "dwingend-recht",
+      "attempt": 0,
+      "ms": 15618,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor de drag-along toe te voegen aan artikel 6 door een tweede zin aan dezelfde bepaling toe te voegen. Let op: de instructie vraagt uitdrukkelijk om géén waarderingsmechanisme; dat verzwakt de positie van Van Galen, omdat zij verplicht kan worden mee te verkopen tegen de door Bloemendaal met de derde overeengekomen voorwaarden zonder onafhankelijke prijs- of redelijkheidstoets. De werking",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 6",
+          "title": "Toevoeging drag-along bij verkoop gehele belang Bloemendaal",
+          "find": "Indien Bloemendaal haar Aandelen geheel of gedeeltelijk aan een Derde verkoopt, heeft Van Galen het recht om haar Aandelen onder dezelfde voorwaarden en tegen dezelfde prijs per aandeel mee te verkopen.",
+          "replace": "Indien Bloemendaal haar Aandelen geheel of gedeeltelijk aan een Derde verkoopt, heeft Van Galen het recht om haar Aandelen onder dezelfde voorwaarden en tegen dezelfde prijs per aandeel mee te verkopen. Indien Bloemendaal haar gehele belang in de Vennootschap aan een Derde verkoopt, is Van Galen verplicht om al haar Aandelen onder dezelfde voorwaarden en tegen dezelfde prijs per aandeel aan die Derde mee te verkopen.",
+          "why": "Voegt het gevraagde drag-alongrecht toe. Omdat geen waarderingsmechanisme of redelijkheidstoets is opgenomen, wordt Van Galen gebonden aan de door Bloemendaal overeengekomen verkoopvoorwaarden. De overdracht blijft onderworpen aan toepasselijke statutaire overdrachtsbeperkingen.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 2, artikel 195",
+          "meta": "Overdrachtsbeperkingen en aanbiedingsregeling bij aandelen in een besloten vennootschap",
+          "url": "https://wetten.overheid.nl/BWBR0003045/Boek2/Titel5/Afdeling4/Artikel195"
+        }
+      ],
+      "judge": null,
+      "passCount": 3,
+      "attemptCount": 3,
+      "attempts": [
+        {
+          "attempt": 0,
+          "pass": true,
+          "ms": 15618,
+          "reasons": []
+        },
+        {
+          "attempt": 1,
+          "pass": true,
+          "ms": 11994,
+          "reasons": []
+        },
+        {
+          "attempt": 2,
+          "pass": true,
+          "ms": 21313,
+          "reasons": []
+        }
+      ]
+    },
+    {
+      "id": "fr-57-herschrijf-lang",
+      "category": "tone",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        8
+      ],
+      "touched": [
+        8
+      ],
+      "suggestionCount": 7,
+      "applicableCount": 7,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Het is Franchisenemer gedurende de looptijd van deze overeenkomst en gedurende één jaar na het einde daarvan verboden om",
+          "findLen": 120,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 8,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        },
+        {
+          "find": "binnen het Rayon, dan wel binnen een straal van tien kilometer daarbuiten,",
+          "findLen": 74,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 8,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        },
+        {
+          "find": "direct of indirect betrokken te zijn bij een onderneming die brood- of banketproducten verkoopt volgens een met de Formule vergelijkbaar concept.",
+          "findLen": 145,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 8,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        },
+        {
+          "find": "Het is Franchisenemer gedurende dezelfde periode verboden om",
+          "findLen": 60,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 8,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        },
+        {
+          "find": "leveranciers of personeelsleden van Franchisegever of van andere franchisenemers van de Formule te bewegen hun relatie met Franchisegever te beëindigen.",
+          "findLen": 152,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 8,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        },
+        {
+          "find": "Franchisenemer houdt alle Vertrouwelijke Informatie strikt geheim, zowel tijdens als na afloop van deze overeenkomst,",
+          "findLen": 117,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 8,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        },
+        {
+          "find": "en gebruikt deze uitsluitend voor de exploitatie van de Formule binnen het Rayon.",
+          "findLen": 81,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 8,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "multi-alinea-lengte",
+      "attempt": 0,
+      "ms": 27982,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor artikel 8 taalkundig te moderniseren zonder de inhoudelijke reikwijdte te wijzigen. De formulering blijft aansluiten bij de huidige duur, het gebied en de verboden gedragingen; het non-concurrentiebeding blijft dus ongewijzigd van strekking. Ter context: voor franchiseovereenkomsten gelden specifieke eisen aan postcontractuele non-concurrentiebedingen, onder meer in artikel 7:920 BW.",
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 8",
+          "title": "Modernisering non-concurrentiebeding",
+          "find": "Het is Franchisenemer gedurende de looptijd van deze overeenkomst en gedurende één jaar na het einde daarvan verboden om",
+          "replace": "Franchisenemer mag tijdens deze overeenkomst en tot één jaar na het einde daarvan niet",
+          "why": "Heldere en modernere formulering zonder wijziging van duur of verbod.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        },
+        {
+          "ref": "Artikel 8",
+          "title": "Modernisering gebiedsomschrijving",
+          "find": "binnen het Rayon, dan wel binnen een straal van tien kilometer daarbuiten,",
+          "replace": "binnen het Rayon of binnen een straal van tien kilometer daarbuiten",
+          "why": "Vereenvoudigt de formulering zonder de geografische reikwijdte te wijzigen.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        },
+        {
+          "ref": "Artikel 8",
+          "title": "Modernisering betrokkenheidsverbod",
+          "find": "direct of indirect betrokken te zijn bij een onderneming die brood- of banketproducten verkoopt volgens een met de Formule vergelijkbaar concept.",
+          "replace": "direct of indirect betrokken zijn bij een onderneming die brood- of banketproducten verkoopt volgens een concept dat vergelijkbaar is met de Formule.",
+          "why": "Maakt de zin beter leesbaar zonder de juridische strekking te wijzigen.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        },
+        {
+          "ref": "Artikel 8",
+          "title": "Modernisering relatiebeding",
+          "find": "Het is Franchisenemer gedurende dezelfde periode verboden om",
+          "replace": "Franchisenemer mag gedurende dezelfde periode geen",
+          "why": "Zet de bepaling om naar helder, actief taalgebruik zonder inhoudelijke wijziging.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        },
+        {
+          "ref": "Artikel 8",
+          "title": "Modernisering relatiebeding",
+          "find": "leveranciers of personeelsleden van Franchisegever of van andere franchisenemers van de Formule te bewegen hun relatie met Franchisegever te beëindigen.",
+          "replace": "leveranciers of personeelsleden van Franchisegever of van andere franchisenemers van de Formule ertoe bewegen hun relatie met Franchisegever te beëindigen.",
+          "why": "Verduidelijkt de formulering van het wervings- en relatieverbod zonder de inhoud te wijzigen.",
+          "applicable": true,
+          "findIssue": null
+        },
+        {
+          "ref": "Artikel 8",
+          "title": "Modernisering geheimhoudingsbeding",
+          "find": "Franchisenemer houdt alle Vertrouwelijke Informatie strikt geheim, zowel tijdens als na afloop van deze overeenkomst,",
+          "replace": "Franchisenemer houdt alle Vertrouwelijke Informatie strikt geheim, tijdens en na afloop van deze overeenkomst,",
+          "why": "Maakt de formulering bondiger en moderner zonder de duur van de geheimhoudingsplicht te wijzigen.",
+          "applicable": true,
+          "findIssue": null
+        },
+        {
+          "ref": "Artikel 8",
+          "title": "Modernisering gebruiksbeperking vertrouwelijke informatie",
+          "find": "en gebruikt deze uitsluitend voor de exploitatie van de Formule binnen het Rayon.",
+          "replace": "en gebruikt die informatie uitsluitend voor de exploitatie van de Formule binnen het Rayon.",
+          "why": "Verduidelijkt waarnaar wordt verwezen zonder de toegestane gebruiksdoeleinden te wijzigen.",
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 920",
+          "meta": "Postcontractueel non-concurrentiebeding bij franchiseovereenkomsten",
+          "url": "https://wetten.overheid.nl/BWBR0005290/Boek7/Titel16/Artikel920"
+        }
+      ],
+      "judge": null,
+      "passCount": 3,
+      "attemptCount": 3,
+      "attempts": [
+        {
+          "attempt": 0,
+          "pass": true,
+          "ms": 27982,
+          "reasons": []
+        },
+        {
+          "attempt": 1,
+          "pass": true,
+          "ms": 27206,
+          "reasons": []
+        },
+        {
+          "attempt": 2,
+          "pass": true,
+          "ms": 33373,
+          "reasons": []
+        }
+      ]
+    }
+  ]
+}

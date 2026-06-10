@@ -233,4 +233,265 @@ Beide partijen kunnen de opdracht tussentijds opzeggen met inachtneming van een 
 
 Artikel 10 — Toepasselijk recht
 Op deze overeenkomst is Nederlands recht van toepassing. Geschillen worden voorgelegd aan de rechtbank Midden-Nederland.`,
+
+  // ── 7. Aandeelhoudersovereenkomst (BV) — vennootschapsrecht ────────────────
+  aandeelhouders: `AANDEELHOUDERSOVEREENKOMST INNOVATECH SOLUTIONS B.V.
+
+De ondergetekenden:
+1. Bloemendaal Beheer B.V., houdster van 60% van de aandelen, hierna: "Bloemendaal";
+2. Van Galen Holding B.V., houdster van 40% van de aandelen, hierna: "Van Galen";
+gezamenlijk de aandeelhouders van Innovatech Solutions B.V., hierna: "de Vennootschap";
+
+komen overeen:
+
+Artikel 1 — Definities
+In deze overeenkomst wordt verstaan onder: "Aandelen": alle door een aandeelhouder gehouden aandelen in het kapitaal van de Vennootschap; "Overdracht": iedere vervreemding of bezwaring van Aandelen; "Derde": iedere partij die geen partij is bij deze overeenkomst.
+
+Artikel 2 — Bestuur en besluitvorming
+Het bestuur van de Vennootschap behoeft de voorafgaande goedkeuring van beide aandeelhouders voor besluiten omtrent: het aangaan van verplichtingen boven € 150.000, het vestigen van zekerheden, het benoemen of ontslaan van statutair bestuurders en het wijzigen van de strategie.
+
+Artikel 3 — Dividendbeleid
+De Vennootschap keert jaarlijks ten minste 40% van de nettowinst uit als dividend, tenzij beide aandeelhouders schriftelijk anders besluiten of de uitkeringstoets van artikel 2:216 BW zich daartegen verzet.
+
+Artikel 4 — Aanbiedingsplicht
+De aandeelhouder die zijn Aandelen geheel of gedeeltelijk wenst over te dragen, biedt deze eerst te koop aan aan de andere aandeelhouder. De andere aandeelhouder heeft een reactietermijn van dertig dagen na ontvangst van het aanbod.
+
+Artikel 5 — Blokkeringsregeling
+Overdracht van Aandelen aan een Derde behoeft de voorafgaande goedkeuring van de algemene vergadering, overeenkomstig de blokkeringsregeling in de statuten van de Vennootschap.
+
+Artikel 6 — Meeverkooprecht (tag-along)
+Indien Bloemendaal haar Aandelen geheel of gedeeltelijk aan een Derde verkoopt, heeft Van Galen het recht om haar Aandelen onder dezelfde voorwaarden en tegen dezelfde prijs per aandeel mee te verkopen.
+
+Artikel 7 — Informatierechten
+De Vennootschap verstrekt iedere aandeelhouder binnen vijfenveertig dagen na afloop van ieder kwartaal de kwartaalcijfers, alsmede jaarlijks de conceptjaarrekening.
+
+Artikel 8 — Non-concurrentie
+Het is een aandeelhouder verboden om gedurende de periode dat hij Aandelen houdt en gedurende twee jaar na Overdracht van al zijn Aandelen, direct of indirect concurrerende activiteiten te ontplooien ten opzichte van de Vennootschap.
+
+Artikel 9 — Geheimhouding
+De aandeelhouders houden alle informatie omtrent de Vennootschap waarvan zij weten of behoren te weten dat deze vertrouwelijk is, strikt geheim.
+
+Artikel 10 — Boetebeding
+Bij overtreding van artikel 8 of artikel 9 verbeurt de overtredende aandeelhouder een direct opeisbare boete van € 100.000 per overtreding, onverminderd het recht van de andere partij op volledige schadevergoeding.
+
+Artikel 11 — Duur
+Deze overeenkomst geldt zolang beide partijen aandeelhouder van de Vennootschap zijn en eindigt van rechtswege ten aanzien van een partij zodra die partij geen Aandelen meer houdt.
+
+Artikel 12 — Toepasselijk recht en forumkeuze
+Op deze overeenkomst is Nederlands recht van toepassing. Geschillen worden voorgelegd aan de rechtbank Noord-Holland, locatie Haarlem.`,
+
+  // ── 8. Verwerkersovereenkomst (AVG) ─────────────────────────────────────────
+  verwerkers: `VERWERKERSOVEREENKOMST
+
+De ondergetekenden:
+1. Praktijk De Linde B.V., hierna: "Verwerkingsverantwoordelijke";
+2. CloudAdmin Services B.V., hierna: "Verwerker";
+
+in aanmerking nemende dat Verwerker in opdracht van Verwerkingsverantwoordelijke persoonsgegevens verwerkt in het kader van de salaris- en personeelsadministratie, komen overeen:
+
+Artikel 1 — Definities
+De begrippen in deze overeenkomst hebben de betekenis die daaraan wordt gegeven in de Algemene verordening gegevensbescherming (AVG), waaronder: "Persoonsgegevens", "Verwerking", "Betrokkene" en "Datalek" (inbreuk in verband met persoonsgegevens).
+
+Artikel 2 — Voorwerp van de verwerking
+Verwerker verwerkt uitsluitend de volgende categorieën persoonsgegevens: naam, adres, woonplaats, geboortedatum, burgerservicenummer, salarisgegevens en verzuimgegevens, van de categorie betrokkenen: werknemers van Verwerkingsverantwoordelijke, met als doel het voeren van de salaris- en personeelsadministratie, voor de duur van de hoofdovereenkomst.
+
+Artikel 3 — Instructies
+Verwerker verwerkt de persoonsgegevens uitsluitend op basis van schriftelijke instructies van Verwerkingsverantwoordelijke, behoudens afwijkende wettelijke verplichtingen.
+
+Artikel 4 — Geheimhouding
+Verwerker waarborgt dat personen die onder haar gezag persoonsgegevens verwerken, zich tot geheimhouding hebben verbonden.
+
+Artikel 5 — Beveiliging
+Verwerker treft passende technische en organisatorische maatregelen, waaronder versleuteling van gegevens in rust en tijdens transport, logische toegangscontrole op basis van least privilege en periodieke beveiligingstests.
+
+Artikel 6 — Sub-verwerkers
+Verwerker schakelt geen sub-verwerkers in zonder voorafgaande specifieke schriftelijke toestemming van Verwerkingsverantwoordelijke. Verwerker legt aan iedere sub-verwerker dezelfde verplichtingen op als in deze overeenkomst zijn opgenomen.
+
+Artikel 7 — Doorgifte buiten de EER
+Verwerker verwerkt de persoonsgegevens uitsluitend binnen de Europese Economische Ruimte, tenzij Verwerkingsverantwoordelijke vooraf schriftelijk instemt en passende waarborgen als bedoeld in hoofdstuk V van de AVG zijn getroffen.
+
+Artikel 8 — Datalekken
+Verwerker informeert Verwerkingsverantwoordelijke zonder onredelijke vertraging, doch uiterlijk binnen 48 uur na ontdekking, over ieder Datalek, en verstrekt daarbij alle informatie die nodig is om aan de wettelijke meldplicht te kunnen voldoen.
+
+Artikel 9 — Rechten van betrokkenen
+Verwerker verleent Verwerkingsverantwoordelijke alle redelijke bijstand bij het vervullen van diens plicht om verzoeken van Betrokkenen tot inzage, rectificatie of verwijdering te beantwoorden.
+
+Artikel 10 — Audit
+Verwerker stelt alle informatie ter beschikking die nodig is om naleving van deze overeenkomst aan te tonen en maakt audits door of namens Verwerkingsverantwoordelijke mogelijk, ten hoogste eenmaal per jaar.
+
+Artikel 11 — Teruggave en verwijdering
+Na afloop van de hoofdovereenkomst retourneert of verwijdert Verwerker alle persoonsgegevens binnen zestig dagen, naar keuze van Verwerkingsverantwoordelijke, behoudens wettelijke bewaarplichten.
+
+Artikel 12 — Toepasselijk recht
+Op deze overeenkomst is Nederlands recht van toepassing.`,
+
+  // ── 9. Licentie-/SaaS-voorwaarden (IE & tech, met staffel-lijst) ────────────
+  saas_licentie: `LICENTIE- EN SAAS-VOORWAARDEN NOVAPLAN SOFTWARE B.V.
+
+Artikel 1 — Definities
+In deze voorwaarden wordt verstaan onder: "Novaplan": Novaplan Software B.V.; "Klant": de wederpartij van Novaplan; "Software": de programmatuur Novaplan Studio, zoals als onlinedienst ter beschikking gesteld; "Abonnement": het recht op toegang tot en gebruik van de Software.
+
+Artikel 2 — Licentie
+Novaplan verleent Klant voor de duur van het Abonnement een niet-exclusief, niet-overdraagbaar en niet-sublicentieerbaar recht om de Software te gebruiken binnen de eigen organisatie van Klant, uitsluitend voor diens interne bedrijfsvoering.
+
+Artikel 3 — Beschikbaarheid
+Novaplan spant zich in voor een beschikbaarheid van de Software van ten minste 99,5% per kalendermaand, gemeten buiten aangekondigde onderhoudsvensters.
+
+Artikel 4 — Duur en verlenging
+Het Abonnement wordt aangegaan voor een initiële periode van twaalf maanden en wordt daarna telkens stilzwijgend verlengd met perioden van twaalf maanden, behoudens schriftelijke opzegging uiterlijk drie maanden voor het einde van de lopende periode.
+
+Artikel 5 — Vergoeding
+De abonnementsvergoeding bedraagt € 450 per maand per omgeving, jaarlijks per 1 januari te indexeren conform de Dienstenprijsindex (DPI) van het CBS.
+
+Artikel 6 — Servicecredits
+Indien de beschikbaarheid in een kalendermaand lager is dan toegezegd, heeft Klant recht op een servicecredit op de maandvergoeding volgens de volgende staffel:
+a. bij een beschikbaarheid lager dan 99,5% maar ten minste 99,0%: een credit van 5% van de maandvergoeding;
+b. bij een beschikbaarheid lager dan 99,0% maar ten minste 97,0%: een credit van 10% van de maandvergoeding;
+c. bij een beschikbaarheid lager dan 97,0%: een credit van 20% van de maandvergoeding.
+
+Artikel 7 — Onderhoud en updates
+Novaplan houdt de Software in stand en stelt updates en upgrades ter beschikking zodra deze algemeen beschikbaar zijn. Aangekondigd onderhoud vindt zoveel mogelijk buiten kantooruren plaats.
+
+Artikel 8 — Intellectuele eigendom
+Alle intellectuele eigendomsrechten op de Software, de documentatie en daarmee samenhangende materialen berusten uitsluitend bij Novaplan of haar licentiegevers. Er vindt geen overdracht van intellectuele eigendomsrechten aan Klant plaats.
+
+Artikel 9 — Broncode en escrow
+Klant verkrijgt geen toegang tot de broncode van de Software. Een broncode-escrowregeling maakt geen deel uit van het Abonnement en wordt slechts getroffen indien partijen dit afzonderlijk schriftelijk overeenkomen.
+
+Artikel 10 — Klantdata
+Alle door of namens Klant in de Software ingevoerde gegevens blijven eigendom van Klant. Novaplan stelt na het einde van het Abonnement gedurende dertig dagen een export van de klantdata beschikbaar in een gangbaar formaat.
+
+Artikel 11 — Aansprakelijkheid
+De totale aansprakelijkheid van Novaplan per kalenderjaar is beperkt tot de door Klant in de twaalf voorafgaande maanden betaalde abonnementsvergoedingen, met een maximum van € 75.000. Aansprakelijkheid voor indirecte schade, waaronder gederfde winst en verlies van gegevens, is uitgesloten.
+
+Artikel 12 — Gebruiksaudit
+Novaplan is gerechtigd ten hoogste eenmaal per jaar het gebruik van de Software door Klant te controleren op overeenstemming met het Abonnement, na voorafgaande aankondiging van ten minste tien werkdagen.
+
+Artikel 13 — Opschorting
+Novaplan mag de toegang tot de Software opschorten indien Klant na aanmaning in gebreke blijft met betaling of indien het gebruik de veiligheid of integriteit van de dienst bedreigt.
+
+Artikel 14 — Toepasselijk recht en forumkeuze
+Op deze voorwaarden is Nederlands recht van toepassing. Geschillen worden voorgelegd aan de rechtbank Den Haag.`,
+
+  // ── 10. Franchiseovereenkomst — adversarieel: bijlage met eigen nummering,
+  //        typografische aanhalingstekens, non-breaking space, dubbele spatie,
+  //        en drie voorkomens van "dertig dagen" (art. 4, 5 en 10) ─────────────
+  franchise: `FRANCHISEOVEREENKOMST HET GOUDEN BROOD
+
+De ondergetekenden:
+1. Het Gouden Brood Formule B.V., gevestigd te Apeldoorn, hierna te noemen: "Franchisegever";
+2. Vermeulen Brood V.O.F., gevestigd te Deventer, hierna te noemen: "Franchisenemer";
+
+komen overeen:
+
+Artikel 1 — Definities
+In deze overeenkomst wordt verstaan onder: "Formule": het door Franchisegever ontwikkelde bedrijfsconcept voor ambachtelijke bakkerijwinkels, met inbegrip van merknaam, huisstijl en werkwijzen; "Handboek": het handboek waarin de Formule is beschreven; "Vertrouwelijke Informatie": alle recepturen, de inhoud van het Handboek en overige bedrijfsgeheimen van Franchisegever; "Rayon": het in Bijlage 1 omschreven verzorgingsgebied.
+
+Artikel 2 — De Formule en het Rayon
+Franchisegever verleent Franchisenemer het exclusieve recht om de Formule te exploiteren binnen het Rayon. Franchisenemer exploiteert binnen het Rayon één bakkerijwinkel volgens de Formule.
+
+Artikel 3 — Duur
+Deze overeenkomst wordt aangegaan voor de duur van vijf jaar, ingaande op 1 januari 2027. Verlenging geschiedt telkens met perioden van vijf jaar, tenzij een der partijen uiterlijk twaalf maanden voor het einde van de lopende periode schriftelijk opzegt.
+
+Artikel 4 — Franchisevergoeding
+Franchisenemer is bij aanvang een eenmalige entreevergoeding van € 35.000 verschuldigd. Daarnaast is Franchisenemer een doorlopende franchisevergoeding verschuldigd van 6% van de maandomzet exclusief btw, te voldoen binnen dertig dagen na afloop van de betreffende kalendermaand.
+
+Artikel 5 — Marketingbijdrage
+Franchisenemer draagt maandelijks 2% van de maandomzet exclusief btw af aan het landelijke marketingfonds. De afdracht geschiedt gelijktijdig met de in artikel 4 bedoelde franchisevergoeding, binnen dertig dagen na afloop van de kalendermaand.
+
+Artikel 6 — Het Handboek
+Franchisenemer ontvangt bij aanvang één exemplaar van het Handboek in bruikleen. Het Handboek en alle wijzigingen daarvan behoren tot de Vertrouwelijke Informatie en blijven eigendom van Franchisegever.
+
+Artikel 7 — Opleiding
+Franchisenemer en diens bedrijfsleider volgen voor de opening de opleiding “Startklaar Plus” aan de formule-academie te Apeldoorn. De opleiding duurt tien werkdagen en de kosten daarvan zijn begrepen in de entreevergoeding.
+
+Artikel 8 — Non-concurrentie, relatiebeding en geheimhouding
+8.1 Het is Franchisenemer gedurende de looptijd van deze overeenkomst en gedurende één jaar na het einde daarvan verboden om binnen het Rayon, dan wel binnen een straal van tien kilometer daarbuiten, direct of indirect betrokken te zijn bij een onderneming die brood- of banketproducten verkoopt volgens een met de Formule vergelijkbaar concept.
+8.2 Het is Franchisenemer gedurende dezelfde periode verboden om leveranciers of personeelsleden van Franchisegever of van andere franchisenemers van de Formule te bewegen hun relatie met Franchisegever te beëindigen.
+8.3 Franchisenemer houdt alle Vertrouwelijke Informatie strikt geheim, zowel tijdens als na afloop van deze overeenkomst, en gebruikt deze uitsluitend voor de exploitatie van de Formule binnen het Rayon.
+
+Artikel 9 — Boetes
+Bij overtreding van deze overeenkomst is Franchisenemer de volgende direct opeisbare boetes verschuldigd, onverminderd het recht van Franchisegever op volledige schadevergoeding:
+a. bij te late betaling van enige vergoeding: € 250 per dag dat de betaling uitblijft;
+b. bij schending van de geheimhoudingsplicht: € 12.500 per overtreding;
+c. bij schending van het non-concurrentiebeding: € 25.000 per overtreding, vermeerderd met € 1.000 per dag dat de overtreding voortduurt.
+
+Artikel 10 — Inkoopverplichting
+Franchisenemer betrekt ten minste 80% van het assortiment van Franchisegever of van door Franchisegever aangewezen leveranciers. Facturen voor leveringen worden voldaan binnen dertig dagen na factuurdatum.
+
+Artikel 11 — Prijsbeleid
+Franchisegever verstrekt jaarlijks adviesprijzen voor het kernassortiment. Voor het standaardbrood “Goudkorst” geldt een consumentenadviesprijs van € 3,95. De adviesprijslijst wordt  jaarlijks geactualiseerd; Franchisenemer blijft vrij zijn eigen verkoopprijzen vast te stellen.
+
+Artikel 12 — Administratie en controle
+Franchisenemer voert een deugdelijke administratie en verstrekt Franchisegever maandelijks een omzetopgave. Franchisegever is gerechtigd de administratie eenmaal per jaar door een accountant te laten controleren, ter verificatie van de in artikel 4 bedoelde franchisevergoeding.
+
+Artikel 13 — Overdracht
+Franchisenemer kan zijn rechten uit deze overeenkomst niet overdragen zonder voorafgaande schriftelijke toestemming van Franchisegever. Franchisegever onthoudt die toestemming niet op onredelijke gronden.
+
+Artikel 14 — Tussentijdse beëindiging
+Ieder der partijen kan deze overeenkomst met onmiddellijke ingang beëindigen indien de andere partij in staat van faillissement wordt verklaard, surseance van betaling aanvraagt of toerekenbaar tekortschiet en die tekortkoming niet binnen veertien dagen na schriftelijke ingebrekestelling herstelt.
+
+Artikel 15 — Gevolgen van beëindiging
+Bij het einde van deze overeenkomst staakt Franchisenemer onmiddellijk ieder gebruik van de Formule, retourneert hij het Handboek en alle overige dragers van Vertrouwelijke Informatie, en verwijdert hij alle uitingen van de huisstijl uit en aan het pand.
+
+Artikel 16 — Toepasselijk recht en forumkeuze
+Op deze overeenkomst is Nederlands recht van toepassing. Geschillen worden voorgelegd aan de rechtbank Overijssel, locatie Zwolle.
+
+BIJLAGE 1 — RAYON EN VESTIGINGSEISEN
+
+Artikel 1 — Het Rayon
+Het Rayon omvat de bebouwde kom van de gemeente Deventer, postcodegebieden 7411 tot en met 7429.
+
+Artikel 2 — Vestigingseisen
+De winkel heeft een verkoopvloeroppervlak van ten minste 85 m², voldoet aan de inrichtingseisen uit het Handboek en beschikt over een afbakoven van het in het Handboek voorgeschreven type.
+
+Artikel 3 — Openingstijden
+De winkel is geopend van maandag tot en met zaterdag van ten minste 08:00 tot 18:00 uur, met uitzondering van algemeen erkende feestdagen.`,
 }
+
+// ── 11. Raamovereenkomst ICT (gegenereerd, > 24.000 tekens) ──────────────────
+// Test: lange-document-precisie én truncatie. De client (src/office/word.js
+// getContext) knipt de body op 24.000 tekens; artikel 27 ligt dáár voorbij.
+// Artikel 22 (kwaliteitsborgingsbudget € 8.450) ligt nog binnen het venster;
+// artikel 27 (exitvergoeding € 4.699) is voor het model onzichtbaar.
+function buildRaamovereenkomst() {
+  const fmt = (n) => String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  const onderwerpen = [
+    'Definities en rangorde', 'Voorwerp van de raamovereenkomst', 'Wijze van opdrachtverstrekking',
+    'Implementatiediensten', 'Beheer en ondersteuning', 'Servicedesk en responstijden',
+    'Personeel en vervanging', 'Onderaanneming', 'Tarieven en indexering',
+    'Facturering en betaling', 'Meerwerk en minderwerk', 'Acceptatieprocedure',
+    'Documentatie en kennisoverdracht', 'Beveiliging en continuïteit', 'Privacy en gegevensbescherming',
+    'Intellectuele eigendomsrechten', 'Garanties', 'Aansprakelijkheid en vrijwaring',
+    'Verzekering', 'Overmacht', 'Geheimhouding', 'Kwaliteitsborging en rapportage',
+    'Wijzigingsprocedure', 'Duur en verlenging', 'Opzegging', 'Gevolgen van beëindiging',
+    'Exit en overdracht van werkzaamheden', 'Toepasselijk recht en geschillen',
+  ]
+  const head = `RAAMOVEREENKOMST ICT-DIENSTVERLENING
+
+De ondergetekenden:
+1. Provincie Flevoland, zetelend te Lelystad, hierna te noemen: "Opdrachtgever";
+2. Helix Digital B.V., gevestigd te Almere, hierna te noemen: "Opdrachtnemer";
+
+komen het volgende overeen:
+`
+  const blokken = onderwerpen.map((onderwerp, i) => {
+    const n = i + 1
+    const bedrag = fmt(2000 + n * 731)
+    const dagen = 5 + ((n * 3) % 40)
+    const pct = 1 + (n % 9)
+    const zinnen = [
+      `Dit artikel regelt ${onderwerp.toLowerCase()} tussen Opdrachtgever en Opdrachtnemer, binnen de kaders van deze raamovereenkomst en de daaronder te sluiten nadere overeenkomsten.`,
+      `Voor de toepassing van dit artikel geldt een referentiebedrag van € ${bedrag} per kalenderjaar, dat jaarlijks per 1 januari wordt geïndexeerd volgens de consumentenprijsindex van het CBS.`,
+      `Meldingen en verzoeken uit hoofde van dit artikel worden schriftelijk gedaan en binnen ${dagen} werkdagen na ontvangst inhoudelijk beantwoord, bij gebreke waarvan het verzoek geacht wordt te zijn afgewezen.`,
+      `Indien de uitvoering aantoonbaar afwijkt van de overeengekomen norm, geldt een correctie van ${pct} procent op de eerstvolgende maandfactuur, onverminderd de overige rechten van Opdrachtgever uit deze raamovereenkomst.`,
+      `Partijen evalueren de werking van dit artikel ten minste eenmaal per jaar in het periodieke contractoverleg en leggen verbeterafspraken vast in het verslag van dat overleg.`,
+    ]
+    if (n === 22) zinnen.push('Opdrachtgever reserveert voor kwaliteitsborging jaarlijks een kwaliteitsborgingsbudget van € 8.450, te besteden in overleg met de stuurgroep.')
+    if (n === 27) zinnen.push('Bij beëindiging van de raamovereenkomst voert Opdrachtnemer de exitwerkzaamheden uit tegen een eenmalige exitvergoeding van € 4.699.')
+    return `Artikel ${n} — ${onderwerp}\n${zinnen.join(' ')}`
+  })
+  return `${head}\n${blokken.join('\n\n')}`
+}
+
+DOCS.raam_lang = buildRaamovereenkomst()

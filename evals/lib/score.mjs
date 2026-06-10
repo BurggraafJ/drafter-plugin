@@ -31,19 +31,30 @@ export function countOccurrences(haystack, needle) {
 }
 
 // Splits document in artikel-spans op basis van "Artikel N"-koppen.
+// Bijlage-bewust: artikelen ná een "BIJLAGE N"-kop krijgen het id 'B<bijlage>.<artikel>'
+// (string), omdat bijlagen vaak een EIGEN artikelnummering hebben. Zo kan een scope-check
+// onderscheid maken tussen artikel 1 van de hoofdtekst en artikel 1 van Bijlage 1.
 export function splitArticles(doc) {
-  const re = /(^|\n)\s*Artikel\s+(\d+)\b/g
+  const re = /(^|\n)[ \t]*(?:BIJLAGE|Bijlage)\s+(\d+)\b|(^|\n)[ \t]*Artikel\s+(\d+)\b/g
   const marks = []
   let m
   while ((m = re.exec(doc)) !== null) {
-    const start = m.index + (m[1] ? m[1].length : 0)
-    marks.push({ num: Number(m[2]), start })
+    if (m[2] != null) marks.push({ type: 'bijlage', num: Number(m[2]), start: m.index + (m[1] ? m[1].length : 0) })
+    else marks.push({ type: 'artikel', num: Number(m[4]), start: m.index + (m[3] ? m[3].length : 0) })
   }
-  return marks.map((mk, i) => ({
-    num: mk.num,
-    start: mk.start,
-    end: i + 1 < marks.length ? marks[i + 1].start : doc.length,
-  }))
+  const headStarts = marks.map((mk) => mk.start)
+  const spans = []
+  let bijlage = null
+  for (const mk of marks) {
+    if (mk.type === 'bijlage') { bijlage = mk.num; continue }
+    const nextHead = headStarts.find((h) => h > mk.start)
+    spans.push({
+      num: bijlage == null ? mk.num : `B${bijlage}.${mk.num}`,
+      start: mk.start,
+      end: nextHead ?? doc.length,
+    })
+  }
+  return spans
 }
 
 export function articleAt(articles, idx) {
@@ -85,6 +96,11 @@ export function scoreSuggestion(doc, articles, s) {
 
   const replaceDiffers = normalize(replace).trim() !== find.trim() && (replace.trim().length > 0 || (s?.del && !s?.ins))
 
+  // De server (drafter-chat annotateSuggestion) markeert onplaatsbare suggesties met
+  // applicable=false en word.js slaat die over. Zo'n suggestie wordt dus NOOIT geplaatst,
+  // ook als de tekst toevallig wél in het volledige document staat (bv. na truncatie).
+  const serverRejected = s?.applicable === false
+
   if (!s?.find) issues.push('find ontbreekt')
   else {
     if (!foundStrict && !foundNorm) issues.push('find niet in document (niet toepasbaar)')
@@ -93,9 +109,10 @@ export function scoreSuggestion(doc, articles, s) {
     if (multiline) issues.push('find bevat alinea-einde (Word search matcht niet over alineas)')
     if (foundStrict && !unique) issues.push(`find komt ${countStrict}x voor (niet uniek → mogelijk verkeerde locatie)`)
     if (!replaceDiffers) issues.push('replace verschilt niet van find (geen effectieve wijziging)')
+    if (serverRejected) issues.push(`door server gemarkeerd als niet-toepasbaar${s?.findIssue ? ` (${s.findIssue})` : ''}`)
   }
 
-  const applicable = foundStrict && !tooLong && !multiline && unique
+  const applicable = !serverRejected && foundStrict && !tooLong && !multiline && unique
   return { find: s?.find ?? '', findLen, multiline, tooLong, countStrict, foundStrict, foundNorm, unique, article, replaceDiffers, applicable, issues }
 }
 
