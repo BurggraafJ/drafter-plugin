@@ -9,8 +9,20 @@
       Office.js MOET via de officiële CDN geladen worden (niet gebundeld) en VÓÓR de app-bundle.
       Buiten Word (bv. de /admin-route in een gewone browser) laadt office.js wel maar blijft
       Office.context.host null — de app detecteert dat via useOfficeReady().
+
+      LET OP: Office.js verwijdert in sommige webviews (o.a. Word voor Mac/WKWebView)
+      window.history.pushState/replaceState. BrowserRouter heeft die nodig bij het mounten —
+      zonder herstel crasht de app vóór de eerste render (leeg paneel). Daarom bewaren we de
+      functies vóór office.js laadt en zetten we ze er direct na terug.
     -->
+    <script type="text/javascript">
+      window.__historyFns = { push: window.history.pushState, replace: window.history.replaceState };
+    </script>
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <script type="text/javascript">
+      if (!window.history.pushState) window.history.pushState = window.__historyFns.push;
+      if (!window.history.replaceState) window.history.replaceState = window.__historyFns.replace;
+    </script>
   </head>
   <body>
     <div id="root"></div>
