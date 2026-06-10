@@ -56,13 +56,18 @@ Voeg een document toe aan `corpus.mjs` (met `Artikel N`-koppen) en een case aan 
 óf onderbouwde weigering, beide goed). `targets`: artikelnummers die geraakt mogen worden. `value`:
 tekst die in een `replace` moet staan. `replyMust`: één van deze termen moet in de reply staan.
 
-## Resultaat (8 jun 2026)
+## Resultaat (9 jun 2026)
 
 | | Pass | latency p50 | p95 |
 |---|---|---|---|
-| baseline (v7) | 20/30 (67%) | 13,2 s | 32,7 s |
-| na productie-hardening (v8) | **30/30 (100%)** | **8,4 s** | **20,6 s** |
+| baseline (drafter-chat v7) | 20/30 (67%) | 13,2 s | 32,7 s |
+| na productie-hardening (v8) | 30/30 (100%) | 8,4 s | 20,6 s |
+| + 5 adversariële cases (v8) | **35/35 (100%)** | 10,3 s | 24,8 s |
 
-De verbetering kwam van: striktere prompt (korte, uniek-binnen-één-alinea `find`), server-side
-verfijning (identieke kop-/staartregels wegknippen) + validatie/annotatie (`applicable`), en een
-reply-fallback. Zie de bijbehorende skill `drafter-evals` voor het volledige verhaal.
+**Eerlijk over de baseline-fails (10):** ~6 waren echte bugs — 3× lege prozatekst (→ reply-fallback),
+2× `find` met alinea-einde + 1× `find` > 255 tekens (→ niet plaatsbaar in Word; opgelost door prompt
++ server-side `trimCommonLines`/validatie). De andere ~4 waren het model dat **terecht voorzichtig**
+was bij juridisch-nietige instructies (waarborgsom > 2 mnd huur, proeftijd te lang) of een al-conforme
+clausule — die testverwachtingen zijn bijgesteld naar `policy` (edit-met-waarschuwing óf onderbouwde
+weigering, beide goed). De adversariële set (locatie-op-citaat, twee artikelen tegelijk, "overal
+vervangen", verwijdering, referentie-zonder-nummer) houdt 100%. Zie de skill `drafter-evals`.

@@ -143,4 +143,25 @@ export const CASES = [
   { id: 'zzp-30-tarief', doc: 'opdracht_zzp', category: 'value',
     question: 'Verhoog het uurtarief in artikel 3 naar € 110 exclusief btw.',
     expect: { suggestions: 'one', targets: [3], value: '110', note: 'Alleen tarief art. 3; bedragen in art. 7 NIET raken.' } },
+
+  // ── HARD / adversarieel (breedte + diepte) ────────────────────────────────
+  { id: 'h31-by-quote', doc: 'opdracht_zzp', category: 'topic',
+    question: 'Wijzig de aansprakelijkheidsbepaling: de zin die begint met "De aansprakelijkheid van Opdrachtnemer is per gebeurtenis beperkt" moet uitkomen op een maximum van € 50.000.',
+    expect: { suggestions: 'one', targets: [7], value: '50.000', note: 'Lokaliseren op inhoud (geen artikelnummer genoemd) → art. 7.' } },
+
+  { id: 'h32-multi-article', doc: 'opdracht_zzp', category: 'multi',
+    question: 'Pas het uurtarief in artikel 3 aan naar € 105 én verkort in artikel 4 de betaaltermijn naar zeven dagen.',
+    expect: { suggestions: 'some', targets: [3, 4], value: '105', note: 'Twee artikelen tegelijk; beide moeten geraakt, niets anders.' } },
+
+  { id: 'h33-broad-multi-instance', doc: 'algemene_voorwaarden', category: 'trap',
+    question: 'Wijzig overal in de algemene voorwaarden "dertig dagen" naar "veertien dagen".',
+    expect: { suggestions: 'some', targets: [3, 6], value: 'veertien dagen', note: '"dertig dagen" staat in art. 3 én art. 6; beide unieke finds, niets anders.' } },
+
+  { id: 'h34-deletion', doc: 'arbeid_bepaalde_tijd', category: 'targeted',
+    question: 'Verwijder het concurrentiebeding in artikel 7 volledig.',
+    expect: { suggestions: 'some', targets: [7], scopeStrict: true, note: 'Verwijdering (replace leeg/ingekort); alleen art. 7.' } },
+
+  { id: 'h35-ambiguous-ref', doc: 'algemene_voorwaarden', category: 'topic',
+    question: 'Maak de opzegtermijn in de opzeg-/ontbindingsbepaling drie maanden.',
+    expect: { suggestions: 'one', targets: [14], value: 'drie maanden', note: 'Geen artikelnummer → moet art. 14 vinden (niet art. 9 termijnen).' } },
 ]
