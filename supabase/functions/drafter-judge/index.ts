@@ -85,13 +85,23 @@ Deno.serve(async (req) => {
 
     const sugText = suggestions.length
       ? suggestions.map((s: any, i: number) => {
+          const tail = `\n   WHY: ${String(s.why || "").slice(0, 300)}${s.applicable === false ? "\n   (door de server gemarkeerd als niet-plaatsbaar; wordt NIET toegepast)" : ""}`
+          // Insert-suggesties voegen NIEUWE tekst toe (content + positie) — er is geen find/replace.
+          if (s.action === "insert") {
+            const p = s.position
+            const pos = p === "start" ? "begin document"
+              : p?.after ? `na """${String(p.after).slice(0, 120)}"""`
+              : p?.before ? `vóór """${String(p.before).slice(0, 120)}"""`
+              : "einde document"
+            return `${i + 1}. INVOEGING (${pos})${s.title ? ` — ${String(s.title).slice(0, 120)}` : ""}\n   NIEUWE TEKST: """${String(s.content || "").slice(0, 6000)}"""${tail}`
+          }
           const head = `${i + 1}. FIND: """${String(s.find || "").slice(0, 600)}"""`
           // Opmaak-suggesties wijzigen de TEKST niet: alleen de opmaak van de gevonden passage
           // (vet/cursief/onderstrepen/markeren/tekstkleur) — beoordeel ze ook zo.
           const body = s.action === "format"
             ? `\n   OPMAAK (tekst blijft ongewijzigd): ${JSON.stringify(s.format || {})}`
             : `\n   REPLACE: """${String(s.replace || "").slice(0, 600)}"""`
-          return `${head}${body}\n   WHY: ${String(s.why || "").slice(0, 300)}${s.applicable === false ? "\n   (door de server gemarkeerd als niet-plaatsbaar; wordt NIET toegepast)" : ""}`
+          return `${head}${body}${tail}`
         }).join("\n")
       : "(geen wijzigingsvoorstellen)"
 
@@ -111,7 +121,7 @@ ANTWOORD VAN DE ASSISTENT (toelichting):
 WIJZIGINGSVOORSTELLEN VAN DE ASSISTENT:
 ${sugText}${clarifyText}`
 
-    const system = `Je bent een zeer ervaren Nederlandse jurist (15+ jaar contractenrecht) die de output van een juridische AI-assistent streng en onafhankelijk beoordeelt. De assistent helpt juristen in Microsoft Word: hij geeft een toelichting en stelt wijzigingen voor — tekstwijzigingen (find → replace) of opmaak-wijzigingen (find + opmaak zoals vet/markeren; de tekst zelf blijft dan ongewijzigd) — die als Track Changes worden geplaatst. Bij een écht ambigue instructie mag de assistent in plaats daarvan verduidelijkingsvragen stellen (CLARIFY); beoordeel dan of vragen hier de juiste keuze was (was de instructie werkelijk niet uitvoerbaar zonder keuze?) en of de vragen scherp en relevant zijn. Een opmaak-voorstel of een terechte verduidelijkingsvraag is GEEN gebrek.
+    const system = `Je bent een zeer ervaren Nederlandse jurist (15+ jaar contractenrecht) die de output van een juridische AI-assistent streng en onafhankelijk beoordeelt. De assistent helpt juristen in Microsoft Word: hij geeft een toelichting en stelt wijzigingen voor — tekstwijzigingen (find → replace), opmaak-wijzigingen (find + opmaak zoals vet/markeren; de tekst zelf blijft dan ongewijzigd) of INVOEGINGEN van nieuwe tekst (een nieuw beding of een compleet nieuw document op een aangegeven positie; er is dan bewust geen find/replace — beoordeel de NIEUWE TEKST inhoudelijk) — die als Track Changes worden geplaatst. Bij een écht ambigue instructie mag de assistent in plaats daarvan verduidelijkingsvragen stellen (CLARIFY); beoordeel dan of vragen hier de juiste keuze was (was de instructie werkelijk niet uitvoerbaar zonder keuze?) en of de vragen scherp en relevant zijn. Een opmaak-voorstel, een invoeging of een terechte verduidelijkingsvraag is GEEN gebrek.
 
 Beoordeel UITSLUITEND de juridisch-inhoudelijke kwaliteit volgens deze rubric. Geef per dimensie een score 0, 1 of 2 (of "nvt" als de dimensie niet van toepassing is):
 

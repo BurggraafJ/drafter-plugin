@@ -135,6 +135,8 @@ async function callJudge(c, chatResponse) {
     suggestions: (chatResponse?.suggestions || []).map((s) => ({
       find: s.find, replace: s.replace, why: s.why, applicable: s.applicable !== false,
       action: s.action, format: s.format,
+      // Insert-suggesties dragen hun tekst in content (+ position/title), niet in find/replace.
+      content: s.content, position: s.position, title: s.title,
     })),
     ...(chatResponse?.clarify ? { clarify: chatResponse.clarify } : {}),
     ...(JUDGE_MODEL ? { model: JUDGE_MODEL } : {}),

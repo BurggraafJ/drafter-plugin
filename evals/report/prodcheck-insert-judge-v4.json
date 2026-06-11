@@ -1,0 +1,223 @@
+{
+  "stamp": {
+    "tag": "prodcheck-insert-judge-v4",
+    "base": "https://pwpoqyhzkzwuridlzwzr.supabase.co/functions/v1",
+    "profile": "default",
+    "model": null,
+    "cases": 2,
+    "repeat": 1,
+    "passed": 2,
+    "flaky": 0,
+    "elapsedSec": 51.9,
+    "p50": 33996,
+    "p95": 33996,
+    "byCat": {
+      "add": {
+        "pass": 2,
+        "total": 2
+      }
+    },
+    "byMode": {
+      "insert-nieuw-document": {
+        "pass": 2,
+        "total": 2
+      }
+    },
+    "judge": {
+      "avg": 93,
+      "count": 2,
+      "errors": 0,
+      "verdicts": {
+        "pass": 2
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "ins-98-leeg-document",
+      "category": "add",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [],
+      "touched": [],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "",
+          "findLen": 0,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 0,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": null,
+          "isInsert": true,
+          "content": "GEHEIMHOUDINGSOVEREENKOMST\n\nDe ondergetekenden:\n\n1. [naam onderneming 1], statutair gevestigd te [plaats], kantoorhoudende te [adres], ingeschreven in het handelsregister onder nummer [KvK-nummer], rechtsgeldig vertegenwoordigd door [naam], hierna te noemen: “Partij 1”; en\n\n2. [naam onderneming 2], statutair gevestigd te [plaats], kantoorhoudende te [adres], ingeschreven in het handelsregister onder nummer [KvK-nummer], rechtsgeldig vertegenwoordigd door [naam], hierna te noemen: “Partij 2”;\n\nPartij 1 en Partij 2 hierna afzonderlijk te noemen: “Partij” en gezamenlijk: “Partijen”.\n\nArtikel 1 — Doel\nPartijen zijn voornemens met elkaar overleg te voeren over [omschrijving doel/samenwerking]. In dat kader kunnen Partijen vertrouwelijke informatie aan elkaar verstrekken. Deze overeenkomst regelt de geheimhouding van die informatie.\n\nArtikel 2 — Vertrouwelijke informatie\nOnder “Vertrouwelijke Informatie” wordt verstaan alle informatie die een Partij aan de andere Partij verstrekt, ongeacht de vorm waarin die informatie wordt verstrekt, voor zover deze informatie als vertrouwelijk is aangeduid of de ontvangende Partij redelijkerwijs moet begrijpen dat deze vertrouwelijk is.\n\nArtikel 3 — Geheimhouding en gebruik\nDe ontvangende Partij zal de Vertrouwelijke Informatie strikt vertrouwelijk behandelen en uitsluitend gebruiken voor het in artikel 1 genoemde doel. De ontvangende Partij zal de Vertrouwelijke Informatie niet aan derden verstrekken zonder voorafgaande schriftelijke toestemming van de verstrekkende Partij.\n\nArtikel 4 — Uitzonderingen\nDe geheimhoudingsverplichting geldt niet voor informatie waarvan de ontvangende Partij kan aantonen dat deze: a. reeds rechtmatig bij haar bekend was vóór ontvangst; b. algemeen bekend is of wordt zonder schending van deze overeenkomst; c. rechtmatig van een derde is verkregen zonder geheimhoudingsverplichting; of d. op grond van wet- of regelgeving, een rechterlijke uitspraak of een bindend besluit van een bevoegde autoriteit moet worden verstrekt, mits de ontvangende Partij de verstrekkende Partij, voor zover toegestaan, vooraf informeert.\n\nArtikel 5 — Medewerkers en adviseurs\nDe ontvangende Partij mag Vertrouwelijke Informatie uitsluitend delen met haar bestuurders, werknemers, groepsmaatschappijen en professionele adviseurs voor zover dit noodzakelijk is voor het in artikel 1 genoemde doel. De ontvangende Partij zorgt ervoor dat deze personen of partijen gebonden zijn aan een passende geheimhoudingsverplichting.\n\nArtikel 6 — Eigendom en teruggave\nAlle Vertrouwelijke Informatie blijft eigendom van de verstrekkende Partij. Op eerste verzoek van de verstrekkende Partij zal de ontvangende Partij de Vertrouwelijke Informatie retourneren of vernietigen, voor zover bewaring niet verplicht is op grond van wet- of regelgeving of interne complianceverplichtingen.\n\nArtikel 7 — Duur\nDeze overeenkomst treedt in werking op de datum van ondertekening en geldt voor de duur van [aantal] jaar. De geheimhoudingsverplichtingen blijven gedurende [aantal] jaar na beëindiging van deze overeenkomst van kracht.\n\nArtikel 8 — Geen verplichting tot samenwerking\nDeze overeenkomst verplicht Partijen niet om een nadere overeenkomst aan te gaan of een samenwerking tot stand te brengen.\n\nArtikel 9 — Toepasselijk recht en bevoegde rechter\nOp deze overeenkomst is Nederlands recht van toepassing. Geschillen die voortvloeien uit of verband houden met deze overeenkomst worden voorgelegd aan de bevoegde rechter van de rechtbank [plaats], tenzij dwingend recht anders voorschrijft.\n\nAldus overeengekomen en in tweevoud ondertekend.\n\nPlaats: [plaats]\nDatum: [datum]\n\nVoor Partij 1:\n\nNaam: [naam]\nFunctie: [functie]\nHandtekening: ______________________\n\nVoor Partij 2:\n\nNaam: [naam]\nFunctie: [functie]\nHandtekening: ______________________",
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "insert-nieuw-document",
+      "attempt": 0,
+      "ms": 33996,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel hieronder een beknopte wederzijdse geheimhoudingsovereenkomst voor tussen twee ondernemingen. Omdat het document leeg is, plaats ik de tekst als nieuwe invoeging aan het einde van het document.",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "action": "insert",
+          "position": "end",
+          "title": "Beknopte geheimhoudingsovereenkomst",
+          "content": "GEHEIMHOUDINGSOVEREENKOMST\n\nDe ondergetekenden:\n\n1. [naam onderneming 1], statutair gevestigd te [plaats], kantoorhoudende te [adres], ingeschreven in het handelsregister onder nummer [KvK-nummer], rechtsgeldig vertegenwoordigd door [naam], hierna te noemen: “Partij 1”; en\n\n2. [naam onderneming 2], statutair gevestigd te [plaats], kantoorhoudende te [adres], ingeschreven in het handelsregister onder nummer [KvK-nummer], rechtsgeldig vertegenwoordigd door [naam], hierna te noemen: “Partij 2”;\n\nPartij 1 en Partij 2 hierna afzonderlijk te noemen: “Partij” en gezamenlijk: “Partijen”.\n\nArtikel 1 — Doel\nPartijen zijn voornemens met elkaar overleg te voeren over [omschrijving doel/samenwerking]. In dat kader kunnen Partijen vertrouwelijke informatie aan elkaar verstrekken. Deze overeenkomst regelt de geheimhouding van die informatie.\n\nArtikel 2 — Vertrouwelijke informatie\nOnder “Vertrouwelijke Informatie” wordt verstaan alle informatie die een Partij aan de andere Partij verstrekt, ongeacht de vorm waarin die informatie wordt verstrekt, voor zover deze informatie als vertrouwelijk is aangeduid of de ontvangende Partij redelijkerwijs moet begrijpen dat deze vertrouwelijk is.\n\nArtikel 3 — Geheimhouding en gebruik\nDe ontvangende Partij zal de Vertrouwelijke Informatie strikt vertrouwelijk behandelen en uitsluitend gebruiken voor het in artikel 1 genoemde doel. De ontvangende Partij zal de Vertrouwelijke Informatie niet aan derden verstrekken zonder voorafgaande schriftelijke toestemming van de verstrekkende Partij.\n\nArtikel 4 — Uitzonderingen\nDe geheimhoudingsverplichting geldt niet voor informatie waarvan de ontvangende Partij kan aantonen dat deze: a. reeds rechtmatig bij haar bekend was vóór ontvangst; b. algemeen bekend is of wordt zonder schending van deze overeenkomst; c. rechtmatig van een derde is verkregen zonder geheimhoudingsverplichting; of d. op grond van wet- of regelgeving, een rechterlijke uitspraak of een bindend besluit van een bevoegde autoriteit moet worden verstrekt, mits de ontvangende Partij de verstrekkende Partij, voor zover toegestaan, vooraf informeert.\n\nArtikel 5 — Medewerkers en adviseurs\nDe ontvangende Partij mag Vertrouwelijke Informatie uitsluitend delen met haar bestuurders, werknemers, groepsmaatschappijen en professionele adviseurs voor zover dit noodzakelijk is voor het in artikel 1 genoemde doel. De ontvangende Partij zorgt ervoor dat deze personen of partijen gebonden zijn aan een passende geheimhoudingsverplichting.\n\nArtikel 6 — Eigendom en teruggave\nAlle Vertrouwelijke Informatie blijft eigendom van de verstrekkende Partij. Op eerste verzoek van de verstrekkende Partij zal de ontvangende Partij de Vertrouwelijke Informatie retourneren of vernietigen, voor zover bewaring niet verplicht is op grond van wet- of regelgeving of interne complianceverplichtingen.\n\nArtikel 7 — Duur\nDeze overeenkomst treedt in werking op de datum van ondertekening en geldt voor de duur van [aantal] jaar. De geheimhoudingsverplichtingen blijven gedurende [aantal] jaar na beëindiging van deze overeenkomst van kracht.\n\nArtikel 8 — Geen verplichting tot samenwerking\nDeze overeenkomst verplicht Partijen niet om een nadere overeenkomst aan te gaan of een samenwerking tot stand te brengen.\n\nArtikel 9 — Toepasselijk recht en bevoegde rechter\nOp deze overeenkomst is Nederlands recht van toepassing. Geschillen die voortvloeien uit of verband houden met deze overeenkomst worden voorgelegd aan de bevoegde rechter van de rechtbank [plaats], tenzij dwingend recht anders voorschrijft.\n\nAldus overeengekomen en in tweevoud ondertekend.\n\nPlaats: [plaats]\nDatum: [datum]\n\nVoor Partij 1:\n\nNaam: [naam]\nFunctie: [functie]\nHandtekening: ______________________\n\nVoor Partij 2:\n\nNaam: [naam]\nFunctie: [functie]\nHandtekening: ______________________",
+          "why": "De overeenkomst bevat de kernbepalingen voor een wederzijdse NDA tussen ondernemingen: doel, definitie van vertrouwelijke informatie, gebruiksbeperking, uitzonderingen, duur, teruggave en forumkeuze.",
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [],
+      "judge": {
+        "scores": {
+          "legal_accuracy": 1,
+          "guardrail": "nvt",
+          "completeness": 2,
+          "scope_fidelity": 2,
+          "clarity": 2,
+          "refusal_balance": 2
+        },
+        "weighted100": 85,
+        "verdict": "pass",
+        "issues": [
+          "Artikel 6 stelt dat alle Vertrouwelijke Informatie eigendom blijft van de verstrekkende partij; naar Nederlands recht is informatie als zodanig niet zonder meer vatbaar voor eigendom, zodat formulering juridisch onnauwkeurig is.",
+          "Forumkeuze met placeholder 'rechtbank [plaats]' is praktisch bruikbaar, maar moet worden ingevuld als bevoegde rechtbank/locatie en binnen de grenzen van art. 108 Rv."
+        ],
+        "rationale": "De overeenkomst dekt de kern van een wederzijdse NDA tussen ondernemingen en blijft binnen de gevraagde scope door een nieuwe tekst in een leeg document in te voegen. Juridisch is de tekst grotendeels juist, maar bevat zij een relevante onnauwkeurigheid over eigendom van informatie en een wat onzuivere forumkeuzeformulering. Er was geen reden om te weigeren of om nadere vragen te stellen.",
+        "model": "gpt-5.5"
+      },
+      "passCount": 1,
+      "attemptCount": 1
+    },
+    {
+      "id": "ins-99-nieuw-artikel",
+      "category": "add",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [],
+      "touched": [
+        10
+      ],
+      "suggestionCount": 2,
+      "applicableCount": 2,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "",
+          "findLen": 0,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 0,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 10,
+          "isInsert": true,
+          "content": "Artikel 10 — Mediation\nPartijen spannen zich in om geschillen die voortvloeien uit of verband houden met deze overeenkomst eerst in onderling overleg op te lossen. Indien dat overleg niet binnen dertig dagen tot een oplossing leidt, zullen partijen het geschil voorleggen aan een onafhankelijke mediator, tenzij een partij naar redelijkheid meent dat mediation geen passend middel is. Deelname aan mediation laat onverlet het recht van partijen om voorlopige of bewarende maatregelen te treffen of een vordering aan de bevoegde rechter voor te leggen.",
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        },
+        {
+          "find": "Artikel 10 — Toepasselijk recht",
+          "findLen": 31,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 10,
+          "isFormat": false,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "insert-nieuw-document",
+      "attempt": 0,
+      "ms": 15321,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor een nieuw mediationartikel in te voegen direct vóór het huidige artikel over toepasselijk recht. Omdat daardoor de nummering opschuift, hernummer ik het huidige artikel 10 naar artikel 11. Er zijn geen verwijzingen elders in het document die moeten worden aangepast.",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 10",
+          "action": "insert",
+          "position": {
+            "before": "Artikel 10 — Toepasselijk recht"
+          },
+          "title": "Nieuw artikel over mediation",
+          "content": "Artikel 10 — Mediation\nPartijen spannen zich in om geschillen die voortvloeien uit of verband houden met deze overeenkomst eerst in onderling overleg op te lossen. Indien dat overleg niet binnen dertig dagen tot een oplossing leidt, zullen partijen het geschil voorleggen aan een onafhankelijke mediator, tenzij een partij naar redelijkheid meent dat mediation geen passend middel is. Deelname aan mediation laat onverlet het recht van partijen om voorlopige of bewarende maatregelen te treffen of een vordering aan de bevoegde rechter voor te leggen.",
+          "why": "Voegt een contractuele escalatiestap toe voor mediation, zonder de toegang tot de rechter of spoedeisende maatregelen uit te sluiten.",
+          "applicable": true,
+          "findIssue": null
+        },
+        {
+          "ref": "Artikel 10",
+          "title": "Hernummering toepasselijk recht",
+          "find": "Artikel 10 — Toepasselijk recht",
+          "replace": "Artikel 11 — Toepasselijk recht",
+          "why": "Door invoeging van een nieuw artikel vóór het artikel over toepasselijk recht moet de bestaande bepaling worden hernummerd.",
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [],
+      "judge": {
+        "scores": {
+          "legal_accuracy": 2,
+          "guardrail": "nvt",
+          "completeness": 2,
+          "scope_fidelity": 2,
+          "clarity": 2,
+          "refusal_balance": 2
+        },
+        "weighted100": 100,
+        "verdict": "pass",
+        "issues": [],
+        "rationale": "Het voorgestelde mediationbeding is juridisch aanvaardbaar naar Nederlands recht en waarborgt terecht dat toegang tot de rechter en voorlopige of bewarende maatregelen niet worden uitgesloten. De assistent voert de instructie volledig uit door het artikel direct vóór het toepasselijk-rechtartikel in te voegen en de nummering logisch aan te passen. De toelichting is helder en blijft binnen de gevraagde scope.",
+        "model": "gpt-5.5"
+      },
+      "passCount": 1,
+      "attemptCount": 1
+    }
+  ]
+}

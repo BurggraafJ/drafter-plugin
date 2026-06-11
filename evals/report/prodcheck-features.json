@@ -1,0 +1,307 @@
+{
+  "stamp": {
+    "tag": "prodcheck-features",
+    "base": "https://pwpoqyhzkzwuridlzwzr.supabase.co/functions/v1",
+    "profile": "default",
+    "model": null,
+    "cases": 3,
+    "repeat": 1,
+    "passed": 3,
+    "flaky": 0,
+    "elapsedSec": 50,
+    "p50": 9123,
+    "p95": 40309,
+    "byCat": {
+      "add": {
+        "pass": 2,
+        "total": 2
+      },
+      "targeted": {
+        "pass": 1,
+        "total": 1
+      }
+    },
+    "byMode": {
+      "opmaak-actie": {
+        "pass": 1,
+        "total": 1
+      },
+      "verduidelijking": {
+        "pass": 1,
+        "total": 1
+      },
+      "insert-nieuw-document": {
+        "pass": 1,
+        "total": 1
+      }
+    },
+    "judge": {
+      "avg": 80,
+      "count": 3,
+      "errors": 0,
+      "verdicts": {
+        "pass": 2,
+        "fail": 1
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "cap-86-vet",
+      "category": "add",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        3
+      ],
+      "touched": [
+        3
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "€ 18.000 bruto",
+          "findLen": 14,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 3,
+          "isFormat": true,
+          "format": {
+            "bold": true
+          },
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "opmaak-actie",
+      "attempt": 0,
+      "ms": 6045,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor om uitsluitend het bedrag van de beëindigingsvergoeding in artikel 3 vetgedrukt te maken. Dit is een opmaaksuggestie en wijzigt de inhoud van de bepaling niet.",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 3",
+          "title": "Bedrag beëindigingsvergoeding vetgedrukt",
+          "find": "€ 18.000 bruto",
+          "action": "format",
+          "format": {
+            "bold": true
+          },
+          "why": "Het bedrag van de beëindigingsvergoeding wordt conform instructie visueel benadrukt zonder inhoudelijke wijziging.",
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [],
+      "judge": {
+        "scores": {
+          "legal_accuracy": 2,
+          "guardrail": "nvt",
+          "completeness": 2,
+          "scope_fidelity": 2,
+          "clarity": 2,
+          "refusal_balance": 2
+        },
+        "weighted100": 100,
+        "verdict": "pass",
+        "issues": [],
+        "rationale": "De assistent voert de instructie exact uit door uitsluitend het bedrag van de beëindigingsvergoeding in artikel 3 vet te maken. Het voorstel is terecht als opmaakwijziging geformuleerd en wijzigt de tekst inhoudelijk niet. Er zijn geen juridische risico’s of ontbrekende onderdelen.",
+        "model": "gpt-5.5"
+      },
+      "passCount": 1,
+      "attemptCount": 1
+    },
+    {
+      "id": "clr-97-redelijke-default",
+      "category": "targeted",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        6
+      ],
+      "touched": [
+        6
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "€ 10.000 per overtreding",
+          "findLen": 24,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 6,
+          "isFormat": false,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "verduidelijking",
+      "attempt": 0,
+      "ms": 9123,
+      "status": 200,
+      "error": null,
+      "reply": "Ik ga ervan uit dat “wat hoger” betekent: verhogen van € 10.000 naar € 25.000 per overtreding. Dit blijft een boetebeding in de zin van art. 6:91 BW; de rechter kan een buitensporige boete onder omstandigheden matigen op grond van art. 6:94 BW.",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 6",
+          "title": "Boete verhogen",
+          "find": "€ 10.000 per overtreding",
+          "replace": "€ 25.000 per overtreding",
+          "why": "Verhoogt de contractuele boete zonder de systematiek van het boetebeding te wijzigen. Een boete kan onder omstandigheden door de rechter worden gematigd.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 6, artikelen 6:91 en 6:94",
+          "meta": "Boetebeding en rechterlijke matiging",
+          "url": "https://wetten.overheid.nl/BWBR0005289/Boek6/Titeldeel1/Afdeling9/Artikel91"
+        }
+      ],
+      "judge": {
+        "scores": {
+          "legal_accuracy": 2,
+          "guardrail": 2,
+          "completeness": 2,
+          "scope_fidelity": 2,
+          "clarity": 2,
+          "refusal_balance": 2
+        },
+        "weighted100": 100,
+        "verdict": "pass",
+        "issues": [],
+        "rationale": "De assistent verhoogt uitsluitend het boetebedrag en benoemt correct dat sprake is van een boetebeding in de zin van art. 6:91 BW en dat matiging op grond van art. 6:94 BW mogelijk is. De waarschuwing voor mogelijke matiging is passend bij het verhogen van een contractuele boete. De gekozen verhoging naar € 25.000 is commercieel arbitrair, maar wordt expliciet als aanname gepresenteerd en blijft binnen de gevraagde wijziging.",
+        "model": "gpt-5.5"
+      },
+      "passCount": 1,
+      "attemptCount": 1
+    },
+    {
+      "id": "ins-98-leeg-document",
+      "category": "add",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [],
+      "touched": [],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "",
+          "findLen": 0,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 0,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": null,
+          "isInsert": true,
+          "content": "GEHEIMHOUDINGSOVEREENKOMST\n\nPartijen:\n\n1. [naam onderneming 1], gevestigd te [plaats], ingeschreven in het handelsregister onder nummer [KvK-nummer], rechtsgeldig vertegenwoordigd door [naam], hierna: “Partij A”; en\n\n2. [naam onderneming 2], gevestigd te [plaats], ingeschreven in het handelsregister onder nummer [KvK-nummer], rechtsgeldig vertegenwoordigd door [naam], hierna: “Partij B”.\n\nPartij A en Partij B worden hierna gezamenlijk aangeduid als “Partijen” en ieder afzonderlijk als “Partij”.\n\nArtikel 1 — Doel\nPartijen wensen vertrouwelijke informatie met elkaar te delen in verband met [omschrijving doel, bijvoorbeeld: het onderzoeken van een mogelijke samenwerking]. Deze overeenkomst regelt de voorwaarden waaronder die informatie wordt verstrekt en gebruikt.\n\nArtikel 2 — Vertrouwelijke informatie\nOnder “Vertrouwelijke Informatie” wordt verstaan alle informatie die een Partij direct of indirect aan de andere Partij verstrekt en die als vertrouwelijk is aangeduid of waarvan de ontvangende Partij redelijkerwijs behoort te begrijpen dat deze vertrouwelijk is. Hieronder vallen in ieder geval commerciële, financiële, technische, juridische en strategische informatie, ongeacht de vorm waarin deze wordt verstrekt.\n\nArtikel 3 — Geheimhouding en gebruik\nDe ontvangende Partij zal de Vertrouwelijke Informatie strikt vertrouwelijk behandelen en uitsluitend gebruiken voor het in artikel 1 genoemde doel. De ontvangende Partij zal de Vertrouwelijke Informatie niet zonder voorafgaande schriftelijke toestemming van de verstrekkende Partij aan derden bekendmaken.\n\nArtikel 4 — Toegang binnen de organisatie\nDe ontvangende Partij mag Vertrouwelijke Informatie alleen delen met haar bestuurders, werknemers, adviseurs of groepsmaatschappijen voor zover dit noodzakelijk is voor het in artikel 1 genoemde doel. De ontvangende Partij zorgt ervoor dat deze personen of partijen aan een geheimhoudingsverplichting zijn gebonden die ten minste gelijkwaardig is aan de verplichtingen uit deze overeenkomst.\n\nArtikel 5 — Uitzonderingen\nDe verplichtingen uit deze overeenkomst gelden niet voor informatie waarvan de ontvangende Partij kan aantonen dat deze: a. reeds rechtmatig bij haar bekend was zonder geheimhoudingsverplichting; b. algemeen bekend is of wordt zonder schending van deze overeenkomst; c. rechtmatig van een derde is verkregen zonder geheimhoudingsverplichting; of d. onafhankelijk door de ontvangende Partij is ontwikkeld zonder gebruik van de Vertrouwelijke Informatie.\n\nArtikel 6 — Wettelijke verplichting tot openbaarmaking\nIndien de ontvangende Partij op grond van wet- of regelgeving, een rechterlijke uitspraak of een bindend bevel van een bevoegde autoriteit verplicht is Vertrouwelijke Informatie openbaar te maken, zal zij de verstrekkende Partij, voor zover wettelijk toegestaan, vooraf schriftelijk informeren. De ontvangende Partij zal de openbaarmaking beperken tot hetgeen strikt noodzakelijk is.\n\nArtikel 7 — Teruggave en vernietiging\nOp eerste schriftelijk verzoek van de verstrekkende Partij zal de ontvangende Partij de Vertrouwelijke Informatie en alle kopieën daarvan teruggeven of vernietigen, tenzij bewaring wettelijk verplicht is of redelijkerwijs noodzakelijk is voor bewijsdoeleinden. De geheimhoudingsverplichtingen blijven ook na teruggave of vernietiging van kracht.\n\nArtikel 8 — Duur\nDeze overeenkomst treedt in werking op de datum van ondertekening door beide Partijen en geldt voor een periode van [aantal] jaar. De verplichtingen tot geheimhouding blijven gedurende [aantal] jaar na het einde van deze overeenkomst van kracht.\n\nArtikel 9 — Geen overdracht van rechten\nNiets in deze overeenkomst strekt tot overdracht of verlening van intellectuele eigendomsrechten of andere rechten op de Vertrouwelijke Informatie. Alle rechten blijven berusten bij de Partij die de betreffende informatie verstrekt of bij de rechthebbende derde.\n\nArtikel 10 — Toepasselijk recht en bevoegde rechter\nOp deze overeenkomst is Nederlands recht van toepassing. Geschillen die voortvloeien uit of verband houden met deze overeenkomst worden voorgelegd aan de bevoegde rechter van de rechtbank [plaats rechtbank], tenzij dwingend recht anders voorschrijft.\n\nAldus overeengekomen en in tweevoud ondertekend.\n\nPlaats: [plaats]\nDatum: [datum]\n\nVoor Partij A:\n\nNaam: [naam]\nFunctie: [functie]\nHandtekening: _________________________\n\nVoor Partij B:\n\nNaam: [naam]\nFunctie: [functie]\nHandtekening: _________________________",
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "insert-nieuw-document",
+      "attempt": 0,
+      "ms": 40309,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel hieronder een beknopte wederzijdse geheimhoudingsovereenkomst voor tussen twee ondernemingen. De tekst bevat kernbepalingen over vertrouwelijke informatie, toegestane openbaarmaking, duur, teruggave/vernietiging en toepasselijk recht, en is via een invoegsuggestie aan het lege document toe te voegen.",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 1",
+          "action": "insert",
+          "position": "end",
+          "title": "Beknopte geheimhoudingsovereenkomst",
+          "content": "GEHEIMHOUDINGSOVEREENKOMST\n\nPartijen:\n\n1. [naam onderneming 1], gevestigd te [plaats], ingeschreven in het handelsregister onder nummer [KvK-nummer], rechtsgeldig vertegenwoordigd door [naam], hierna: “Partij A”; en\n\n2. [naam onderneming 2], gevestigd te [plaats], ingeschreven in het handelsregister onder nummer [KvK-nummer], rechtsgeldig vertegenwoordigd door [naam], hierna: “Partij B”.\n\nPartij A en Partij B worden hierna gezamenlijk aangeduid als “Partijen” en ieder afzonderlijk als “Partij”.\n\nArtikel 1 — Doel\nPartijen wensen vertrouwelijke informatie met elkaar te delen in verband met [omschrijving doel, bijvoorbeeld: het onderzoeken van een mogelijke samenwerking]. Deze overeenkomst regelt de voorwaarden waaronder die informatie wordt verstrekt en gebruikt.\n\nArtikel 2 — Vertrouwelijke informatie\nOnder “Vertrouwelijke Informatie” wordt verstaan alle informatie die een Partij direct of indirect aan de andere Partij verstrekt en die als vertrouwelijk is aangeduid of waarvan de ontvangende Partij redelijkerwijs behoort te begrijpen dat deze vertrouwelijk is. Hieronder vallen in ieder geval commerciële, financiële, technische, juridische en strategische informatie, ongeacht de vorm waarin deze wordt verstrekt.\n\nArtikel 3 — Geheimhouding en gebruik\nDe ontvangende Partij zal de Vertrouwelijke Informatie strikt vertrouwelijk behandelen en uitsluitend gebruiken voor het in artikel 1 genoemde doel. De ontvangende Partij zal de Vertrouwelijke Informatie niet zonder voorafgaande schriftelijke toestemming van de verstrekkende Partij aan derden bekendmaken.\n\nArtikel 4 — Toegang binnen de organisatie\nDe ontvangende Partij mag Vertrouwelijke Informatie alleen delen met haar bestuurders, werknemers, adviseurs of groepsmaatschappijen voor zover dit noodzakelijk is voor het in artikel 1 genoemde doel. De ontvangende Partij zorgt ervoor dat deze personen of partijen aan een geheimhoudingsverplichting zijn gebonden die ten minste gelijkwaardig is aan de verplichtingen uit deze overeenkomst.\n\nArtikel 5 — Uitzonderingen\nDe verplichtingen uit deze overeenkomst gelden niet voor informatie waarvan de ontvangende Partij kan aantonen dat deze: a. reeds rechtmatig bij haar bekend was zonder geheimhoudingsverplichting; b. algemeen bekend is of wordt zonder schending van deze overeenkomst; c. rechtmatig van een derde is verkregen zonder geheimhoudingsverplichting; of d. onafhankelijk door de ontvangende Partij is ontwikkeld zonder gebruik van de Vertrouwelijke Informatie.\n\nArtikel 6 — Wettelijke verplichting tot openbaarmaking\nIndien de ontvangende Partij op grond van wet- of regelgeving, een rechterlijke uitspraak of een bindend bevel van een bevoegde autoriteit verplicht is Vertrouwelijke Informatie openbaar te maken, zal zij de verstrekkende Partij, voor zover wettelijk toegestaan, vooraf schriftelijk informeren. De ontvangende Partij zal de openbaarmaking beperken tot hetgeen strikt noodzakelijk is.\n\nArtikel 7 — Teruggave en vernietiging\nOp eerste schriftelijk verzoek van de verstrekkende Partij zal de ontvangende Partij de Vertrouwelijke Informatie en alle kopieën daarvan teruggeven of vernietigen, tenzij bewaring wettelijk verplicht is of redelijkerwijs noodzakelijk is voor bewijsdoeleinden. De geheimhoudingsverplichtingen blijven ook na teruggave of vernietiging van kracht.\n\nArtikel 8 — Duur\nDeze overeenkomst treedt in werking op de datum van ondertekening door beide Partijen en geldt voor een periode van [aantal] jaar. De verplichtingen tot geheimhouding blijven gedurende [aantal] jaar na het einde van deze overeenkomst van kracht.\n\nArtikel 9 — Geen overdracht van rechten\nNiets in deze overeenkomst strekt tot overdracht of verlening van intellectuele eigendomsrechten of andere rechten op de Vertrouwelijke Informatie. Alle rechten blijven berusten bij de Partij die de betreffende informatie verstrekt of bij de rechthebbende derde.\n\nArtikel 10 — Toepasselijk recht en bevoegde rechter\nOp deze overeenkomst is Nederlands recht van toepassing. Geschillen die voortvloeien uit of verband houden met deze overeenkomst worden voorgelegd aan de bevoegde rechter van de rechtbank [plaats rechtbank], tenzij dwingend recht anders voorschrijft.\n\nAldus overeengekomen en in tweevoud ondertekend.\n\nPlaats: [plaats]\nDatum: [datum]\n\nVoor Partij A:\n\nNaam: [naam]\nFunctie: [functie]\nHandtekening: _________________________\n\nVoor Partij B:\n\nNaam: [naam]\nFunctie: [functie]\nHandtekening: _________________________",
+          "why": "De overeenkomst bevat de gebruikelijke kernbepalingen voor een wederzijdse geheimhoudingsovereenkomst tussen ondernemingen.",
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [],
+      "judge": {
+        "scores": {
+          "legal_accuracy": 1,
+          "guardrail": "nvt",
+          "completeness": 0,
+          "scope_fidelity": 0,
+          "clarity": 1,
+          "refusal_balance": 0
+        },
+        "weighted100": 40,
+        "verdict": "fail",
+        "issues": [
+          "Er is geen tekst van een geheimhoudingsovereenkomst opgenomen; de REPLACE is leeg.",
+          "De instructie om een beknopte NDA in het document te zetten is niet uitgevoerd.",
+          "De toelichting stelt ten onrechte dat kernbepalingen zijn opgenomen, terwijl die ontbreken."
+        ],
+        "rationale": "De assistent had een concrete wederzijdse geheimhoudingsovereenkomst moeten invoegen, maar het wijzigingsvoorstel bevat geen tekst. Daardoor ontbreken alle juridisch noodzakelijke onderdelen zoals definitie van vertrouwelijke informatie, verplichtingen, uitzonderingen, duur en toepasselijk recht. De toelichting is misleidend omdat zij suggereert dat de overeenkomst wel is toegevoegd.",
+        "model": "gpt-5.5"
+      },
+      "passCount": 1,
+      "attemptCount": 1
+    }
+  ]
+}

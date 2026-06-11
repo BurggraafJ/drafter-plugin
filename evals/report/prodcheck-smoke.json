@@ -1,0 +1,433 @@
+{
+  "stamp": {
+    "tag": "prodcheck-smoke",
+    "base": "https://pwpoqyhzkzwuridlzwzr.supabase.co/functions/v1",
+    "profile": "default",
+    "model": null,
+    "cases": 5,
+    "repeat": 1,
+    "passed": 5,
+    "flaky": 0,
+    "elapsedSec": 18.4,
+    "p50": 14518,
+    "p95": 18381,
+    "byCat": {
+      "value": {
+        "pass": 1,
+        "total": 1
+      },
+      "legal": {
+        "pass": 2,
+        "total": 2
+      },
+      "add": {
+        "pass": 1,
+        "total": 1
+      },
+      "targeted": {
+        "pass": 1,
+        "total": 1
+      }
+    },
+    "byMode": {
+      "waarde": {
+        "pass": 1,
+        "total": 1
+      },
+      "dwingend-recht": {
+        "pass": 1,
+        "total": 1
+      },
+      "toevoeging-scope": {
+        "pass": 1,
+        "total": 1
+      },
+      "juridische-volledigheid": {
+        "pass": 1,
+        "total": 1
+      },
+      "scope-precisie": {
+        "pass": 1,
+        "total": 1
+      }
+    },
+    "judge": null
+  },
+  "results": [
+    {
+      "id": "arb-01-salaris",
+      "category": "value",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        5
+      ],
+      "touched": [
+        5
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Het brutosalaris bedraagt € 2.800 per maand",
+          "findLen": 43,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 5,
+          "isFormat": false,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "waarde",
+      "attempt": 0,
+      "ms": 8788,
+      "status": 200,
+      "error": null,
+      "reply": "Ik pas artikel 5 aan door uitsluitend het genoemde brutosalaris te verhogen naar € 3.100 per maand. Dit is een feitelijke wijziging van de loonafspraak; let erop dat het overeengekomen loon ten minste moet voldoen aan de Wet minimumloon en minimumvakantiebijslag.",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 5",
+          "title": "Brutosalaris verhogen",
+          "find": "Het brutosalaris bedraagt € 2.800 per maand",
+          "replace": "Het brutosalaris bedraagt € 3.100 per maand",
+          "why": "Past de overeengekomen loonafspraak aan conform de instructie; loonafspraken moeten ten minste voldoen aan de wettelijke minimumloonregels.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "Wml",
+          "title": "Wet minimumloon en minimumvakantiebijslag",
+          "meta": "art. 7 Wml",
+          "url": "https://wetten.overheid.nl/BWBR0002638/"
+        }
+      ],
+      "judge": null,
+      "passCount": 1,
+      "attemptCount": 1
+    },
+    {
+      "id": "arb-02-proeftijd",
+      "category": "legal",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        3
+      ],
+      "touched": [
+        3
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Gedurende de eerste maand van het dienstverband geldt een proeftijd als bedoeld in artikel 7:652 BW.",
+          "findLen": 100,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 3,
+          "isFormat": false,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "dwingend-recht",
+      "attempt": 0,
+      "ms": 15485,
+      "status": 200,
+      "error": null,
+      "reply": "Ik heb de proeftijd aangepast naar twee maanden. Let op: bij een arbeidsovereenkomst voor bepaalde tijd van twaalf maanden mag de proeftijd op grond van artikel 7:652 lid 4 BW maximaal één maand bedragen; een langere proeftijd is nietig op grond van artikel 7:652 lid 8 BW. Deze wijziging is dus juridisch zeer risicovol en naar verwachting niet afdwingbaar.",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 3",
+          "title": "Proeftijd verlengen naar twee maanden",
+          "find": "Gedurende de eerste maand van het dienstverband geldt een proeftijd als bedoeld in artikel 7:652 BW.",
+          "replace": "Gedurende de eerste twee maanden van het dienstverband geldt een proeftijd als bedoeld in artikel 7:652 BW.",
+          "why": "De wijziging voert de instructie uit, maar bij een arbeidsovereenkomst voor bepaalde tijd van twaalf maanden is een proeftijd van meer dan één maand nietig.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Artikel 7:652 BW",
+          "meta": "Lid 4 en lid 8: maximale duur proeftijd en nietigheid bij overschrijding",
+          "url": "https://wetten.overheid.nl/BWBR0005290/Boek7/Titeldeel10/Afdeling5/Artikel652"
+        }
+      ],
+      "judge": null,
+      "passCount": 1,
+      "attemptCount": 1
+    },
+    {
+      "id": "arb-03-tussentijds",
+      "category": "add",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        2
+      ],
+      "touched": [
+        2
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "De overeenkomst eindigt van rechtswege op 31 augustus 2027, zonder dat opzegging is vereist.",
+          "findLen": 92,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 2,
+          "isFormat": false,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "toevoeging-scope",
+      "attempt": 0,
+      "ms": 14518,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor de tussentijdse opzegmogelijkheid schriftelijk en wederkerig op te nemen in artikel 2. Bij een arbeidsovereenkomst voor bepaalde tijd is tussentijdse opzegging alleen mogelijk als dat recht voor ieder van partijen schriftelijk is overeengekomen (art. 7:667 lid 3 BW); opzegging door de werkgever blijft bovendien gebonden aan de wettelijke ontslagregels.",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 2",
+          "title": "Tussentijdse opzegmogelijkheid toevoegen",
+          "find": "De overeenkomst eindigt van rechtswege op 31 augustus 2027, zonder dat opzegging is vereist.",
+          "replace": "De overeenkomst kan door ieder van partijen tussentijds schriftelijk worden opgezegd met inachtneming van een opzegtermijn van één (1) maand, waarbij opzegging door Werkgever slechts kan plaatsvinden met inachtneming van de daarvoor geldende wettelijke vereisten. Indien de overeenkomst niet tussentijds rechtsgeldig wordt opgezegd, eindigt zij van rechtswege op 31 augustus 2027, zonder dat opzegging is vereist.",
+          "why": "Een tussentijds opzegbeding bij een arbeidsovereenkomst voor bepaalde tijd moet schriftelijk en voor beide partijen zijn overeengekomen; voor de werkgever blijven de wettelijke ontslagvereisten gelden.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 7:667 lid 3",
+          "meta": "Tussentijdse opzegging arbeidsovereenkomst voor bepaalde tijd",
+          "url": "https://wetten.overheid.nl/BWBR0005290/2026-01-01#Boek7_Titeldeel10_Afdeling9_Artikel667"
+        }
+      ],
+      "judge": null,
+      "passCount": 1,
+      "attemptCount": 1
+    },
+    {
+      "id": "arb-04-concurrentie-motivering",
+      "category": "legal",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        7
+      ],
+      "touched": [
+        7
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Het is Werknemer verboden om gedurende twaalf maanden na het einde van het dienstverband binnen een straal van 50 kilometer werkzaam te zijn bij een onderneming die gelijksoortige activiteiten ontplooit als Werkgever.",
+          "findLen": 217,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 7,
+          "isFormat": false,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "juridische-volledigheid",
+      "attempt": 0,
+      "ms": 18381,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel voor het concurrentiebeding aan te vullen met een expliciete schriftelijke motivering van zwaarwegende bedrijfs- of dienstbelangen, omdat een concurrentiebeding in een arbeidsovereenkomst voor bepaalde tijd alleen geldig kan zijn als die motivering in het beding zelf is opgenomen. Let op: of de motivering inhoudelijk voldoende is, blijft afhankelijk van de concrete functie en bedrijfsvoering; de voorgestelde tekst maakt het beding zo veel mogelijk compliant op basis van de beschikbare documenttekst.",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 7",
+          "title": "Aanvulling motivering zwaarwegende bedrijfsbelangen",
+          "find": "Het is Werknemer verboden om gedurende twaalf maanden na het einde van het dienstverband binnen een straal van 50 kilometer werkzaam te zijn bij een onderneming die gelijksoortige activiteiten ontplooit als Werkgever.",
+          "replace": "Het is Werknemer verboden om gedurende twaalf maanden na het einde van het dienstverband binnen een straal van 50 kilometer werkzaam te zijn bij een onderneming die gelijksoortige activiteiten ontplooit als Werkgever. Werkgever heeft zwaarwegende bedrijfsbelangen bij dit concurrentiebeding, omdat Werknemer in de functie van logistiek medewerker toegang heeft tot vertrouwelijke en concurrentiegevoelige informatie over de logistieke processen, routes, planning, klantafspraken, tarieven en operationele werkwijzen van Werkgever. Deze kennis kan, indien Werknemer kort na het einde van het dienstverband bij een concurrerende onderneming werkzaam wordt, worden gebruikt om Werkgever in haar concurrentiepositie te benadelen. Het beding is daarom noodzakelijk ter bescherming van het bedrijfsdebiet van Werkgever en is beperkt tot de duur, regio en activiteiten die daarvoor noodzakelijk zijn.",
+          "why": "Bij een arbeidsovereenkomst voor bepaalde tijd is een concurrentiebeding alleen geldig indien uit de bij dat beding opgenomen schriftelijke motivering blijkt dat het beding noodzakelijk is wegens zwaarwegende bedrijfs- of dienstbelangen.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 653",
+          "meta": "Art. 7:653 lid 2 BW",
+          "url": "https://wetten.overheid.nl/BWBR0005290/Boek7/Titeldeel10/Afdeling5/Artikel653"
+        }
+      ],
+      "judge": null,
+      "passCount": 1,
+      "attemptCount": 1
+    },
+    {
+      "id": "arb-05-concurrentie-duur",
+      "category": "targeted",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        7
+      ],
+      "touched": [
+        7
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "gedurende twaalf maanden na het einde van het dienstverband",
+          "findLen": 59,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 7,
+          "isFormat": false,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "scope-precisie",
+      "attempt": 0,
+      "ms": 8711,
+      "status": 200,
+      "error": null,
+      "reply": "Ik pas de duur in artikel 7 aan van twaalf naar zes maanden. Let op: omdat dit een arbeidsovereenkomst voor bepaalde tijd is, is een concurrentiebeding alleen geldig als uit de schriftelijke motivering blijkt dat het beding noodzakelijk is wegens zwaarwegende bedrijfs- of dienstbelangen; die motivering ontbreekt hier (art. 7:653 lid 2 BW).",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 7",
+          "title": "Duur concurrentiebeding verkorten naar zes maanden",
+          "find": "gedurende twaalf maanden na het einde van het dienstverband",
+          "replace": "gedurende zes maanden na het einde van het dienstverband",
+          "why": "De wijziging verkort de overeengekomen duur van het concurrentiebeding. Bij een arbeidsovereenkomst voor bepaalde tijd blijft een schriftelijke motivering van zwaarwegende bedrijfs- of dienstbelangen vereist.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 7, artikel 653",
+          "meta": "Art. 7:653 lid 2 BW",
+          "url": "https://wetten.overheid.nl/BWBR0005290/2024-07-01#Boek7_Titeldeel10_Afdeling5_Artikel653"
+        }
+      ],
+      "judge": null,
+      "passCount": 1,
+      "attemptCount": 1
+    }
+  ]
+}
