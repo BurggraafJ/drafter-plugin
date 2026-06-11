@@ -60,9 +60,11 @@
 .wd-ins-final { color: inherit; background: rgba(220,111,63,.10); border-radius: 2px; padding: 0 1px; }
 
 /* ---------- Plug-in panel shell ------------------------------------------ */
+/* Vult de hele taskpane: Word laat de gebruiker het paneel zelf breder/smaller slepen,
+   dus geen vaste breedte — alles schaalt mee (bubbels e.d. werken met percentages). */
 .lm-panel {
-  width: 340px; flex-shrink: 0; height: 100%;
-  background: #fff; border-left: 1px solid #d9dde3;
+  width: 100%; flex-shrink: 0; height: 100%;
+  background: #fff;
   display: flex; flex-direction: column; position: relative; overflow: hidden;
 }
 .lm-panel-head {
@@ -139,6 +141,13 @@
 .lm-proposal-list { padding: 0 13px 4px; display: flex; flex-direction: column; gap: 1px; }
 .lm-proposal-li { display: flex; align-items: center; gap: 8px; padding: 6px 0; font-size: 12px; color: #2a2a2a; border-top: 1px solid var(--color-border-subtle); }
 .lm-proposal-li .lm-pill { font-size: 9.5px; }
+.lm-proposal-more {
+  display: flex; align-items: center; gap: 6px; padding: 7px 0; width: 100%;
+  border: 0; border-top: 1px solid var(--color-border-subtle); background: transparent;
+  font-size: 12px; font-weight: 600; color: var(--brand-orange-deep); cursor: pointer;
+  text-align: left;
+}
+.lm-proposal-more:hover { color: var(--brand-orange); }
 .lm-pill { font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: #475569; background: #f1f5f9; border-radius: 5px; padding: 2px 6px; flex-shrink: 0; }
 .lm-proposal-foot { display: flex; gap: 8px; padding: 10px 13px 13px; }
 .lm-btn {

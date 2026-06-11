@@ -105,6 +105,8 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
 
   return {
     messages, suggestions, applied, statuses, activeId, helpOpen, toast, busy,
+    // typing voedt de "Legal Mind denkt na…"-bubble in de thread zolang de AI-call loopt.
+    typing: busy,
     setHelpOpen, send, applyChanges, accept, reject, acceptAll, rejectAll, focusChange, newChat,
     counts: { pending: pending.length, accepted: accepted.length, rejected: rejected.length, resolved, total: suggestions.length },
   }
