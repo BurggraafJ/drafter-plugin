@@ -44,6 +44,9 @@ export default defineConfig(async () => ({
     strictPort: true,
   },
   build: {
+    // Word voor Mac draait in een WKWebView waarvan de WebKit-versie aan macOS hangt;
+    // es2018 transpileert o.a. ?. en ?? weg zodat ook oudere webviews de bundel parsen.
+    target: 'es2018',
     rollupOptions: {
       output: {
         manualChunks: {
