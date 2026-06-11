@@ -71,6 +71,8 @@ export function scoreSuggestion(doc, articles, s) {
 
   const findLen = (s?.find ?? '').length
   const multiline = /[\r\n]/.test(s?.find ?? '')
+  // Tabs markeren in Word tabelcel-grenzen; search matcht niet over cellen heen.
+  const hasTab = /\t/.test(s?.find ?? '')
   const tooLong = findLen > WORD_SEARCH_MAX
   const countStrict = (() => {
     // exacte (case-insensitive) telling zónder quote-normalisatie = wat Word ziet
@@ -107,12 +109,13 @@ export function scoreSuggestion(doc, articles, s) {
     else if (!foundStrict && foundNorm) issues.push('find matcht alleen na quote/spatie-normalisatie (faalt in Word)')
     if (tooLong) issues.push(`find ${findLen} tekens > ${WORD_SEARCH_MAX} (Word search-limiet)`)
     if (multiline) issues.push('find bevat alinea-einde (Word search matcht niet over alineas)')
+    if (hasTab) issues.push('find bevat een tab (kruist tabelcel-grens — Word search matcht niet over cellen)')
     if (foundStrict && !unique) issues.push(`find komt ${countStrict}x voor (niet uniek → mogelijk verkeerde locatie)`)
     if (!replaceDiffers) issues.push('replace verschilt niet van find (geen effectieve wijziging)')
     if (serverRejected) issues.push(`door server gemarkeerd als niet-toepasbaar${s?.findIssue ? ` (${s.findIssue})` : ''}`)
   }
 
-  const applicable = !serverRejected && foundStrict && !tooLong && !multiline && unique
+  const applicable = !serverRejected && foundStrict && !tooLong && !multiline && !hasTab && unique
   return { find: s?.find ?? '', findLen, multiline, tooLong, countStrict, foundStrict, foundNorm, unique, article, replaceDiffers, applicable, issues }
 }
 
@@ -174,6 +177,22 @@ export function scoreCase(c, doc, response) {
     if (!valueOk) reasons.push(`verwachte waarde "${expect.value}" niet in replace gevonden`)
   }
 
+  // 5b) findMust / findMustNot — borgt dat het JUISTE voorkomen verankerd is (bv. "alleen
+  // de eerste 'Opdrachtnemer'"): minstens één toepasbare find moet findMust bevatten, en
+  // géén toepasbare find mag findMustNot bevatten.
+  let findMustOk = true
+  if (expect.findMust) {
+    const want = normalize(expect.findMust).toLowerCase()
+    findMustOk = applicable.some((p) => normalize(p.find).toLowerCase().includes(want))
+    if (!findMustOk) reasons.push(`geen toepasbare find bevat "${expect.findMust}" (verkeerde plek verankerd?)`)
+  }
+  let findMustNotOk = true
+  if (expect.findMustNot) {
+    const bad = normalize(expect.findMustNot).toLowerCase()
+    findMustNotOk = !applicable.some((p) => normalize(p.find).toLowerCase().includes(bad))
+    if (!findMustNotOk) reasons.push(`een find bevat "${expect.findMustNot}" terwijl die plek juist niet geraakt mocht worden`)
+  }
+
   // 6) Reply aanwezig
   const replyOk = typeof response?.reply === 'string' && response.reply.trim().length > 0
   if (!replyOk) reasons.push('lege reply')
@@ -186,10 +205,10 @@ export function scoreCase(c, doc, response) {
     if (!replyMustOk) reasons.push(`reply benoemt het juridische punt niet (verwacht één van: ${expect.replyMust.join(', ')})`)
   }
 
-  const pass = countOk && applicabilityOk && precisionOk && recallOk && valueOk && replyOk && replyMustOk
+  const pass = countOk && applicabilityOk && precisionOk && recallOk && valueOk && findMustOk && findMustNotOk && replyOk && replyMustOk
   return {
     id: c.id, category: c.category, pass,
-    checks: { countOk, applicabilityOk, precisionOk, recallOk, valueOk, replyOk, replyMustOk },
+    checks: { countOk, applicabilityOk, precisionOk, recallOk, valueOk, findMustOk, findMustNotOk, replyOk, replyMustOk },
     targets, touched,
     suggestionCount: suggestions.length, applicableCount: applicable.length,
     reasons, perSug,

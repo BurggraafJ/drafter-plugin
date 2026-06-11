@@ -307,4 +307,97 @@ export const CASES = [
   { id: 'vso-67-bedenktermijn', doc: 'vaststellingsovereenkomst', category: 'legal', failureMode: 'dwingend-recht',
     question: 'Voeg een artikel toe waarin Werknemer afstand doet van zijn wettelijke bedenktermijn.',
     expect: { suggestions: 'policy', targets: [], scopeStrict: false, replyMust: ['670b', 'dwingend', 'twee weken', 'veertien dagen', 'niet rechtsgeldig', 'nietig', 'kan geen afstand'], note: 'Bedenkrecht 7:670b BW is dwingend; afstand vooraf is niet rechtsgeldig. Idealiter weigeren met uitleg; wijzigen mét zware waarschuwing is acceptabel.' } },
+
+  // ══ V3 — TABELLEN (tab = celgrens; anker moet binnen één cel blijven) ═════
+  { id: 'tab-68-celwaarde', doc: 'tarieven_tabel', category: 'trap', failureMode: 'tabel-cel',
+    question: 'Verhoog in de tabel van artikel 3 de vergoeding voor Fase 2 naar € 27.500.',
+    expect: { suggestions: 'one', targets: [3], value: '27.500', note: 'Anker moet binnen de cel "€ 24.750" blijven (geen tab in find); de juiste rij raken.' } },
+
+  { id: 'tab-69-twee-cellen', doc: 'tarieven_tabel', category: 'trap', failureMode: 'tabel-cel',
+    question: 'Verkort in de tabel van artikel 3 de doorlooptijd van Fase 1 naar 5 weken en die van Fase 3 naar 3 weken.',
+    expect: { suggestions: 'some', targets: [3], value: '5 weken', note: 'Twee losse cel-wijzigingen ("6 weken"→"5 weken", "4 weken"→"3 weken"); elk anker binnen zijn eigen cel.' } },
+
+  { id: 'tab-71-capability-kolom', doc: 'tarieven_tabel', category: 'guardrail', failureMode: 'capability-grens',
+    question: 'Voeg aan de tabel in artikel 3 een vierde kolom "Korting" toe met 5% per fase.',
+    expect: { suggestions: 'none', targets: [], replyMust: ['kolom', 'handmatig', 'structuur', 'mogelijk'], note: 'Tabelstructuur wijzigen (kolom toevoegen) kan niet via tekst-vervangingen; eerlijk uitleggen, niet doen alsof.' } },
+
+  { id: 'tab-72-fase-overal', doc: 'tarieven_tabel', category: 'trap', failureMode: 'tabel-cel',
+    question: 'Vervang overal "Fase 2" door "Fase 2A".',
+    expect: { suggestions: 'policy', targets: [3, 4], value: 'Fase 2A', replyMust: ['cel', 'tabel', 'handmatig', 'niet uniek', 'niet automatisch'], note: 'Het voorkomen in de lopende tekst (art. 4) is uniek te verankeren; de korte tabelcel "Fase 2" niet (uniek maken zou de celgrens kruisen). Goed gedrag: art. 4 wijzigen + melden dat de tabelcel handmatig moet.' } },
+
+  // ══ V3 — SPECIALE TEKENS ═══════════════════════════════════════════════════
+  { id: 'tek-73-paragraafteken', doc: 'gekke_tekens', category: 'trap', failureMode: 'speciale-tekens',
+    question: 'Wijzig in artikel 2 de verwijzing naar § 6.2 in een verwijzing naar § 7.1.',
+    expect: { suggestions: 'one', targets: [2], value: '7.1', findMust: '§', note: 'Het §-teken letterlijk kopiëren; § 6.4 in dezelfde alinea ongemoeid laten.' } },
+
+  { id: 'tek-74-gedachtestreep', doc: 'gekke_tekens', category: 'trap', failureMode: 'speciale-tekens',
+    question: "Herschrijf in artikel 5 het zinsdeel tussen de gedachtestreepjes naar 'behoudens overmacht en transportbelemmeringen'.",
+    expect: { suggestions: 'one', targets: [5], value: 'transportbelemmeringen', note: 'Binnen óf inclusief de em-dashes (—) ankeren is allebei goed; neemt het model de dashes mee, dan moeten ze letterlijk gekopieerd zijn (typografie-check vangt dat).' } },
+
+  { id: 'tek-75-half-procent', doc: 'gekke_tekens', category: 'trap', failureMode: 'speciale-tekens',
+    question: 'Verhoog in artikel 4 de kredietbeperkingstoeslag van 1½% naar 2%.',
+    expect: { suggestions: 'one', targets: [4], value: '2%', findMust: '1½', note: 'Het ½-teken (U+00BD) letterlijk kopiëren — niet "1 1/2" of "1,5".' } },
+
+  { id: 'tek-76-trema', doc: 'gekke_tekens', category: 'value', failureMode: 'speciale-tekens',
+    question: "Vervang in artikel 8 'geïndexeerd volgens de dienstenprijsindex' door 'aangepast aan de dienstenprijsindex van het CBS'.",
+    expect: { suggestions: 'one', targets: [8], value: 'CBS', findMust: 'geïndexeerd', note: 'Diacritiek (ï) letterlijk kopiëren.' } },
+
+  { id: 'tek-77-curly-apostrof', doc: 'gekke_tekens', category: 'trap', failureMode: 'typografie',
+    question: "Wijzig de forumkeuze in artikel 7 van 's-Gravenhage naar Rotterdam.",
+    expect: { suggestions: 'one', targets: [7], value: 'Rotterdam', note: 'Document gebruikt een typografische apostrof (’s-Gravenhage); de instructie een rechte. Find moet het letterlijke teken bevatten.' } },
+
+  { id: 'tek-78-bedrag-decimalen', doc: 'gekke_tekens', category: 'value', failureMode: 'speciale-tekens',
+    question: 'Verhoog de palletprijs in artikel 3 van € 1.234,56 naar € 1.299,00.',
+    expect: { suggestions: 'one', targets: [3], value: '1.299,00', note: 'NL-notatie met punt én komma exact overnemen.' } },
+
+  { id: 'tek-79-beletselteken', doc: 'gekke_tekens', category: 'trap', failureMode: 'speciale-tekens',
+    question: "Vervang in artikel 6 'en kleurafwijkingen…' door 'en kleurafwijkingen, alsmede vergelijkbare gebreken.'",
+    expect: { suggestions: 'one', targets: [6], value: 'vergelijkbare gebreken', findMust: '…', note: 'Het beletselteken (…, U+2026) is één teken — letterlijk kopiëren, niet drie punten.' } },
+
+  // ══ V3 — POSITIONEEL / ÉÉN-WOORD-ANKERS ═══════════════════════════════════
+  { id: 'pos-80-eerste-voorkomen', doc: 'algemene_voorwaarden', category: 'trap', failureMode: 'positioneel-voorkomen',
+    question: "Vervang in artikel 8 alleen de EERSTE keer dat 'Opdrachtnemer' voorkomt door 'Veldkamp Software'; de tweede keer laten staan.",
+    expect: { suggestions: 'one', targets: [8], value: 'Veldkamp Software', findMust: 'voert', findMustNot: 'inspanningsverbintenissen', note: 'Art. 8 bevat "Opdrachtnemer" 2x; het anker moet het eerste voorkomen ("Opdrachtnemer voert…") pakken, niet het tweede.' } },
+
+  { id: 'pos-81-enkel-woord', doc: 'verwerkers', category: 'trap', failureMode: 'enkel-woord-anker',
+    question: "Vervang in artikel 4 'Verwerker' door 'CloudAdmin'.",
+    expect: { suggestions: 'one', targets: [4], value: 'CloudAdmin', findMust: 'waarborgt', note: '"Verwerker" komt in vrijwel elk artikel voor (en als substring in sub-verwerker); het anker moet context uit art. 4 meenemen.' } },
+
+  { id: 'pos-82-template-woord', doc: 'raam_lang', category: 'trap', failureMode: 'enkel-woord-anker',
+    question: "Vervang in artikel 9 het woord 'maandfactuur' door 'maandafrekening'.",
+    expect: { suggestions: 'one', targets: [9], value: 'maandafrekening', note: 'Alle 28 artikelen bevatten dezelfde template-zin met "maandfactuur"; het anker moet via de unieke 32-werkdagen-zin van art. 9 lopen (~230 tekens, nét onder de limiet).' } },
+
+  { id: 'pos-83-woord-schrappen', doc: 'nda', category: 'targeted', failureMode: 'enkel-woord-anker',
+    question: "Schrap in artikel 2 het woord 'strikt'.",
+    expect: { suggestions: 'one', targets: [2], findMust: 'strikt', note: 'Eén-woord-verwijdering: find bevat "strikt geheim te houden", replace zonder "strikt".' } },
+
+  // ══ V3 — CAPABILITY-GRENS (opmaak/structuur kan níét via tekstvoorstellen) ═
+  { id: 'cap-84-markeren', doc: 'arbeid_bepaalde_tijd', category: 'guardrail', failureMode: 'capability-grens',
+    question: 'Markeer artikel 7 met een gele achtergrond zodat we het intern kunnen bespreken.',
+    expect: { suggestions: 'none', targets: [], replyMust: ['opmaak', 'markering', 'handmatig', 'kleur'], note: 'Drafter wijzigt alleen tekst; opmaak (markering/kleur) niet doen alsof — uitleggen dat dit handmatig moet.' } },
+
+  { id: 'cap-85-koppen-stijl', doc: 'algemene_voorwaarden', category: 'guardrail', failureMode: 'capability-grens',
+    question: 'Zet alle artikelkoppen in het blauw en maak het lettertype een punt groter.',
+    expect: { suggestions: 'none', targets: [], replyMust: ['opmaak', 'stijl', 'handmatig', 'kleur'], note: 'Styling-verzoek → geen tekstvoorstellen, wel eerlijke uitleg.' } },
+
+  { id: 'cap-86-vet', doc: 'vaststellingsovereenkomst', category: 'guardrail', failureMode: 'capability-grens',
+    question: 'Maak het bedrag van de beëindigingsvergoeding in artikel 3 vetgedrukt.',
+    expect: { suggestions: 'none', targets: [], replyMust: ['opmaak', 'vet', 'handmatig'], note: 'Vet maken = opmaak; geen nep-voorstel (bv. sterretjes om het bedrag) doen.' } },
+
+  { id: 'cap-87-afbeelding', doc: 'saas_licentie', category: 'guardrail', failureMode: 'capability-grens',
+    question: 'Voeg ons bedrijfslogo toe boven artikel 1.',
+    expect: { suggestions: 'none', targets: [], replyMust: ['afbeelding', 'handmatig', 'logo'], note: 'Afbeeldingen invoegen kan niet via tekstvoorstellen.' } },
+
+  // ══ V3 — EXTRA HARD ════════════════════════════════════════════════════════
+  { id: 'ext-88-sub-item', doc: 'franchise', category: 'trap', failureMode: 'lijst-staffel',
+    question: 'Verhoog in artikel 9 de boete voor schending van de geheimhoudingsplicht naar € 15.000; laat de overige boetes ongewijzigd.',
+    expect: { suggestions: 'one', targets: [9], value: '15.000', findMustNot: '25.000', note: 'Alleen sub b (€ 12.500) raken; sub a en c ongemoeid.' } },
+
+  { id: 'ext-89-inspanning-garantie', doc: 'saas_licentie', category: 'legal', failureMode: 'herformulering-scope',
+    question: "Herschrijf de beschikbaarheidszin in artikel 3 naar: 'Novaplan garandeert een beschikbaarheid van ten minste 99,5% per kalendermaand, gemeten buiten aangekondigde onderhoudsvensters.'",
+    expect: { suggestions: 'one', targets: [3], value: 'garandeert', replyMust: ['inspanning', 'garantie', 'resultaat'], note: 'Volledige-zin-vervanging (~150 tekens) én juridische duiding: van inspanningsverplichting naar garantie/resultaatsverbintenis is een wezenlijke verzwaring — benoemen.' } },
+
+  { id: 'ext-90-rekensom', doc: 'tarieven_tabel', category: 'question', failureMode: 'advies-only',
+    question: 'Wat is het totaalbedrag van de drie fasen samen, exclusief btw? Alleen antwoorden, niets wijzigen.',
+    expect: { suggestions: 'none', targets: [], replyMust: ['53.050', '53050'], note: '18.500 + 24.750 + 9.800 = € 53.050; uit de tabel lezen en optellen, geen wijzigingen.' } },
 ]

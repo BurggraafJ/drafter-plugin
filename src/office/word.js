@@ -123,19 +123,32 @@ export async function insertAtSelection(text, { location = 'After', track = true
 }
 
 /**
+ * In Word's zoeksyntaxis is '^' óók zonder wildcards een speciaal teken (^p = alinea,
+ * ^t = tab, ^^ = letterlijke caret). Onze `find` is altijd LETTERLIJKE documenttekst,
+ * dus een caret moet op de zoek-plek verdubbeld worden.
+ * Zie learn.microsoft.com/office/dev/add-ins/word/search-option-guidance.
+ */
+function toSearchText(find) {
+  return String(find).replace(/\^/g, '^^')
+}
+
+/**
  * Zoek de eerste exacte match van `find` in de body en vervang door `replace`,
  * onder Track Changes. Gebruikt voor "herschrijf deze passage"-suggesties waarbij
  * het model de te-vervangen passage letterlijk teruggeeft.
  */
 export async function replacePassage(find, replace, { track = true } = {}) {
   // Word's body.search() gooit een GeneralException bij zoekstrings > 255 tekens of met
-  // alinea-einden. We vangen dat af zodat één onplaatsbare suggestie de hele apply-lus niet breekt.
-  if (!find || find.length > 255 || /[\r\n]/.test(find)) return false
+  // alinea-einden, en matcht niet over tabelcel-grenzen (tabs). We vangen dat af zodat
+  // één onplaatsbare suggestie de hele apply-lus niet breekt.
+  if (!find || /[\r\n\t]/.test(find)) return false
+  const searchText = toSearchText(find)
+  if (searchText.length > 255) return false
   return Word.run(async (context) => {
     if (track && isTrackChangesSupported()) {
       context.document.changeTrackingMode = Word.ChangeTrackingMode.trackAll
     }
-    const results = context.document.body.search(find, { matchCase: false, ignorePunct: false })
+    const results = context.document.body.search(searchText, { matchCase: false, ignorePunct: false })
     results.load('items')
     await context.sync()
     if (results.items.length === 0) return false
@@ -185,8 +198,12 @@ export async function applyChange(change) {
 /** Accepteer/weiger de tracked changes die overlappen met de eerste match van `text`. */
 async function resolveChangesNear(text, mode) {
   if (!text || !isTrackChangesSupported()) return false
+  // Neem de eerste regel/cel als anker (search kan niet over alinea- of celgrenzen) en
+  // blijf ruim onder de 255-tekens-limiet, ook na ^-escaping.
+  const searchText = toSearchText(String(text).split(/[\r\n\t]/)[0].slice(0, 200))
+  if (!searchText || searchText.length > 255) return false
   return Word.run(async (context) => {
-    const results = context.document.body.search(text, { matchCase: false, ignorePunct: false })
+    const results = context.document.body.search(searchText, { matchCase: false, ignorePunct: false })
     results.load('items')
     await context.sync()
     if (!results.items.length) return false

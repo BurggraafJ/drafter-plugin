@@ -447,6 +447,69 @@ De winkel heeft een verkoopvloeroppervlak van ten minste 85 m², voldoet aan de 
 
 Artikel 3 — Openingstijden
 De winkel is geopend van maandag tot en met zaterdag van ten minste 08:00 tot 18:00 uur, met uitzondering van algemeen erkende feestdagen.`,
+
+  // ── 12. Dienstverleningsovereenkomst met TAB-TABEL ──────────────────────────
+  //        Tabs (\t) markeren tabelcel-grenzen: Word's search matcht niet over
+  //        cellen heen, dus een bruikbaar anker blijft binnen één cel.
+  tarieven_tabel: `DIENSTVERLENINGSOVEREENKOMST IMPLEMENTATIE HRM-SUITE
+
+De ondergetekenden:
+1. Gemeente Waterlanden, hierna te noemen: "Opdrachtgever";
+2. Solvix Consulting B.V., gevestigd te Utrecht, hierna te noemen: "Opdrachtnemer";
+
+komen overeen:
+
+Artikel 1 — De opdracht
+Opdrachtnemer implementeert voor Opdrachtgever de HRM-suite "PeopleFlow", inclusief inrichting, datamigratie, koppelingen en training van eindgebruikers.
+
+Artikel 2 — Projectorganisatie
+Partijen wijzen ieder een projectleider aan. De stuurgroep komt maandelijks bijeen en besluit over wijzigingen in scope, planning en budget.
+
+Artikel 3 — Vergoeding per fase
+De implementatie wordt uitgevoerd in drie fasen. Per fase gelden de volgende vaste vergoeding en uitvoeringsperiode:
+Fase\tOmschrijving\tVergoeding\tDoorlooptijd
+Fase 1\tInrichting en configuratie\t€ 18.500\t6 weken
+Fase 2\tDatamigratie en koppelingen\t€ 24.750\t8 weken
+Fase 3\tTraining en nazorg\t€ 9.800\t4 weken
+De vergoedingen zijn exclusief btw en worden per fase na schriftelijke acceptatie gefactureerd.
+
+Artikel 4 — Acceptatie
+Opdrachtgever toetst elk faseresultaat binnen tien werkdagen aan de acceptatiecriteria. Na afronding van Fase 2 vindt bovendien een integrale keten-test plaats voordat Fase 3 aanvangt.
+
+Artikel 5 — Meerwerk
+Werkzaamheden buiten de fase-omschrijvingen gelden als meerwerk en worden vooraf geoffreerd tegen een uurtarief van € 145 exclusief btw.
+
+Artikel 6 — Toepasselijk recht
+Op deze overeenkomst is Nederlands recht van toepassing. Geschillen worden voorgelegd aan de rechtbank Midden-Nederland, locatie Utrecht.`,
+
+  // ── 13. Leveringsvoorwaarden met SPECIALE TEKENS ────────────────────────────
+  //        §-verwijzingen, gedachtestreepjes (—), beletselteken (…), ½, curly
+  //        apostrof (’s-Gravenhage, manco’s) en diacritiek (geïndexeerd).
+  gekke_tekens: `LEVERINGS- EN BETALINGSVOORWAARDEN NOORDSTAR HANDEL B.V.
+
+Artikel 1 — Toepasselijkheid
+Deze voorwaarden zijn van toepassing op alle offertes en overeenkomsten van Noordstar Handel B.V., hierna: "Noordstar".
+
+Artikel 2 — Kwaliteit
+De geleverde zaken voldoen aan de specificaties zoals vastgelegd in § 6.2 van het kwaliteitshandboek van Noordstar. Afwijkingen binnen de in § 6.4 genoemde toleranties gelden niet als gebrek.
+
+Artikel 3 — Prijzen
+De prijs bedraagt € 1.234,56 per pallet, af magazijn Zwolle, exclusief btw en exclusief transport.
+
+Artikel 4 — Betaling
+Betaling geschiedt binnen dertig dagen na factuurdatum. Bij overschrijding is de afnemer een kredietbeperkingstoeslag van 1½% per maand verschuldigd over het openstaande bedrag.
+
+Artikel 5 — Levertijd
+De levertijd — behoudens overmacht — bedraagt veertien werkdagen na orderbevestiging. Overschrijding van de levertijd geeft geen recht op schadevergoeding.
+
+Artikel 6 — Reclames
+Zichtbare gebreken meldt de afnemer binnen achtenveertig uur na levering, waaronder begrepen transportschade, manco’s en kleurafwijkingen… Latere meldingen worden niet in behandeling genomen.
+
+Artikel 7 — Forumkeuze
+Alle geschillen worden bij uitsluiting voorgelegd aan de rechtbank te ’s-Gravenhage.
+
+Artikel 8 — Indexering
+De overeengekomen prijzen worden jaarlijks per 1 januari geïndexeerd volgens de dienstenprijsindex; de coördinatie van de jaarlijkse aanpassing ligt bij Noordstar, die daarbij een reëel kostenniveau hanteert.`,
 }
 
 // ── 11. Raamovereenkomst ICT (gegenereerd, > 24.000 tekens) ──────────────────

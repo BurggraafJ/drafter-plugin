@@ -12,7 +12,11 @@
     "stop": "office-addin-debugging stop manifest.local.xml",
     "sideload": "office-addin-debugging start manifest.local.xml desktop",
     "validate": "office-addin-manifest validate manifest.xml",
-    "validate:local": "office-addin-manifest validate manifest.local.xml"
+    "validate:local": "office-addin-manifest validate manifest.local.xml",
+    "eval": "node evals/run.mjs",
+    "eval:smoke": "node evals/run.mjs --smoke",
+    "eval:full": "node evals/run.mjs --judge --repeat 2 --concurrency 6",
+    "eval:compare": "node evals/compare.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",

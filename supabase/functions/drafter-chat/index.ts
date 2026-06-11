@@ -143,6 +143,10 @@ ANTWOORD
   onderbouwd weigeren.
 - Vraagt de jurist enkel om advies of uitleg ("leg uit", "geef advies", "ik wil nog niets wijzigen"),
   geef dan uitsluitend tekst en GEEN wijzigingen.
+- Drafter wijzigt uitsluitend TEKST. Vraagt de jurist om opmaak (kleur, markering, vet, lettertype,
+  stijlen), om afbeeldingen of logo's, of om structuurwijzigingen aan tabellen (kolommen of rijen
+  toevoegen/verwijderen): stel GEEN wijziging voor maar leg kort uit dat dit handmatig in Word moet.
+  Doe nooit alsof met een tekst-trucje (bv. sterretjes om een woord).
 - Staat de gevraagde passage, het genoemde artikel of de genoemde bijlage niet in het document,
   stel dan GEEN wijziging voor maar meld dat in je toelichting. Verzin nooit een bestemming.
 - Let op: bijlagen hebben vaak een EIGEN artikelnummering. "Artikel 2" zonder meer = artikel 2 van
@@ -184,6 +188,12 @@ Eisen aan elke suggestion — KRITISCH voor Track Changes:
 - Moet een term OVERAL vervangen worden: loop systematisch ALLE voorkomens in het document langs en
   maak per voorkomen één suggestie met een uniek anker (met omringende woorden); respecteer
   uitzonderingen die de jurist noemt ("behalve artikel 1") strikt.
+- Vraagt de jurist een SPECIFIEK voorkomen ("alleen de eerste/tweede X"): kies precies dat voorkomen
+  en maak het anker uniek met de omringende woorden van díé plek.
+- TABELLEN: een tab markeert een celgrens en Word's zoekfunctie matcht nooit over cellen heen.
+  Een find blijft dus altijd binnen ÉÉN cel (nooit een tab-teken opnemen); wijzig per cel met een
+  eigen suggestie. Is een celtekst te kort om uniek te zijn in het document (bv. een kort label dat
+  ook elders staat), sla die cel dan over en meld dat de jurist die cel handmatig moet aanpassen.
 - Herschrijf je een heel artikel of een lange passage: splits de herschrijving in MEERDERE kleine
   suggesties (per zin of zinsdeel, elk binnen één alinea, find < 160 tekens). Vervang nooit een
   meeralinea-passage in één keer.
@@ -334,30 +344,37 @@ function makeUnique(body: string, find: string, hint: string | null, articles: {
   const pos = positions.find((p) => p >= art.start && p < art.end)
   if (pos == null) return null
 
-  const paraStart = body.lastIndexOf("\n", pos) + 1
-  const paraEndIdx = body.indexOf("\n", pos + find.length)
-  const paraEnd = paraEndIdx === -1 ? body.length : paraEndIdx
+  // Alinea- ÉN celgrenzen (tab) begrenzen het anker: Word's search matcht over geen van beide.
+  const lastBoundary = Math.max(body.lastIndexOf("\n", pos), body.lastIndexOf("\t", pos))
+  const paraStart = lastBoundary + 1
+  const nextNl = body.indexOf("\n", pos + find.length)
+  const nextTab = body.indexOf("\t", pos + find.length)
+  const nexts = [nextNl, nextTab].filter((x) => x !== -1)
+  const paraEnd = nexts.length ? Math.min(...nexts) : body.length
 
+  // Greedy uitbreiden naar woordgrenzen: kies per stap de richting die het aantal matches
+  // het hardst laat dalen (bij gelijkspel links — daar staat in juridische zinnen meestal de
+  // onderscheidende context). Max 250 tekens: nét onder Word's 255-limiet.
   let start = pos, end = pos + find.length
-  for (let step = 0; step < 30 && end - start <= 230; step++) {
+  for (let step = 0; step < 60 && end - start <= 250; step++) {
     const cand = body.slice(start, end)
     if (occurrences(body, cand) === 1) {
       return { pre: body.slice(start, pos), post: body.slice(pos + find.length, end) }
     }
-    // Breid afwisselend links/rechts uit naar de volgende woordgrens binnen de alinea.
     const canLeft = start > paraStart
     const canRight = end < paraEnd
     if (!canLeft && !canRight) return null
-    if (canLeft && (step % 2 === 0 || !canRight)) {
-      const sp = body.lastIndexOf(" ", start - 2)
-      start = sp <= paraStart ? paraStart : sp + 1
-    } else {
-      const sp = body.indexOf(" ", end + 1)
-      end = sp === -1 || sp > paraEnd ? paraEnd : sp
-    }
+    const spL = canLeft ? body.lastIndexOf(" ", start - 2) : -1
+    const nextStart = canLeft ? (spL <= paraStart ? paraStart : spL + 1) : start
+    const spR = canRight ? body.indexOf(" ", end + 1) : -1
+    const nextEnd = canRight ? (spR === -1 || spR > paraEnd ? paraEnd : spR) : end
+    const countL = canLeft ? occurrences(body, body.slice(nextStart, end)) : Infinity
+    const countR = canRight ? occurrences(body, body.slice(start, nextEnd)) : Infinity
+    if (countL <= countR) start = nextStart
+    else end = nextEnd
   }
   const cand = body.slice(start, end)
-  if (occurrences(body, cand) === 1) return { pre: body.slice(start, pos), post: body.slice(pos + find.length, end) }
+  if (cand.length <= 255 && occurrences(body, cand) === 1) return { pre: body.slice(start, pos), post: body.slice(pos + find.length, end) }
   return null
 }
 
@@ -426,6 +443,7 @@ function annotateSuggestion(s: any, body: string, articles: { num: string; start
   else if (countExact === 0) issues.push("alleen na normalisatie gevonden")
   if (find.length > WORD_SEARCH_MAX) issues.push("te lang (>255 tekens)")
   if (/[\r\n]/.test(find)) issues.push("meerdere alinea's")
+  if (/\t/.test(find)) issues.push("kruist tabelcel-grens (tab)")
   if (countExact > 1) issues.push("niet uniek")
 
   // 5) Afgebroken replace-vangnet: wie een volledige zin (eindigend op . ; :) vervangt door
@@ -437,7 +455,13 @@ function annotateSuggestion(s: any, body: string, articles: { num: string; start
   const truncatedReplace = findEndsSentence && !replaceEndsOk
   if (truncatedReplace) issues.push("replace lijkt afgebroken (eindigt niet op een zinseinde)")
 
-  out.applicable = countExact === 1 && find.length <= WORD_SEARCH_MAX && !/[\r\n]/.test(find) && !truncatedReplace
+  // 6) No-op-vangnet: replace gelijk aan find = geen echte wijziging (komt voor wanneer het
+  //    model "doet alsof" bij opmaakverzoeken). Niet plaatsen — het zou alleen een lege
+  //    del+ins-revisie in het document zetten.
+  const noopReplace = replace.trim() === find.trim()
+  if (noopReplace) issues.push("replace is gelijk aan find (geen wijziging)")
+
+  out.applicable = countExact === 1 && find.length <= WORD_SEARCH_MAX && !/[\r\n\t]/.test(find) && !truncatedReplace && !noopReplace
   out.findIssue = issues.length ? issues.join("; ") : null
   return out
 }
