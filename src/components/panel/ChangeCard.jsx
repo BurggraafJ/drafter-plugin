@@ -8,14 +8,23 @@ function formatLabel(format = {}) {
     .join(' + ') || 'opmaak'
 }
 
-// Diff-preview: doorgehaalde oude tekst + voorgestelde nieuwe tekst, of (bij een
-// opmaak-suggestie) de doeltekst met het opmaak-label.
+// Diff-preview: doorgehaalde oude tekst + voorgestelde nieuwe tekst, een opmaak-label,
+// of (bij een invoeging) een voorproef van de nieuwe tekst.
 export function DiffPreview({ change }) {
   if (change.action === 'format') {
     return (
       <div className="lm-diff-preview">
         <span className="lm-format-badge">Opmaak: {formatLabel(change.format)}</span>
         <span className="i" style={{ textDecoration: 'none' }}>{(change.find || '').slice(0, 120)}</span>
+      </div>
+    )
+  }
+  if (change.action === 'insert') {
+    const preview = (change.content || '').slice(0, 220)
+    return (
+      <div className="lm-diff-preview">
+        <span className="lm-format-badge">Nieuw</span>
+        <span className="i" style={{ textDecoration: 'none' }}>{preview}{(change.content || '').length > 220 ? '…' : ''}</span>
       </div>
     )
   }

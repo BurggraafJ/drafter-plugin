@@ -219,6 +219,43 @@ export async function undoFormat(change) {
   return formatPassage(change.find, change.format, { track: true, invert: true })
 }
 
+/**
+ * NIEUWE tekst invoegen — ook in een leeg document. `position` is 'end', 'start' of
+ * { after: 'ankertekst' } / { before: 'ankertekst' } (anker volgt de find-regels).
+ * Meeralinea-content: \n wordt een alineamarkering (\r) zodat Word echte alinea's maakt.
+ * Onder Track Changes verschijnt de invoeging als één herziening.
+ */
+export async function insertContent(content, position = 'end', { track = true } = {}) {
+  if (!content || typeof content !== 'string') return false
+  const text = content.replace(/\r\n/g, '\n').replace(/\n/g, '\r')
+  return Word.run(async (context) => {
+    if (track && isTrackChangesSupported()) {
+      context.document.changeTrackingMode = Word.ChangeTrackingMode.trackAll
+    }
+    const body = context.document.body
+    if (position === 'end' || position === 'start') {
+      body.insertText(position === 'start' ? text + '\r' : '\r' + text,
+        position === 'start' ? Word.InsertLocation.start : Word.InsertLocation.end)
+      await context.sync()
+      return true
+    }
+    const anchor = position?.after || position?.before
+    if (!anchor || /[\r\n\t]/.test(anchor)) return false
+    const searchText = toSearchText(anchor)
+    if (searchText.length > 255) return false
+    const results = body.search(searchText, { matchCase: false, ignorePunct: false })
+    results.load('items')
+    await context.sync()
+    if (results.items.length === 0) return false
+    results.items[0].insertText(
+      position.after ? '\r' + text : text + '\r',
+      position.after ? Word.InsertLocation.after : Word.InsertLocation.before,
+    )
+    await context.sync()
+    return true
+  }).catch(() => false)
+}
+
 // ── Per-suggestie wiring voor het Wijzigingen-tabblad ────────────────────────
 // Het contract: tekst-suggesties hebben `find` (huidige passage) en `replace` (nieuwe
 // tekst); opmaak-suggesties hebben `find` + `format` ({bold, italic, underline,
@@ -230,7 +267,11 @@ export async function undoFormat(change) {
  * De server markeert onplaatsbare suggesties met `applicable === false`; die slaan we over.
  */
 export async function applyChange(change) {
-  if (!change?.find || change.applicable === false) return false
+  if (change?.applicable === false) return false
+  if (change?.action === 'insert' && change.content) {
+    return insertContent(change.content, change.position || 'end', { track: true })
+  }
+  if (!change?.find) return false
   if (change.action === 'format' && change.format) {
     return formatPassage(change.find, change.format, { track: true })
   }
@@ -264,10 +305,13 @@ async function resolveChangesNear(text, mode) {
 export async function acceptChange(change) {
   // Opmaak: de getrackte opmaak-revisies accepteren; markering is al toegepast (geen revisie).
   if (change?.action === 'format') return resolveChangesNear(change?.find, 'accept')
+  // Invoeging: ankeren op de eerste regel van de ingevoegde tekst.
+  if (change?.action === 'insert') return resolveChangesNear(change?.content, 'accept')
   return resolveChangesNear(change?.replace || change?.ins, 'accept')
 }
 
 export async function rejectChange(change) {
+  if (change?.action === 'insert') return resolveChangesNear(change?.content, 'reject')
   if (change?.action === 'format') {
     // Getrackte opmaak-revisies (vet/cursief/kleur) terugdraaien…
     const ok = await resolveChangesNear(change?.find, 'reject')

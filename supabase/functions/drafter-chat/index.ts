@@ -71,6 +71,16 @@ Deno.serve(async (req) => {
     }
     if (!question.trim()) return json({ error: "question is verplicht" }, 400, CORS)
 
+    // Gesprekshistorie (de server is verder stateless): de client stuurt de laatste beurten
+    // mee zodat vervolg-instructies ("zet dat in het document") hun referent behouden.
+    const history = (Array.isArray(parsed?.history) ? parsed.history : [])
+      .slice(-6)
+      .map((m: any) => ({
+        role: m?.role === "user" ? "jurist" : "assistent",
+        text: String(m?.text || "").slice(0, 1500),
+      }))
+      .filter((m: { text: string }) => m.text.trim())
+
     const modelOverride = typeof parsed?.model === "string" && parsed.model.trim() ? parsed.model.trim() : null
     if (modelOverride && !ALLOWED_MODELS.includes(modelOverride)) {
       return json({ error: `model niet toegestaan (toegestaan: ${ALLOWED_MODELS.join(", ")})` }, 400, CORS)
@@ -91,7 +101,7 @@ Deno.serve(async (req) => {
     if (!apiKey) return json({ error: "Configuratiefout: OpenAI-sleutel niet gevonden. Neem contact op met de beheerder." }, 503, CORS)
 
     const systemMsg = buildSystemMessage(prof?.published_text)
-    const userMsg = buildUserMessage(question, context)
+    const userMsg = buildUserMessage(question, context, history)
 
     const usedModel = modelOverride || settings.model
     let reply
@@ -116,23 +126,27 @@ Deno.serve(async (req) => {
 
     const text = reply?.choices?.[0]?.message?.content || ""
     const finishReason = reply?.choices?.[0]?.finish_reason || ""
-    const { prose, suggestions, citations } = splitSuggestions(text)
+    const { prose, suggestions, citations, clarify } = splitSuggestions(text)
 
     const body = context.body
     const articles = splitArticles(body)
-    const processed = suggestions.map((s) => annotateSuggestion(s, body, articles))
+    // Vraagt het model om verduidelijking, dan horen er géén wijzigingen bij diezelfde beurt
+    // (eerst de keuze van de jurist, dan pas voorstellen).
+    const processed = clarify ? [] : suggestions.map((s) => annotateSuggestion(s, body, articles))
 
     // Toelichting mag nooit leeg zijn (anders een lege chatbubble in het paneel).
     let replyText = prose
     if (!replyText) {
-      replyText = processed.length
-        ? `Ik stel ${processed.length} wijziging${processed.length === 1 ? "" : "en"} voor. Bekijk ze in het tabblad Wijzigingen en accepteer of wijs ze af.`
-        : finishReason === "length"
-          ? "Het antwoord was te lang en is afgekapt. Stel je vraag iets specifieker, dan kan ik gerichter helpen."
-          : "Ik kon hier geen concreet voorstel voor maken. Kun je je vraag iets specifieker formuleren?"
+      replyText = clarify
+        ? "Ik heb nog een paar korte vragen om dit goed te kunnen doen."
+        : processed.length
+          ? `Ik stel ${processed.length} wijziging${processed.length === 1 ? "" : "en"} voor. Bekijk ze in het tabblad Wijzigingen en accepteer of wijs ze af.`
+          : finishReason === "length"
+            ? "Het antwoord was te lang en is afgekapt. Stel je vraag iets specifieker, dan kan ik gerichter helpen."
+            : "Ik kon hier geen concreet voorstel voor maken. Kun je je vraag iets specifieker formuleren?"
     }
 
-    return json({ reply: replyText, suggestions: processed, citations, model: usedModel }, 200, CORS)
+    return json({ reply: replyText, suggestions: processed, citations, clarify, model: usedModel }, 200, CORS)
   } catch (e) {
     return json({ error: `Onverwachte fout: ${(e as Error).message}` }, 500, corsHeaders(req))
   }
@@ -156,6 +170,13 @@ ANTWOORD
   onderbouwd weigeren.
 - Vraagt de jurist enkel om advies of uitleg ("leg uit", "geef advies", "ik wil nog niets wijzigen"),
   geef dan uitsluitend tekst en GEEN wijzigingen.
+- AANVULLENDE VRAGEN — wees hier TERUGHOUDEND mee. Alleen als de instructie écht niet uitvoerbaar
+  is zonder een keuze van de jurist (meerdere plausibele doelen of interpretaties, waarbij een
+  verkeerde aanname schade zou doen — bv. "pas de termijn aan" terwijl het document meerdere
+  termijnen kent), sluit dan af met ALLEEN dit JSON-blok en stel géén wijzigingen voor:
+  { "clarify": { "intro": "korte zin", "questions": [ { "q": "…", "options": ["…", "…"] } ] } }
+  Maximaal 2 vragen met elk maximaal 4 korte opties. Is er één redelijke standaardinterpretatie,
+  stel dan GEEN vraag: voer uit en benoem je aanname kort in de toelichting.
 - OPMAAK kan Drafter beperkt aan: vet, cursief, onderstrepen, markeren (achtergrondkleur) en
   tekstkleur — via een opmaak-suggestie (zie WIJZIGINGEN, "action": "format"). Wat NIET kan:
   lettergrootte of lettertype wijzigen, kop-/alineastijlen, afbeeldingen of logo's invoegen, en
@@ -181,6 +202,17 @@ Sluit je antwoord af met exact één JSON-blok, en alleen als je wijzigingen voo
 Een OPMAAK-suggestie heeft "action": "format" + "format" met uitsluitend deze keys:
 "bold": true, "italic": true, "underline": true, "highlight": "yellow|green|…", "color": "#rrggbb".
 Geen "replace" nodig; "find" volgt dezelfde regels als hieronder en wijst de te opmaken passage aan.
+Een INVOEG-suggestie zet NIEUWE tekst in het document (ook in een leeg document):
+{ "action": "insert", "position": "end", "title": "...", "content": "VOLLEDIGE nieuwe tekst…", "why": "..." }
+- "position": "end" (einde document — gebruik dit bij een leeg document of een nieuw stuk),
+  "start", of { "after": "ankertekst" } / { "before": "ankertekst" } — het anker volgt de
+  find-regels (letterlijk, uniek, één alinea, ≤255 tekens).
+- "content" mag een compleet document of artikel zijn; scheid alinea's met \\n. Schrijf de tekst
+  VOLLEDIG uit (geen "[vul aan]"-instructies aan jezelf; invulvelden voor de jurist zoals
+  [naam] of [datum] mogen wél).
+- Vraagt de jurist om een nieuw document of nieuwe tekst ("schrijf een VSO", "zet dit in het
+  document", "maak een artikel over X"): gebruik een insert-suggestie — óók als je de tekst eerder
+  in dit gesprek al als concept toonde (zet hem dan alsnog via insert in het document).
 Eisen aan elke suggestion — KRITISCH voor Track Changes:
 - "ref": het artikel waarin de wijziging valt, exact als "Artikel N" (of "Bijlage M, artikel N").
 - "find": de LETTERLIJKE, nog ongewijzigde tekst uit het document die vervangen wordt.
@@ -228,14 +260,24 @@ Eisen aan elke suggestion — KRITISCH voor Track Changes:
 Verzin nooit bronnen of vindplaatsen.`
 }
 
-function buildUserMessage(question: string, context: { selection?: string; body?: string; bodyTruncated?: boolean }) {
-  const parts = [`Instructie van de jurist: ${question}`]
+function buildUserMessage(
+  question: string,
+  context: { selection?: string; body?: string; bodyTruncated?: boolean },
+  history: { role: string; text: string }[] = [],
+) {
+  const parts: string[] = []
+  if (history.length) {
+    parts.push(`EERDER IN DIT GESPREK (ter context — "dat"/"het" in de instructie kan hiernaar verwijzen):\n${history.map((m) => `${m.role}: ${m.text}`).join("\n")}\n`)
+  }
+  parts.push(`Instructie van de jurist: ${question}`)
   if (context?.selection) parts.push(`\nDe jurist heeft deze passage geselecteerd:\n"""${context.selection}"""`)
-  if (context?.body) {
+  if (context?.body && context.body.trim()) {
     const truncNote = context?.bodyTruncated
       ? "\nLET OP: de documenttekst hieronder is AFGEKAPT (het document is langer dan wat je ziet). Latere artikelen/bijlagen ontbreken. Valt het gevraagde buiten dit zichtbare deel, stel dan geen wijziging voor maar meld dit."
       : ""
     parts.push(`${truncNote}\nVolledige documenttekst (gebruik dit om 'find' letterlijk en uniek te kiezen):\n"""${context.body}"""`)
+  } else {
+    parts.push("\nHET DOCUMENT IS LEEG (of er is geen tekst aangeleverd). Gebruik bij een schrijfverzoek een insert-suggestie met position \"end\" om de tekst in het document te zetten — vraag NIET om een bestaande passage.")
   }
   return parts.join("\n")
 }
@@ -247,8 +289,8 @@ function splitSuggestions(text: string) {
   const fenced = text.match(/```json\s*([\s\S]*?)```/) || text.match(/```\s*(\{[\s\S]*?\})\s*```/)
   if (fenced) { block = fenced[1]; outer = fenced[0] }
   else {
-    // Geen fence: zoek het laatste JSON-object dat "suggestions" bevat.
-    const i = text.indexOf('"suggestions"')
+    // Geen fence: zoek het laatste JSON-object dat "suggestions" of "clarify" bevat.
+    const i = text.indexOf('"suggestions"') !== -1 ? text.indexOf('"suggestions"') : text.indexOf('"clarify"')
     if (i !== -1) {
       const start = text.lastIndexOf("{", i)
       const end = findMatchingBrace(text, start)
@@ -257,16 +299,39 @@ function splitSuggestions(text: string) {
   }
   let suggestions: any[] = []
   let citations: any[] = []
+  let clarify: { intro: string; questions: { q: string; options: string[] }[] } | null = null
   let prose = text
   if (block) {
     try {
       const parsed = JSON.parse(block)
       suggestions = Array.isArray(parsed?.suggestions) ? parsed.suggestions : []
       citations = Array.isArray(parsed?.citations) ? parsed.citations : []
+      clarify = sanitizeClarify(parsed?.clarify)
       prose = text.replace(outer, "").trim()
     } catch { /* ongeldige JSON → behandel als pure tekst */ }
   }
-  return { prose: prose.trim(), suggestions, citations }
+  return { prose: prose.trim(), suggestions, citations, clarify }
+}
+
+// Verduidelijkingsvragen: streng begrensd (max 2 vragen, 4 korte opties) zodat de kaart in
+// het paneel compact blijft en het model niet kan "uitvragen".
+function sanitizeClarify(raw: unknown): { intro: string; questions: { q: string; options: string[] }[] } | null {
+  if (!raw || typeof raw !== "object") return null
+  const r = raw as Record<string, unknown>
+  const questions = (Array.isArray(r.questions) ? r.questions : [])
+    .slice(0, 2)
+    .map((it: unknown) => {
+      const o = (it && typeof it === "object" ? it : {}) as Record<string, unknown>
+      const q = typeof o.q === "string" ? o.q.trim().slice(0, 200) : ""
+      const options = (Array.isArray(o.options) ? o.options : [])
+        .filter((x: unknown) => typeof x === "string" && (x as string).trim())
+        .slice(0, 4)
+        .map((x: unknown) => (x as string).trim().slice(0, 90))
+      return q ? { q, options } : null
+    })
+    .filter((x): x is { q: string; options: string[] } => x !== null)
+  if (!questions.length) return null
+  return { intro: typeof r.intro === "string" ? r.intro.trim().slice(0, 220) : "", questions }
 }
 
 function findMatchingBrace(s: string, start: number) {
@@ -423,6 +488,33 @@ function sanitizeFormat(raw: unknown): Record<string, boolean | string> | null {
 // Bepaal of een suggestie toepasbaar is in Word en repareer 'find' waar mogelijk.
 function annotateSuggestion(s: any, body: string, articles: { num: string; start: number; end: number }[]) {
   const out: any = { ...s }
+
+  // INVOEG-suggesties: nieuwe tekst, geen find. Valideer content + positie (een eventueel
+  // anker volgt de find-regels: letterlijk, uniek, één alinea/cel, ≤255).
+  if (s?.action === "insert") {
+    const content = String(s?.content || "").trim().slice(0, 20000)
+    if (!content) { out.applicable = false; out.findIssue = "insert zonder content"; return out }
+    out.content = content
+    out.replace = undefined
+    const position = s?.position ?? "end"
+    if (position === "end" || position === "start") {
+      out.position = position
+      out.applicable = true
+      out.findIssue = null
+      return out
+    }
+    const key = position?.after ? "after" : position?.before ? "before" : null
+    const anchor = key ? String(position[key] || "") : ""
+    if (!key || !anchor || /[\r\n\t]/.test(anchor) || anchor.length > WORD_SEARCH_MAX) {
+      out.applicable = false; out.findIssue = "ongeldige insert-positie"; return out
+    }
+    const cnt = occurrences(body, anchor)
+    out.position = { [key]: anchor }
+    out.applicable = cnt === 1
+    out.findIssue = cnt === 1 ? null : cnt === 0 ? "insert-anker niet in document" : "insert-anker niet uniek"
+    return out
+  }
+
   if (!s?.find) { out.applicable = false; out.findIssue = "geen find"; return out }
 
   const isFormat = s?.action === "format"

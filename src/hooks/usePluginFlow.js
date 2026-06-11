@@ -47,6 +47,9 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
   const [storedChats, setStoredChats] = useState(loadStoredChats)
   const chatIdRef = useRef(null)
   const toastTimer = useRef(null)
+  // Spiegel van messages voor gebruik in callbacks (voorkomt verouderde closures).
+  const messagesRef = useRef(messages)
+  useEffect(() => { messagesRef.current = messages }, [messages])
 
   const showToast = useCallback((node) => {
     setToast(node)
@@ -73,9 +76,12 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
     setBusy(true)
     try {
       const ctx = inWord ? await getContext({ includeBody: true }) : { selection: '', body: '' }
-      const res = await askDrafter({ question: text, context: ctx, profile, mode: 'chat' })
+      // Laatste gespreksbeurten meesturen: de server is stateless, maar zo behouden
+      // vervolg-instructies ("zet dat in het document") hun referent.
+      const history = messagesRef.current.slice(-6).map((m) => ({ role: m.role, text: m.text }))
+      const res = await askDrafter({ question: text, context: ctx, profile, mode: 'chat', history })
       const sug = (res.suggestions || []).map((s, i) => ({ id: `c${Date.now()}_${i}`, ...s }))
-      setMessages((m) => [...m, { role: 'assistant', text: res.reply || '', citations: res.citations, suggestions: sug }])
+      setMessages((m) => [...m, { role: 'assistant', text: res.reply || '', citations: res.citations, suggestions: sug, clarify: res.clarify || null }])
       if (sug.length) { setSuggestions(sug); setApplied(false); setStatuses({}) }
     } catch (e) {
       // askDrafter levert al een nette, gebruikersgerichte melding.
@@ -90,6 +96,18 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
     setMessages((m) => [...m, { role: 'user', text }])
     await ask(text)
   }, [ask])
+
+  // Antwoord op een verduidelijkingsvraag. De server is stateless (geen gespreksgeheugen),
+  // dus we componeren de oorspronkelijke vraag + de gekozen optie tot één nieuwe instructie.
+  const answerClarify = useCallback(async (assistantIdx, option) => {
+    if (busy) return
+    let userIdx = -1
+    for (let i = Math.min(assistantIdx, messages.length - 1); i >= 0; i--) {
+      if (messages[i].role === 'user') { userIdx = i; break }
+    }
+    const orig = userIdx >= 0 ? messages[userIdx].text : ''
+    await send(orig ? `${orig} — ${option}` : option)
+  }, [busy, messages, send])
 
   // Opnieuw proberen vanaf een assistant-bericht: draait eerst de wijzigingen die dat
   // antwoord in het document zette terug (reject per suggestie — alléén die van dit
@@ -211,7 +229,7 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
     // typing voedt de "Legal Mind denkt na…"-bubble in de thread zolang de AI-call loopt.
     typing: busy,
     history, loadChat,
-    setHelpOpen, send, retry, applyChanges, accept, reject, acceptAll, rejectAll, focusChange, newChat,
+    setHelpOpen, send, retry, answerClarify, applyChanges, accept, reject, acceptAll, rejectAll, focusChange, newChat,
     counts: { pending: pending.length, accepted: accepted.length, rejected: rejected.length, resolved, total: suggestions.length },
   }
 }

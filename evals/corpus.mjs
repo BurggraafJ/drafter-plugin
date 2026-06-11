@@ -580,6 +580,9 @@ De samenwerking omvat de volgende gegevensverzamelingen: regionale mobiliteitsda
 
 Artikel 2 — Gebruiksvoorwaarden
 Op het gebruik van de Datasets is artikel 5 van de hoofdovereenkomst van overeenkomstige toepassing. Sublicentiëring aan derden is niet toegestaan.`,
+
+  // ── 15. Leeg document — test het opstellen van nieuwe tekst (insert) ────────
+  leeg_document: ``,
 }
 
 // ── 11. Raamovereenkomst ICT (gegenereerd, > 24.000 tekens) ──────────────────

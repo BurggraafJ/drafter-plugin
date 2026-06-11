@@ -118,6 +118,13 @@ minstens één van deze termen moet in de reply staan (borgt dat het juridische 
 | v10/v11 op 67 cases | 65–67/67 | 91–93/100 |
 | **set v3: 89 cases tegen v11** (`baseline-v3`) | 79/89 (89%) | 94/100 |
 | **v12 op 89 cases** (`final-v12`) | **87/89 (98%)** | 93/100 |
+| gpt-5.4-mini op 89 cases (`mini54-v13`) | 84/89 (94%) | 88/100 · 3× sneller, ~7× goedkoper |
+| v14 op 93 cases (`final-v14`: + hernummering, opmaak) | 91/93 (98%) | 92/100 |
+| **v15 op 96 cases** (`final-v15`: + verduidelijking) | **96/96 (100%)** | **96/100** |
+
+**Judge-A/B** (`judge-ab.mjs`): dezelfde antwoorden her-beoordeeld met gpt-5.4-mini geeft ±91%
+verdict-agreement en MAE ±5, maar een te lage fail-recall (mist de échte fails — te mild).
+De judge blijft daarom op gpt-5.5; bespaar door de judge weg te laten bij routinematige runs.
 
 v3 voegde de faalmodi toe waar v11 doorheen zakte — en v12 dicht ze: **tabel-cellen 0/3 → 3/3**
 (prompt: anker binnen één cel), **capability-grens 2/5 → 5/5** (opmaak/kolommen/logo's: eerlijk

@@ -24,7 +24,7 @@ export default function ProposalCard({ suggestions = [], onApply, applied }) {
         {visible.map((c, i) => (
           <div className="lm-proposal-li" key={c.id || i}>
             {c.ref && <span className="lm-pill">{c.ref}</span>}
-            <span>{c.title || c.replace?.slice(0, 60)}</span>
+            <span>{c.title || c.replace?.slice(0, 60) || c.content?.slice(0, 60)}</span>
           </div>
         ))}
         {hidden > 0 && (

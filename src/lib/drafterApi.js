@@ -13,7 +13,7 @@ const FUNCTIONS_BASE =
  *
  * @returns {Promise<{ reply: string, suggestions?: Array<{find:string, replace:string, applicable?:boolean, findIssue?:string}>, citations?: Array }>}
  */
-export async function askDrafter({ question, context, profile = 'default', mode = 'chat' }) {
+export async function askDrafter({ question, context, profile = 'default', mode = 'chat', history = [] }) {
   if (!FUNCTIONS_BASE) throw new Error('Drafter is niet goed geconfigureerd (serverinstellingen ontbreken). Neem contact op met de beheerder.')
 
   const { data: { session } } = await supabase.auth.getSession()
@@ -25,7 +25,7 @@ export async function askDrafter({ question, context, profile = 'default', mode 
         'Content-Type': 'application/json',
         Authorization: `Bearer ${session?.access_token || import.meta.env.VITE_SUPABASE_ANON_KEY}`,
       },
-      body: JSON.stringify({ question, context, profile, mode }),
+      body: JSON.stringify({ question, context, profile, mode, history }),
     })
   } catch {
     // Netwerk-/CORS-fout: geen verbinding met de server.

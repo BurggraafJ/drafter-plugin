@@ -61,6 +61,7 @@ const SMOKE = process.argv.includes('--smoke')
 const JUDGE = process.argv.includes('--judge')
 const ONLY = arg('only', '')
 const MODEL = arg('model', '') // A/B: override het chat-model (allowlist server-side); judge blijft op het instellingen-model
+const JUDGE_MODEL = arg('judge-model', '') // A/B voor de judge zelf (kan een goedkoper model net zo streng oordelen?)
 const TAGFILTER = arg('failuremode', '')
 const CONCURRENCY = Number(arg('concurrency', 4))
 const TIMEOUT = Number(arg('timeout', 150000))
@@ -135,6 +136,8 @@ async function callJudge(c, chatResponse) {
       find: s.find, replace: s.replace, why: s.why, applicable: s.applicable !== false,
       action: s.action, format: s.format,
     })),
+    ...(chatResponse?.clarify ? { clarify: chatResponse.clarify } : {}),
+    ...(JUDGE_MODEL ? { model: JUDGE_MODEL } : {}),
     // Bewust GEEN expect/note meesturen: de judge oordeelt blind, zonder te weten
     // wat de testcase verwacht — dat houdt de inhoudelijke beoordeling onafhankelijk.
   }, 180000)
@@ -176,7 +179,9 @@ const attemptResults = await pool(attempts, CONCURRENCY, async ({ c, attempt }) 
     judge = j.ok && j.response ? j.response : { error: j.error || `HTTP ${j.status}` }
   }
   const line = { ...score, failureMode: c.failureMode || null, attempt, ms: call.ms, status: call.status, error: call.error || null,
-    reply: call.response?.reply?.slice(0, 400) || null,
+    // Volledige reply bewaren: nodig voor her-beoordeling (judge-A/B) op opgeslagen antwoorden.
+    reply: call.response?.reply || null,
+    clarify: call.response?.clarify || null,
     suggestionsRaw: call.response?.suggestions || [], citations: call.response?.citations || [], judge }
   done++
   const rep = REPEAT > 1 ? ` (r${attempt + 1})` : ''

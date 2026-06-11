@@ -417,4 +417,26 @@ export const CASES = [
   { id: 'lst-94-punt-vier', doc: 'verwijzingen_mix', category: 'trap', failureMode: 'non-unieke-find',
     question: 'Pas in de kostenlijst van artikel 6 alleen punt 4 aan: maak de betaaltermijn veertien dagen in plaats van dertig.',
     expect: { suggestions: 'one', targets: [6], value: 'veertien', findMust: 'infrastructuur', note: '"binnen dertig dagen" staat in punt 2, 4 én 6 van de lijst; het anker moet punt 4 pakken (genummerde-lijst-variant van de non-unieke-find-trap).' } },
+
+  // ══ V5 — VERDUIDELIJKINGSVRAGEN (alleen vragen als het écht moet) ══════════
+  { id: 'clr-95-ambigu-termijn', doc: 'algemene_voorwaarden', category: 'guardrail', failureMode: 'verduidelijking',
+    question: 'Pas de termijn aan naar vijfenveertig dagen.',
+    expect: { suggestions: 'clarify', targets: [], note: 'Het document kent meerdere termijnen (offertegeldigheid art. 3, betaling art. 6, fatale termijnen art. 9, opzegging art. 14) en de instructie noemt er geen — een verkeerde gok schaadt. Verwacht: verduidelijkingsvraag, geen wijzigingen.' } },
+
+  { id: 'clr-96-ambigu-bedrag', doc: 'huur_woonruimte', category: 'guardrail', failureMode: 'verduidelijking',
+    question: 'Verhoog het bedrag met € 100.',
+    expect: { suggestions: 'clarify', targets: [], note: 'Huurprijs (art. 3), servicekosten (art. 4) en waarborgsom (art. 6) zijn allemaal plausibel; "het bedrag" is onbepaald. Verwacht: verduidelijkingsvraag met opties.' } },
+
+  { id: 'clr-97-redelijke-default', doc: 'nda', category: 'targeted', failureMode: 'verduidelijking',
+    question: 'Maak de boete wat hoger.',
+    expect: { suggestions: 'one', targets: [6], note: 'De rem-test: er is maar één boetebeding (art. 6) — géén vraag stellen maar een redelijke verhoging voorstellen en de aanname kort benoemen. Een clarify-vraag hier = te snel vragen = fail.' } },
+
+  // ══ V5 — NIEUWE TEKST OPSTELLEN (insert, ook in een leeg document) ═════════
+  { id: 'ins-98-leeg-document', doc: 'leeg_document', category: 'add', failureMode: 'insert-nieuw-document',
+    question: 'Schrijf een beknopte geheimhoudingsovereenkomst tussen twee ondernemingen en zet die in het document.',
+    expect: { suggestions: 'some', targets: [], scopeStrict: false, mustInsert: true, value: 'geheimhouding', note: 'Leeg document: verwacht een insert-suggestie (position "end") met een volledig uitgeschreven NDA — niet om een bestaande passage vragen.' } },
+
+  { id: 'ins-99-nieuw-artikel', doc: 'opdracht_zzp', category: 'add', failureMode: 'insert-nieuw-document',
+    question: 'Voeg een nieuw artikel toe over mediation bij geschillen, direct vóór het artikel over toepasselijk recht.',
+    expect: { suggestions: 'some', targets: [], scopeStrict: false, mustInsert: true, value: 'mediation', note: 'Insert met positie-anker (before/after rond art. 10); volledig uitgeschreven artikeltekst.' } },
 ]

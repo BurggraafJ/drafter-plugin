@@ -96,9 +96,26 @@ export function scoreSuggestion(doc, articles, s) {
     article = articleAt(articles, idx)
   }
 
-  // Opmaak-suggesties ({action:'format', format:{bold/highlight/…}}) hebben geen replace:
-  // de tekst blijft staan, alleen de opmaak verandert.
+  // Opmaak-suggesties ({action:'format'}) hebben geen replace; invoeg-suggesties
+  // ({action:'insert', content, position}) hebben geen find — de server valideert de
+  // positie/het anker en zet de applicable-vlag, die we hier respecteren.
   const isFormat = s?.action === 'format'
+  const isInsert = s?.action === 'insert'
+  if (isInsert) {
+    const hasContent = typeof s?.content === 'string' && s.content.trim().length > 0
+    const applicable = s?.applicable !== false && hasContent
+    const issues = []
+    if (!hasContent) issues.push('insert zonder content')
+    if (s?.applicable === false) issues.push(`door server gemarkeerd als niet-toepasbaar${s?.findIssue ? ` (${s.findIssue})` : ''}`)
+    // Anker-artikel bepalen voor scope-rapportage (end/start → geen artikel).
+    const anchor = s?.position?.after || s?.position?.before || ''
+    let article = null
+    if (anchor) {
+      const idx = normalize(doc).toLowerCase().indexOf(normalize(anchor).toLowerCase())
+      if (idx >= 0) article = articleAt(articles, idx)
+    }
+    return { find: '', findLen: 0, multiline: false, tooLong: false, countStrict: 0, foundStrict: true, foundNorm: true, unique: true, article, isInsert: true, content: s?.content, replaceDiffers: hasContent, applicable, issues }
+  }
   const hasFormat = isFormat && s?.format && typeof s.format === 'object' && Object.keys(s.format).length > 0
   const replaceDiffers = isFormat
     ? hasFormat
@@ -154,6 +171,12 @@ export function scoreCase(c, doc, response) {
     // Juridisch oordeel: zowel "wijziging mét waarschuwing" als "onderbouwde weigering" is goed,
     // mits eventuele wijzigingen in scope blijven en de reply het juridische punt benoemt.
     countOk = true
+  } else if (expect.suggestions === 'clarify') {
+    // De instructie is bewust ambigu: verwacht een verduidelijkingsvraag (clarify-blok met
+    // minstens één vraag) en GEEN geplaatste wijzigingen.
+    const clarify = response?.clarify
+    countOk = !!(clarify && Array.isArray(clarify.questions) && clarify.questions.length >= 1) && applicable.length === 0
+    if (!countOk) reasons.push(clarify ? 'clarify mét wijzigingen (hoort één van beide te zijn)' : 'verwachtte een verduidelijkingsvraag (clarify), kreeg er geen')
   }
 
   // 2) Applicability — elk voorstel moet toepasbaar zijn in Word
@@ -175,12 +198,19 @@ export function scoreCase(c, doc, response) {
     if (missing.length) { recallOk = false; reasons.push(`target-artikel(en) ${missing.join(', ')} niet geraakt`) }
   }
 
-  // 5) Waarde aanwezig in een replace
+  // 5) Waarde aanwezig in een replace (of in insert-content)
   let valueOk = true
   if (expect.value) {
-    const hay = normalize(suggestions.map((s) => `${s.replace ?? ''} ${s.ins ?? ''}`).join(' ')).toLowerCase()
+    const hay = normalize(suggestions.map((s) => `${s.replace ?? ''} ${s.ins ?? ''} ${s.content ?? ''}`).join(' ')).toLowerCase()
     valueOk = hay.includes(normalize(expect.value).toLowerCase())
-    if (!valueOk) reasons.push(`verwachte waarde "${expect.value}" niet in replace gevonden`)
+    if (!valueOk) reasons.push(`verwachte waarde "${expect.value}" niet in replace/content gevonden`)
+  }
+
+  // 5a-bis) Invoeg-verwachting: minstens één toepasbare insert-suggestie.
+  let insertOk = true
+  if (expect.mustInsert) {
+    insertOk = applicable.some((p) => p.isInsert)
+    if (!insertOk) reasons.push('verwachtte een insert-suggestie (nieuwe tekst in het document), maar kreeg er geen toepasbare')
   }
 
   // 5a) Opmaak-verwachting: expect.format = 'highlight'|'bold'|… → minstens één toepasbare
@@ -219,10 +249,10 @@ export function scoreCase(c, doc, response) {
     if (!replyMustOk) reasons.push(`reply benoemt het juridische punt niet (verwacht één van: ${expect.replyMust.join(', ')})`)
   }
 
-  const pass = countOk && applicabilityOk && precisionOk && recallOk && valueOk && formatOk && findMustOk && findMustNotOk && replyOk && replyMustOk
+  const pass = countOk && applicabilityOk && precisionOk && recallOk && valueOk && formatOk && insertOk && findMustOk && findMustNotOk && replyOk && replyMustOk
   return {
     id: c.id, category: c.category, pass,
-    checks: { countOk, applicabilityOk, precisionOk, recallOk, valueOk, formatOk, findMustOk, findMustNotOk, replyOk, replyMustOk },
+    checks: { countOk, applicabilityOk, precisionOk, recallOk, valueOk, formatOk, insertOk, findMustOk, findMustNotOk, replyOk, replyMustOk },
     targets, touched,
     suggestionCount: suggestions.length, applicableCount: applicable.length,
     reasons, perSug,
