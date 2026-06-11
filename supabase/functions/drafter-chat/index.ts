@@ -49,6 +49,13 @@ const BODY_CAP = 24000
 const QUESTION_CAP = 4000
 const SELECTION_CAP = 6000
 
+// Optionele model-override per request (voor de eval-harness: A/B-vergelijking van modellen).
+// Bewust een strakke allowlist van varianten die we bereid zijn te betalen — het endpoint is
+// publiek, dus een aanroeper mag nooit een duurder/willekeurig model kunnen kiezen. Alleen
+// modellen die volgens de actuele OpenAI-prijslijst bestaan (gpt-5.5-mini bestaat NIET; de
+// mini/nano-varianten lopen t/m de 5.4-generatie — zie developers.openai.com/api/docs/pricing).
+const ALLOWED_MODELS = ["gpt-5.5", "gpt-5.4", "gpt-5.4-mini", "gpt-5.4-nano", "gpt-5-mini"]
+
 Deno.serve(async (req) => {
   const CORS = corsHeaders(req)
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS })
@@ -63,6 +70,11 @@ Deno.serve(async (req) => {
         String(parsed?.context?.body || "").length > BODY_CAP,
     }
     if (!question.trim()) return json({ error: "question is verplicht" }, 400, CORS)
+
+    const modelOverride = typeof parsed?.model === "string" && parsed.model.trim() ? parsed.model.trim() : null
+    if (modelOverride && !ALLOWED_MODELS.includes(modelOverride)) {
+      return json({ error: `model niet toegestaan (toegestaan: ${ALLOWED_MODELS.join(", ")})` }, 400, CORS)
+    }
 
     // Rate-limiting: per-IP + globaal dagplafond (kostenbescherming open endpoint).
     const limit = await rateCheck(req, "drafter-chat")
@@ -81,11 +93,12 @@ Deno.serve(async (req) => {
     const systemMsg = buildSystemMessage(prof?.published_text)
     const userMsg = buildUserMessage(question, context)
 
+    const usedModel = modelOverride || settings.model
     let reply
     try {
       reply = await callOpenAI({
         supabase, apiKey,
-        model: settings.model,
+        model: usedModel,
         max_tokens: settings.max_tokens,
         temperature: settings.temperature,
         reasoning_effort: settings.reasoning_effort,
@@ -119,7 +132,7 @@ Deno.serve(async (req) => {
           : "Ik kon hier geen concreet voorstel voor maken. Kun je je vraag iets specifieker formuleren?"
     }
 
-    return json({ reply: replyText, suggestions: processed, citations }, 200, CORS)
+    return json({ reply: replyText, suggestions: processed, citations, model: usedModel }, 200, CORS)
   } catch (e) {
     return json({ error: `Onverwachte fout: ${(e as Error).message}` }, 500, corsHeaders(req))
   }
@@ -143,10 +156,13 @@ ANTWOORD
   onderbouwd weigeren.
 - Vraagt de jurist enkel om advies of uitleg ("leg uit", "geef advies", "ik wil nog niets wijzigen"),
   geef dan uitsluitend tekst en GEEN wijzigingen.
-- Drafter wijzigt uitsluitend TEKST. Vraagt de jurist om opmaak (kleur, markering, vet, lettertype,
-  stijlen), om afbeeldingen of logo's, of om structuurwijzigingen aan tabellen (kolommen of rijen
-  toevoegen/verwijderen): stel GEEN wijziging voor maar leg kort uit dat dit handmatig in Word moet.
-  Doe nooit alsof met een tekst-trucje (bv. sterretjes om een woord).
+- OPMAAK kan Drafter beperkt aan: vet, cursief, onderstrepen, markeren (achtergrondkleur) en
+  tekstkleur — via een opmaak-suggestie (zie WIJZIGINGEN, "action": "format"). Wat NIET kan:
+  lettergrootte of lettertype wijzigen, kop-/alineastijlen, afbeeldingen of logo's invoegen, en
+  structuurwijzigingen aan tabellen (kolommen/rijen toevoegen of verwijderen) — leg bij zulke
+  verzoeken kort uit dat dit handmatig in Word moet. Doe nooit alsof met een tekst-trucje
+  (bv. sterretjes om een woord). Meld bij markeren dat die buiten Word's revisiesysteem valt
+  (Afwijzen in Drafter haalt hem weer weg).
 - Staat de gevraagde passage, het genoemde artikel of de genoemde bijlage niet in het document,
   stel dan GEEN wijziging voor maar meld dat in je toelichting. Verzin nooit een bestemming.
 - Let op: bijlagen hebben vaak een EIGEN artikelnummering. "Artikel 2" zonder meer = artikel 2 van
@@ -158,9 +174,13 @@ ANTWOORD
 WIJZIGINGEN (worden als Track Changes in Word geplaatst)
 Sluit je antwoord af met exact één JSON-blok, en alleen als je wijzigingen voorstelt:
 \`\`\`json
-{ "suggestions": [ { "ref": "Artikel 5", "title": "...", "find": "...", "replace": "...", "why": "...", "cite": 1 } ],
+{ "suggestions": [ { "ref": "Artikel 5", "title": "...", "find": "...", "replace": "...", "why": "...", "cite": 1 },
+                   { "ref": "Artikel 7", "title": "...", "find": "...", "action": "format", "format": { "highlight": "yellow" }, "why": "..." } ],
   "citations": [ { "idx": 1, "badge": "BW", "title": "...", "meta": "...", "url": "..." } ] }
 \`\`\`
+Een OPMAAK-suggestie heeft "action": "format" + "format" met uitsluitend deze keys:
+"bold": true, "italic": true, "underline": true, "highlight": "yellow|green|…", "color": "#rrggbb".
+Geen "replace" nodig; "find" volgt dezelfde regels als hieronder en wijst de te opmaken passage aan.
 Eisen aan elke suggestion — KRITISCH voor Track Changes:
 - "ref": het artikel waarin de wijziging valt, exact als "Artikel N" (of "Bijlage M, artikel N").
 - "find": de LETTERLIJKE, nog ongewijzigde tekst uit het document die vervangen wordt.
@@ -168,7 +188,9 @@ Eisen aan elke suggestion — KRITISCH voor Track Changes:
      (“ ” ‘ ’), harde/dubbele spaties en interpunctie. Vervang nooit gekrulde aanhalingstekens
      door rechte. Bij twijfel: kopieer de hele zinsnede exact zoals die in de documenttekst staat.
    • Houd 'find' ZO KORT MOGELIJK — alleen de zinsnede die echt verandert (richtlijn: minder dan 160 tekens).
-   • 'find' valt binnen ÉÉN alinea: bevat NOOIT een regeleinde en NOOIT de "Artikel N —"-kopregel.
+   • 'find' valt binnen ÉÉN alinea: bevat NOOIT een regeleinde. De "Artikel N —"-kopregel hoort
+     er niet in — TENZIJ de wijziging de kop zélf betreft (bv. een artikel hernoemen): dan is de
+     kopregel juist het anker.
    • 'find' komt EXACT één keer in het document voor; is de zinsnede niet uniek, neem dan net genoeg
      omringende woorden uit dezelfde alinea mee om hem uniek te maken.
 - "replace": exact diezelfde zinsnede in de nieuwe vorm. Verander alleen wat nodig is (minimale diff).
@@ -190,6 +212,12 @@ Eisen aan elke suggestion — KRITISCH voor Track Changes:
   uitzonderingen die de jurist noemt ("behalve artikel 1") strikt.
 - Vraagt de jurist een SPECIFIEK voorkomen ("alleen de eerste/tweede X"): kies precies dat voorkomen
   en maak het anker uniek met de omringende woorden van díé plek.
+- HERNOEMEN van een artikel ("hernoem artikel 5 naar 5A"): werk de kopregel bij ÉN loop daarna
+  systematisch ALLE verwijzingen na — ook varianten ("artikel 5", "art. 5", "Art. 5 lid 2",
+  "conform artikel 5") en verwijzingen in tabellen, lijsten en bijlagen die naar het hoofddocument
+  wijzen. Tel in je toelichting hoeveel verwijzingen je hebt bijgewerkt. Vraagt de jurist bewust
+  een GEDEELTELIJKE update, voer die dan uit maar waarschuw dat het document tijdelijk
+  inconsistente verwijzingen bevat.
 - TABELLEN: een tab markeert een celgrens en Word's zoekfunctie matcht nooit over cellen heen.
   Een find blijft dus altijd binnen ÉÉN cel (nooit een tab-teken opnemen); wijzig per cel met een
   eigen suggestie. Is een celtekst te kort om uniek te zijn in het document (bv. een kort label dat
@@ -378,10 +406,32 @@ function makeUnique(body: string, find: string, hint: string | null, articles: {
   return null
 }
 
+// Toegestane opmaak-keys voor "action": "format" (zelfde set als word.js applyFontProps).
+const FORMAT_KEYS = ["bold", "italic", "underline", "highlight", "color"] as const
+
+function sanitizeFormat(raw: unknown): Record<string, boolean | string> | null {
+  if (!raw || typeof raw !== "object") return null
+  const out: Record<string, boolean | string> = {}
+  for (const k of FORMAT_KEYS) {
+    const v = (raw as Record<string, unknown>)[k]
+    if (v === true) out[k] = true
+    else if ((k === "highlight" || k === "color") && typeof v === "string" && v.trim() && v.length <= 24) out[k] = v.trim()
+  }
+  return Object.keys(out).length ? out : null
+}
+
 // Bepaal of een suggestie toepasbaar is in Word en repareer 'find' waar mogelijk.
 function annotateSuggestion(s: any, body: string, articles: { num: string; start: number; end: number }[]) {
   const out: any = { ...s }
   if (!s?.find) { out.applicable = false; out.findIssue = "geen find"; return out }
+
+  const isFormat = s?.action === "format"
+  if (isFormat) {
+    const fmt = sanitizeFormat(s?.format)
+    if (!fmt) { out.applicable = false; out.findIssue = "opmaak-suggestie zonder geldige format-keys"; return out }
+    out.format = fmt
+    out.replace = undefined
+  }
 
   let find = String(s.find)
   let replace = String(s.replace ?? "")
@@ -423,7 +473,9 @@ function annotateSuggestion(s: any, body: string, articles: { num: string; start
   }
 
   // 3) Niet uniek → maak uniek met het artikel dat de suggestie zelf noemt.
-  if (occurrences(body, find) > 1) {
+  //    NIET voor opmaak-suggesties: het anker verbreden zou de opmaak ook op de
+  //    omringende contextwoorden zetten.
+  if (!isFormat && occurrences(body, find) > 1) {
     const fix = makeUnique(body, find, articleHint(s), articles)
     if (fix) {
       find = fix.pre + find + fix.post
@@ -433,7 +485,7 @@ function annotateSuggestion(s: any, body: string, articles: { num: string; start
   }
 
   out.find = find
-  out.replace = replace
+  if (!isFormat) out.replace = replace
 
   // 4) Valideer tegen het document (zoals Word het ziet).
   const countExact = occurrences(body, find)
@@ -449,16 +501,16 @@ function annotateSuggestion(s: any, body: string, articles: { num: string; start
   // 5) Afgebroken replace-vangnet: wie een volledige zin (eindigend op . ; :) vervangt door
   //    tekst die níét op een zinseinde eindigt, levert vrijwel zeker afgebroken model-output.
   //    Zo'n suggestie NIET plaatsen — een half afgemaakte zin in een contract is erger dan
-  //    een overgeslagen suggestie.
+  //    een overgeslagen suggestie. (Niet van toepassing op opmaak-suggesties: die hebben
+  //    geen replace; de tekst blijft staan.)
   const findEndsSentence = /[.;:]\s*$/.test(find)
   const replaceEndsOk = replace.trim() === "" || /[.;:!?»”")\]]\s*$/.test(replace)
-  const truncatedReplace = findEndsSentence && !replaceEndsOk
+  const truncatedReplace = !isFormat && findEndsSentence && !replaceEndsOk
   if (truncatedReplace) issues.push("replace lijkt afgebroken (eindigt niet op een zinseinde)")
 
   // 6) No-op-vangnet: replace gelijk aan find = geen echte wijziging (komt voor wanneer het
-  //    model "doet alsof" bij opmaakverzoeken). Niet plaatsen — het zou alleen een lege
-  //    del+ins-revisie in het document zetten.
-  const noopReplace = replace.trim() === find.trim()
+  //    model "doet alsof" bij opmaakverzoeken zonder format-actie). Niet plaatsen.
+  const noopReplace = !isFormat && replace.trim() === find.trim()
   if (noopReplace) issues.push("replace is gelijk aan find (geen wijziging)")
 
   out.applicable = countExact === 1 && find.length <= WORD_SEARCH_MAX && !/[\r\n\t]/.test(find) && !truncatedReplace && !noopReplace

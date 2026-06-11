@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Icon } from '../ui/Icon.jsx'
 import { LMMark } from '../ui/Brand.jsx'
 import ProposalCard from './ProposalCard.jsx'
@@ -12,7 +12,7 @@ function UserMessage({ text }) {
 }
 
 // Rendert de (platte-tekst) reply als alinea's + eventuele bronkaarten + acties.
-function AssistantMessage({ text, citations, onCite, showActions = true, error = false }) {
+function AssistantMessage({ text, citations, onCite, onRetry, showActions = true, error = false }) {
   const paras = String(text || '').split(/\n{2,}/).filter(Boolean)
   return (
     <div className="lm-msg">
@@ -39,9 +39,11 @@ function AssistantMessage({ text, citations, onCite, showActions = true, error =
         {showActions && (
           <div className="lm-msg-actions">
             <button title="Kopiëren" onClick={() => navigator.clipboard?.writeText(text)}><Icon name="copy" size={14} /></button>
-            <button title="Nuttig"><Icon name="thumbs-up" size={14} /></button>
-            <button title="Niet nuttig"><Icon name="thumbs-down" size={14} /></button>
-            <button title="Opnieuw"><Icon name="refresh-cw" size={14} /></button>
+            {onRetry && (
+              <button title="Opnieuw proberen (draait eerdere wijzigingen van dit antwoord terug)" onClick={onRetry}>
+                <Icon name="refresh-cw" size={14} />
+              </button>
+            )}
           </div>
         )}
       </div>
@@ -49,13 +51,34 @@ function AssistantMessage({ text, citations, onCite, showActions = true, error =
   )
 }
 
+// Levendige "aan het werk"-indicator: roterende werkfasen + voortgangsbalkje, zodat
+// zichtbaar is dat Drafter écht bezig is (gpt-calls duren 5-20s).
+const WORK_PHASES = [
+  'Document lezen…',
+  'Relevante artikelen zoeken…',
+  'Juridisch kader toetsen…',
+  'Formulering afwegen…',
+  'Wijzigingen voorstellen…',
+  'Antwoord opstellen…',
+]
 function Typing() {
+  const [phase, setPhase] = useState(0)
+  useEffect(() => {
+    const t = setInterval(() => setPhase((p) => (p + 1) % WORK_PHASES.length), 2400)
+    return () => clearInterval(t)
+  }, [])
   return (
     <div className="lm-msg">
       <LMMark size={26} />
       <div className="lm-msg-body">
         <div className="lm-msg-author">Legal Mind</div>
-        <div className="lm-typing"><span /><span /><span /></div>
+        <div className="lm-working">
+          <div className="lm-working-row">
+            <span className="lm-working-spinner" />
+            <span className="lm-working-phase" key={phase}>{WORK_PHASES[phase]}</span>
+          </div>
+          <div className="lm-working-bar"><span /></div>
+        </div>
       </div>
     </div>
   )
@@ -77,7 +100,9 @@ export default function Thread({ flow, onCite }) {
           if (m.role === 'user') return <UserMessage key={i} text={m.text} />
           return (
             <div key={i}>
-              <AssistantMessage text={m.text} citations={m.citations} onCite={onCite} showActions={!m.confirm && !m.error} error={m.error} />
+              <AssistantMessage text={m.text} citations={m.citations} onCite={onCite}
+                onRetry={!m.confirm ? () => flow.retry(i) : undefined}
+                showActions={!m.confirm} error={m.error} />
               {m.suggestions?.length > 0 && (
                 <div style={{ marginTop: 12 }}>
                   <ProposalCard suggestions={m.suggestions} onApply={flow.applyChanges} applied={flow.applied} />

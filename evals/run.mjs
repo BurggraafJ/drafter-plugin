@@ -60,6 +60,7 @@ function arg(name, def) {
 const SMOKE = process.argv.includes('--smoke')
 const JUDGE = process.argv.includes('--judge')
 const ONLY = arg('only', '')
+const MODEL = arg('model', '') // A/B: override het chat-model (allowlist server-side); judge blijft op het instellingen-model
 const TAGFILTER = arg('failuremode', '')
 const CONCURRENCY = Number(arg('concurrency', 4))
 const TIMEOUT = Number(arg('timeout', 150000))
@@ -117,7 +118,9 @@ function clientContext(c) {
 }
 
 async function callChat(c) {
-  return postJson('/drafter-chat', { question: c.question, context: clientContext(c), profile: PROFILE })
+  const payload = { question: c.question, context: clientContext(c), profile: PROFILE }
+  if (MODEL) payload.model = MODEL
+  return postJson('/drafter-chat', payload)
 }
 
 async function callJudge(c, chatResponse) {
@@ -130,6 +133,7 @@ async function callJudge(c, chatResponse) {
     reply: chatResponse?.reply || '',
     suggestions: (chatResponse?.suggestions || []).map((s) => ({
       find: s.find, replace: s.replace, why: s.why, applicable: s.applicable !== false,
+      action: s.action, format: s.format,
     })),
     // Bewust GEEN expect/note meesturen: de judge oordeelt blind, zonder te weten
     // wat de testcase verwacht — dat houdt de inhoudelijke beoordeling onafhankelijk.
@@ -153,7 +157,7 @@ async function pool(items, n, fn) {
 const attempts = []
 for (let r = 0; r < REPEAT; r++) for (const c of cases) attempts.push({ c, attempt: r })
 
-console.log(`Drafter evals — ${cases.length} cases × ${REPEAT} run(s)${JUDGE ? ' + judge' : ''} @ ${BASE} (concurrency ${CONCURRENCY}, timeout ${TIMEOUT}ms)\n`)
+console.log(`Drafter evals — ${cases.length} cases × ${REPEAT} run(s)${JUDGE ? ' + judge' : ''}${MODEL ? ` · model ${MODEL}` : ''} @ ${BASE} (concurrency ${CONCURRENCY}, timeout ${TIMEOUT}ms)\n`)
 const started = Date.now()
 let done = 0
 
@@ -225,7 +229,7 @@ if (JUDGE) console.log(`Judge: gem. ${judgeAvg ?? '–'}/100 over ${judged.lengt
 
 // ── rapport wegschrijven ─────────────────────────────────────────────────────
 await mkdir(join(__dir, 'report'), { recursive: true })
-const stamp = { tag: TAG, base: BASE, profile: PROFILE, cases: results.length, repeat: REPEAT, passed, flaky,
+const stamp = { tag: TAG, base: BASE, profile: PROFILE, model: MODEL || null, cases: results.length, repeat: REPEAT, passed, flaky,
   elapsedSec: Number(elapsed), p50, p95, byCat, byMode,
   judge: JUDGE ? { avg: judgeAvg, count: judged.length, errors: judgeErrors, verdicts: judgeVerdicts } : null }
 const reportJson = JSON.stringify({ stamp, results }, null, 2)
@@ -242,7 +246,7 @@ function buildMarkdown(stamp, results) {
   const lines = []
   lines.push(`# Drafter eval-rapport — ${stamp.tag}`)
   lines.push('')
-  lines.push(`**Pass: ${stamp.passed}/${stamp.cases} (${((stamp.passed / stamp.cases) * 100).toFixed(0)}%)**${stamp.repeat > 1 ? ` · ${stamp.repeat} runs/case · flaky ${stamp.flaky}` : ''} · latency p50 ${stamp.p50}ms / p95 ${stamp.p95}ms · ${stamp.elapsedSec}s · profiel \`${stamp.profile}\``)
+  lines.push(`**Pass: ${stamp.passed}/${stamp.cases} (${((stamp.passed / stamp.cases) * 100).toFixed(0)}%)**${stamp.repeat > 1 ? ` · ${stamp.repeat} runs/case · flaky ${stamp.flaky}` : ''} · latency p50 ${stamp.p50}ms / p95 ${stamp.p95}ms · ${stamp.elapsedSec}s · profiel \`${stamp.profile}\`${stamp.model ? ` · model \`${stamp.model}\`` : ''}`)
   lines.push('')
   lines.push('Per categorie: ' + Object.entries(stamp.byCat).map(([k, v]) => `${k} ${v.pass}/${v.total}`).join(' · '))
   lines.push('')

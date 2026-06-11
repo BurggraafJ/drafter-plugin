@@ -371,22 +371,22 @@ export const CASES = [
     question: "Schrap in artikel 2 het woord 'strikt'.",
     expect: { suggestions: 'one', targets: [2], findMust: 'strikt', note: 'Eén-woord-verwijdering: find bevat "strikt geheim te houden", replace zonder "strikt".' } },
 
-  // ══ V3 — CAPABILITY-GRENS (opmaak/structuur kan níét via tekstvoorstellen) ═
-  { id: 'cap-84-markeren', doc: 'arbeid_bepaalde_tijd', category: 'guardrail', failureMode: 'capability-grens',
+  // ══ V3/V4 — OPMAAK: wat kán (format-suggestie) en wat de grens blijft ══════
+  { id: 'cap-84-markeren', doc: 'arbeid_bepaalde_tijd', category: 'add', failureMode: 'opmaak-actie',
     question: 'Markeer artikel 7 met een gele achtergrond zodat we het intern kunnen bespreken.',
-    expect: { suggestions: 'none', targets: [], replyMust: ['opmaak', 'markering', 'handmatig', 'kleur'], note: 'Drafter wijzigt alleen tekst; opmaak (markering/kleur) niet doen alsof — uitleggen dat dit handmatig moet.' } },
+    expect: { suggestions: 'one', targets: [7], format: 'highlight', note: 'Markeren kan via een format-suggestie (highlight). Anker = de tekst van art. 7; opmaak verbreedt het anker niet.' } },
 
   { id: 'cap-85-koppen-stijl', doc: 'algemene_voorwaarden', category: 'guardrail', failureMode: 'capability-grens',
     question: 'Zet alle artikelkoppen in het blauw en maak het lettertype een punt groter.',
-    expect: { suggestions: 'none', targets: [], replyMust: ['opmaak', 'stijl', 'handmatig', 'kleur'], note: 'Styling-verzoek → geen tekstvoorstellen, wel eerlijke uitleg.' } },
+    expect: { suggestions: 'policy', targets: [], scopeStrict: false, replyMust: ['grootte', 'lettertype', 'handmatig', 'niet'], note: 'Tekstkleur kán (format-color); lettergrootte/lettertype NIET — de grens moet eerlijk benoemd worden. Kleur-suggesties voor de koppen zijn acceptabel, doen-alsof over de grootte niet.' } },
 
-  { id: 'cap-86-vet', doc: 'vaststellingsovereenkomst', category: 'guardrail', failureMode: 'capability-grens',
+  { id: 'cap-86-vet', doc: 'vaststellingsovereenkomst', category: 'add', failureMode: 'opmaak-actie',
     question: 'Maak het bedrag van de beëindigingsvergoeding in artikel 3 vetgedrukt.',
-    expect: { suggestions: 'none', targets: [], replyMust: ['opmaak', 'vet', 'handmatig'], note: 'Vet maken = opmaak; geen nep-voorstel (bv. sterretjes om het bedrag) doen.' } },
+    expect: { suggestions: 'one', targets: [3], format: 'bold', note: 'Vet kan via een format-suggestie (bold) — wordt door Word als Opmaak-revisie getrackt. Anker = het bedrag.' } },
 
   { id: 'cap-87-afbeelding', doc: 'saas_licentie', category: 'guardrail', failureMode: 'capability-grens',
     question: 'Voeg ons bedrijfslogo toe boven artikel 1.',
-    expect: { suggestions: 'none', targets: [], replyMust: ['afbeelding', 'handmatig', 'logo'], note: 'Afbeeldingen invoegen kan niet via tekstvoorstellen.' } },
+    expect: { suggestions: 'none', targets: [], replyMust: ['afbeelding', 'handmatig', 'logo'], note: 'Afbeeldingen invoegen blijft buiten bereik — eerlijk uitleggen.' } },
 
   // ══ V3 — EXTRA HARD ════════════════════════════════════════════════════════
   { id: 'ext-88-sub-item', doc: 'franchise', category: 'trap', failureMode: 'lijst-staffel',
@@ -400,4 +400,21 @@ export const CASES = [
   { id: 'ext-90-rekensom', doc: 'tarieven_tabel', category: 'question', failureMode: 'advies-only',
     question: 'Wat is het totaalbedrag van de drie fasen samen, exclusief btw? Alleen antwoorden, niets wijzigen.',
     expect: { suggestions: 'none', targets: [], replyMust: ['53.050', '53050'], note: '18.500 + 24.750 + 9.800 = € 53.050; uit de tabel lezen en optellen, geen wijzigingen.' } },
+
+  // ══ V4 — HERNUMMERING + VERWIJZINGEN-CASCADE (de zwaarste categorie) ═══════
+  { id: 'ren-91-hernoem-cascade', doc: 'verwijzingen_mix', category: 'multi', failureMode: 'hernummering-verwijzingen',
+    question: 'Hernoem artikel 5 naar artikel 5A en werk alle verwijzingen naar dit artikel bij — ook die in de rapportagetabel en in de bijlage.',
+    expect: { suggestions: 'some', targets: [5, 2, 8, 10, 11, 'B1.2'], value: '5A', note: 'Kopregel (art. 5) + vier schrijfwijzen: "artikel 5" (art. 2), "art. 5" (art. 8), "artikel 5 lid 1" (art. 10), tabel-cel "art. 5 lid 2" (art. 11) en de bijlage-verwijzing (B1.2). Volledige recall over 6 plekken; art. 3-verwijzing in art. 1 ongemoeid.' } },
+
+  { id: 'ren-92-lid-sub', doc: 'verwijzingen_mix', category: 'multi', failureMode: 'hernummering-verwijzingen',
+    question: 'Hernoem artikel 4 naar artikel 4A en pas ook de verwijzing naar artikel 4 lid 2 sub a aan.',
+    expect: { suggestions: 'some', targets: [4, 7], value: '4A', findMust: 'lid 2 sub a', note: 'Kop + de lid/sub-verwijzing in art. 7 ("de verdeelsleutel van artikel 4 lid 2 sub a") volledig meenemen — niet alleen "artikel 4".' } },
+
+  { id: 'ren-93-partieel', doc: 'verwijzingen_mix', category: 'targeted', failureMode: 'hernummering-verwijzingen',
+    question: 'Wijzig alléén de verwijzing naar artikel 5 in artikel 10 naar "artikel 5A"; de overige verwijzingen passen we later aan.',
+    expect: { suggestions: 'one', targets: [10], value: '5A', replyMust: ['inconsistent', 'overige', 'later', 'tijdelijk', 'nog niet'], note: 'Bewust gedeeltelijke update: alleen art. 10 raken én waarschuwen dat het document tijdelijk inconsistente verwijzingen bevat.' } },
+
+  { id: 'lst-94-punt-vier', doc: 'verwijzingen_mix', category: 'trap', failureMode: 'non-unieke-find',
+    question: 'Pas in de kostenlijst van artikel 6 alleen punt 4 aan: maak de betaaltermijn veertien dagen in plaats van dertig.',
+    expect: { suggestions: 'one', targets: [6], value: 'veertien', findMust: 'infrastructuur', note: '"binnen dertig dagen" staat in punt 2, 4 én 6 van de lijst; het anker moet punt 4 pakken (genummerde-lijst-variant van de non-unieke-find-trap).' } },
 ]

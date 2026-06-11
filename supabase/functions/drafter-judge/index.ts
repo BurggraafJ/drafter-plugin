@@ -74,9 +74,15 @@ Deno.serve(async (req) => {
     const settings = await getSettings()
 
     const sugText = suggestions.length
-      ? suggestions.map((s: any, i: number) =>
-          `${i + 1}. FIND: """${String(s.find || "").slice(0, 600)}"""\n   REPLACE: """${String(s.replace || "").slice(0, 600)}"""\n   WHY: ${String(s.why || "").slice(0, 300)}${s.applicable === false ? "\n   (door de server gemarkeerd als niet-plaatsbaar; wordt NIET toegepast)" : ""}`,
-        ).join("\n")
+      ? suggestions.map((s: any, i: number) => {
+          const head = `${i + 1}. FIND: """${String(s.find || "").slice(0, 600)}"""`
+          // Opmaak-suggesties wijzigen de TEKST niet: alleen de opmaak van de gevonden passage
+          // (vet/cursief/onderstrepen/markeren/tekstkleur) — beoordeel ze ook zo.
+          const body = s.action === "format"
+            ? `\n   OPMAAK (tekst blijft ongewijzigd): ${JSON.stringify(s.format || {})}`
+            : `\n   REPLACE: """${String(s.replace || "").slice(0, 600)}"""`
+          return `${head}${body}\n   WHY: ${String(s.why || "").slice(0, 300)}${s.applicable === false ? "\n   (door de server gemarkeerd als niet-plaatsbaar; wordt NIET toegepast)" : ""}`
+        }).join("\n")
       : "(geen wijzigingsvoorstellen)"
 
     const userMsg = `INSTRUCTIE VAN DE JURIST:

@@ -69,9 +69,7 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
     })
   }, [messages, suggestions, statuses, applied])
 
-  const send = useCallback(async (text) => {
-    if (!chatIdRef.current) chatIdRef.current = `chat_${Date.now()}`
-    setMessages((m) => [...m, { role: 'user', text }])
+  const ask = useCallback(async (text) => {
     setBusy(true)
     try {
       const ctx = inWord ? await getContext({ includeBody: true }) : { selection: '', body: '' }
@@ -86,6 +84,42 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
       setBusy(false)
     }
   }, [inWord, profile])
+
+  const send = useCallback(async (text) => {
+    if (!chatIdRef.current) chatIdRef.current = `chat_${Date.now()}`
+    setMessages((m) => [...m, { role: 'user', text }])
+    await ask(text)
+  }, [ask])
+
+  // Opnieuw proberen vanaf een assistant-bericht: draait eerst de wijzigingen die dat
+  // antwoord in het document zette terug (reject per suggestie — alléén die van dit
+  // antwoord, niet andermans tracked changes), knipt het gesprek terug tot de vraag en
+  // stelt die opnieuw.
+  const retry = useCallback(async (assistantIdx) => {
+    if (busy) return
+    const msgs = messages
+    let userIdx = -1
+    for (let i = Math.min(assistantIdx, msgs.length - 1); i >= 0; i--) {
+      if (msgs[i].role === 'user') { userIdx = i; break }
+    }
+    if (userIdx === -1) return
+    const question = msgs[userIdx].text
+
+    // Waren de suggesties van dit antwoord (of een later confirm) al in het document
+    // geplaatst? Dan eerst netjes terugdraaien.
+    const msgSug = msgs.slice(userIdx + 1).flatMap((m) => m.suggestions || [])
+    const placedIds = new Set(suggestions.map((s) => s.id))
+    if (inWord && applied && msgSug.some((s) => placedIds.has(s.id))) {
+      for (const c of suggestions) {
+        if (statuses[c.id] === 'pending' || statuses[c.id] === 'accepted') {
+          try { await rejectChange(c) } catch { /* wijziging stond er niet (meer) */ }
+        }
+      }
+    }
+    setSuggestions([]); setApplied(false); setStatuses({}); setActiveId(null)
+    setMessages(msgs.slice(0, userIdx + 1))
+    await ask(question)
+  }, [busy, messages, suggestions, statuses, applied, inWord, ask])
 
   const applyChanges = useCallback(async () => {
     if (applied || !suggestions.length) return
@@ -177,7 +211,7 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
     // typing voedt de "Legal Mind denkt na…"-bubble in de thread zolang de AI-call loopt.
     typing: busy,
     history, loadChat,
-    setHelpOpen, send, applyChanges, accept, reject, acceptAll, rejectAll, focusChange, newChat,
+    setHelpOpen, send, retry, applyChanges, accept, reject, acceptAll, rejectAll, focusChange, newChat,
     counts: { pending: pending.length, accepted: accepted.length, rejected: rejected.length, resolved, total: suggestions.length },
   }
 }

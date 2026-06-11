@@ -96,7 +96,13 @@ export function scoreSuggestion(doc, articles, s) {
     article = articleAt(articles, idx)
   }
 
-  const replaceDiffers = normalize(replace).trim() !== find.trim() && (replace.trim().length > 0 || (s?.del && !s?.ins))
+  // Opmaak-suggesties ({action:'format', format:{bold/highlight/…}}) hebben geen replace:
+  // de tekst blijft staan, alleen de opmaak verandert.
+  const isFormat = s?.action === 'format'
+  const hasFormat = isFormat && s?.format && typeof s.format === 'object' && Object.keys(s.format).length > 0
+  const replaceDiffers = isFormat
+    ? hasFormat
+    : normalize(replace).trim() !== find.trim() && (replace.trim().length > 0 || (s?.del && !s?.ins))
 
   // De server (drafter-chat annotateSuggestion) markeert onplaatsbare suggesties met
   // applicable=false en word.js slaat die over. Zo'n suggestie wordt dus NOOIT geplaatst,
@@ -111,12 +117,12 @@ export function scoreSuggestion(doc, articles, s) {
     if (multiline) issues.push('find bevat alinea-einde (Word search matcht niet over alineas)')
     if (hasTab) issues.push('find bevat een tab (kruist tabelcel-grens — Word search matcht niet over cellen)')
     if (foundStrict && !unique) issues.push(`find komt ${countStrict}x voor (niet uniek → mogelijk verkeerde locatie)`)
-    if (!replaceDiffers) issues.push('replace verschilt niet van find (geen effectieve wijziging)')
+    if (!replaceDiffers) issues.push(isFormat ? 'opmaak-suggestie zonder geldige format-keys' : 'replace verschilt niet van find (geen effectieve wijziging)')
     if (serverRejected) issues.push(`door server gemarkeerd als niet-toepasbaar${s?.findIssue ? ` (${s.findIssue})` : ''}`)
   }
 
-  const applicable = !serverRejected && foundStrict && !tooLong && !multiline && !hasTab && unique
-  return { find: s?.find ?? '', findLen, multiline, tooLong, countStrict, foundStrict, foundNorm, unique, article, replaceDiffers, applicable, issues }
+  const applicable = !serverRejected && foundStrict && !tooLong && !multiline && !hasTab && unique && (!isFormat || hasFormat)
+  return { find: s?.find ?? '', findLen, multiline, tooLong, countStrict, foundStrict, foundNorm, unique, article, isFormat, format: isFormat ? s?.format : undefined, replaceDiffers, applicable, issues }
 }
 
 // Beoordeel een volledige case.
@@ -177,6 +183,14 @@ export function scoreCase(c, doc, response) {
     if (!valueOk) reasons.push(`verwachte waarde "${expect.value}" niet in replace gevonden`)
   }
 
+  // 5a) Opmaak-verwachting: expect.format = 'highlight'|'bold'|… → minstens één toepasbare
+  // opmaak-suggestie moet die key zetten.
+  let formatOk = true
+  if (expect.format) {
+    formatOk = applicable.some((p) => p.isFormat && p.format && p.format[expect.format])
+    if (!formatOk) reasons.push(`verwachte opmaak-suggestie met "${expect.format}" niet gevonden`)
+  }
+
   // 5b) findMust / findMustNot — borgt dat het JUISTE voorkomen verankerd is (bv. "alleen
   // de eerste 'Opdrachtnemer'"): minstens één toepasbare find moet findMust bevatten, en
   // géén toepasbare find mag findMustNot bevatten.
@@ -205,10 +219,10 @@ export function scoreCase(c, doc, response) {
     if (!replyMustOk) reasons.push(`reply benoemt het juridische punt niet (verwacht één van: ${expect.replyMust.join(', ')})`)
   }
 
-  const pass = countOk && applicabilityOk && precisionOk && recallOk && valueOk && findMustOk && findMustNotOk && replyOk && replyMustOk
+  const pass = countOk && applicabilityOk && precisionOk && recallOk && valueOk && formatOk && findMustOk && findMustNotOk && replyOk && replyMustOk
   return {
     id: c.id, category: c.category, pass,
-    checks: { countOk, applicabilityOk, precisionOk, recallOk, valueOk, findMustOk, findMustNotOk, replyOk, replyMustOk },
+    checks: { countOk, applicabilityOk, precisionOk, recallOk, valueOk, formatOk, findMustOk, findMustNotOk, replyOk, replyMustOk },
     targets, touched,
     suggestionCount: suggestions.length, applicableCount: applicable.length,
     reasons, perSug,

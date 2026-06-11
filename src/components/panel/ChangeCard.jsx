@@ -1,7 +1,24 @@
 import { Icon } from '../ui/Icon.jsx'
 
-// Diff-preview: doorgehaalde oude tekst + voorgestelde nieuwe tekst.
+const FORMAT_LABELS = { bold: 'vet', italic: 'cursief', underline: 'onderstreept', highlight: 'gemarkeerd', color: 'tekstkleur' }
+
+function formatLabel(format = {}) {
+  return Object.keys(format).filter((k) => FORMAT_LABELS[k] && format[k])
+    .map((k) => (k === 'highlight' && typeof format[k] === 'string' ? `${FORMAT_LABELS[k]} (${format[k]})` : FORMAT_LABELS[k]))
+    .join(' + ') || 'opmaak'
+}
+
+// Diff-preview: doorgehaalde oude tekst + voorgestelde nieuwe tekst, of (bij een
+// opmaak-suggestie) de doeltekst met het opmaak-label.
 export function DiffPreview({ change }) {
+  if (change.action === 'format') {
+    return (
+      <div className="lm-diff-preview">
+        <span className="lm-format-badge">Opmaak: {formatLabel(change.format)}</span>
+        <span className="i" style={{ textDecoration: 'none' }}>{(change.find || '').slice(0, 120)}</span>
+      </div>
+    )
+  }
   return (
     <div className="lm-diff-preview">
       {change.del && <span className="d">{change.del}</span>}

@@ -181,10 +181,49 @@ export async function rejectAllChanges() {
   })
 }
 
+/**
+ * Opmaak toepassen op de eerste match van `find`. Vet/cursief/onderstrepen/tekstkleur worden
+ * door Word als "Opmaak"-revisie getrackt; MARKEREN (highlightColor) valt buiten Words
+ * track changes — daarom kan undoFormat() die expliciet terugdraaien (de Afwijzen-knop).
+ * Ondersteunde keys (server-allowlist): bold, italic, underline, highlight, color.
+ */
+function applyFontProps(range, format, { invert = false } = {}) {
+  if (format.bold) range.font.bold = !invert
+  if (format.italic) range.font.italic = !invert
+  if (format.underline) range.font.underline = invert ? 'None' : 'Single'
+  if (format.highlight) range.font.highlightColor = invert ? null : format.highlight
+  if (format.color) range.font.color = invert ? '#000000' : format.color
+}
+
+export async function formatPassage(find, format, { track = true, invert = false } = {}) {
+  if (!find || /[\r\n\t]/.test(find) || !format || typeof format !== 'object') return false
+  const searchText = toSearchText(find)
+  if (searchText.length > 255) return false
+  return Word.run(async (context) => {
+    if (track && isTrackChangesSupported()) {
+      context.document.changeTrackingMode = Word.ChangeTrackingMode.trackAll
+    }
+    const results = context.document.body.search(searchText, { matchCase: false, ignorePunct: false })
+    results.load('items')
+    await context.sync()
+    if (results.items.length === 0) return false
+    applyFontProps(results.items[0], format, { invert })
+    await context.sync()
+    return true
+  }).catch(() => false)
+}
+
+/** Draai een opmaak-suggestie terug (voor Afwijzen — markering kent geen revisie). */
+export async function undoFormat(change) {
+  if (!change?.find || !change?.format) return false
+  return formatPassage(change.find, change.format, { track: true, invert: true })
+}
+
 // ── Per-suggestie wiring voor het Wijzigingen-tabblad ────────────────────────
-// Het herschrijf-contract: elke suggestie heeft `find` (huidige passage) en
-// `replace` (nieuwe tekst). Toepassen = vervangen onder Track Changes; accepteren/
-// weigeren = de tracked change(s) rondom de nieuwe tekst finaliseren of terugdraaien.
+// Het contract: tekst-suggesties hebben `find` (huidige passage) en `replace` (nieuwe
+// tekst); opmaak-suggesties hebben `find` + `format` ({bold, italic, underline,
+// highlight, color}). Toepassen = onder Track Changes; accepteren/weigeren = de tracked
+// change(s) finaliseren of terugdraaien (markering wordt expliciet teruggedraaid).
 
 /**
  * Pas één suggestie toe als tracked change. Geeft false als de wijziging niet plaatsbaar is.
@@ -192,6 +231,9 @@ export async function rejectAllChanges() {
  */
 export async function applyChange(change) {
   if (!change?.find || change.applicable === false) return false
+  if (change.action === 'format' && change.format) {
+    return formatPassage(change.find, change.format, { track: true })
+  }
   return replacePassage(change.find, change.replace ?? '', { track: true })
 }
 
@@ -220,9 +262,22 @@ async function resolveChangesNear(text, mode) {
 }
 
 export async function acceptChange(change) {
+  // Opmaak: de getrackte opmaak-revisies accepteren; markering is al toegepast (geen revisie).
+  if (change?.action === 'format') return resolveChangesNear(change?.find, 'accept')
   return resolveChangesNear(change?.replace || change?.ins, 'accept')
 }
 
 export async function rejectChange(change) {
+  if (change?.action === 'format') {
+    // Getrackte opmaak-revisies (vet/cursief/kleur) terugdraaien…
+    const ok = await resolveChangesNear(change?.find, 'reject')
+    // …en markering expliciet weghalen: die valt buiten Words track changes, dus een
+    // revisie-reject raakt hem niet. Alleen de highlight inverteren — andere props zijn
+    // al door de revisie-reject hersteld (blind inverteren zou origineel-vette tekst slopen).
+    if (change?.format?.highlight) {
+      await formatPassage(change.find, { highlight: change.format.highlight }, { track: true, invert: true })
+    }
+    return ok
+  }
   return resolveChangesNear(change?.replace || change?.ins, 'reject')
 }

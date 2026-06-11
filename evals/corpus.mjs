@@ -510,6 +510,76 @@ Alle geschillen worden bij uitsluiting voorgelegd aan de rechtbank te ’s-Grave
 
 Artikel 8 — Indexering
 De overeengekomen prijzen worden jaarlijks per 1 januari geïndexeerd volgens de dienstenprijsindex; de coördinatie van de jaarlijkse aanpassing ligt bij Noordstar, die daarbij een reëel kostenniveau hanteert.`,
+
+  // ── 14. Samenwerkingsovereenkomst met KRUISVERWIJZINGEN in alle smaken ──────
+  //        Hernummerings-/cascade-tests: verwijzingen naar artikel 5 in vier
+  //        schrijfwijzen ("artikel 5", "art. 5", "conform artikel 5 lid 1",
+  //        tabel-cel "art. 5 lid 2") + bijlage-verwijzing; lid/sub-verwijzing
+  //        naar artikel 4; genummerde lijst met 3× "binnen dertig dagen".
+  verwijzingen_mix: `SAMENWERKINGSOVEREENKOMST DATAPLATFORM REGIO-ANALYSE
+
+De ondergetekenden:
+1. TechNova Solutions B.V., gevestigd te Eindhoven, hierna: "TechNova";
+2. Stichting Regio Analytics, gevestigd te Tilburg, hierna: "de Stichting";
+
+komen overeen:
+
+Artikel 1 — Definities
+In deze overeenkomst wordt verstaan onder: "Dataplatform": de gezamenlijk te exploiteren analyse-omgeving; "Datasets": de in Bijlage 1 omschreven gegevensverzamelingen; "Stuurgroep": het in artikel 3 bedoelde overlegorgaan.
+
+Artikel 2 — Doel van de samenwerking
+Partijen ontwikkelen en exploiteren gezamenlijk het Dataplatform. De geheimhouding van uitgewisselde informatie is geregeld zoals omschreven in artikel 5; de besluitvorming verloopt conform Art. 8 lid 2 van deze overeenkomst.
+
+Artikel 3 — Stuurgroep
+De Stuurgroep bestaat uit twee vertegenwoordigers per partij en vergadert ten minste eenmaal per kwartaal. De Stuurgroep besluit bij unanimiteit.
+
+Artikel 4 — Inbreng van partijen
+1. TechNova brengt de technische infrastructuur en ontwikkelcapaciteit in.
+2. De verdeling van exploitatiekosten is als volgt: a. TechNova draagt zestig procent; b. de Stichting draagt veertig procent.
+
+Artikel 5 — Geheimhouding
+Partijen houden alle in het kader van de samenwerking uitgewisselde informatie strikt vertrouwelijk en gebruiken deze uitsluitend voor het Dataplatform. Deze verplichting blijft vijf jaar na het einde van de samenwerking van kracht.
+
+Artikel 6 — Kosten en facturering
+Voor de gezamenlijke kosten geldt het volgende:
+1. De begroting wordt jaarlijks vóór 1 november door de Stuurgroep vastgesteld.
+2. Licentiekosten van derden worden binnen dertig dagen na factuurdatum voldaan door TechNova.
+3. Hostingkosten worden per kwartaal vooraf gefactureerd.
+4. Facturen voor gezamenlijke infrastructuur worden binnen dertig dagen na ontvangst voldaan volgens de verdeelsleutel.
+5. Personeelskosten blijven voor rekening van de inbrengende partij.
+6. Overige gezamenlijke kosten worden binnen dertig dagen na goedkeuring door de Stuurgroep verrekend.
+
+Artikel 7 — Aansprakelijkheid
+De aansprakelijkheid van ieder der partijen is beperkt tot directe schade, met toepassing van de verdeelsleutel van artikel 4 lid 2 sub a, tot een maximum van € 200.000 per gebeurtenis.
+
+Artikel 8 — Governance en wijzigingen
+1. Wijzigingen van deze overeenkomst behoeven schriftelijke instemming van beide partijen.
+2. Geschilpunten worden eerst aan de Stuurgroep voorgelegd; zie ook art. 5 voor de vertrouwelijkheid van die behandeling.
+
+Artikel 9 — Duur
+Deze overeenkomst wordt aangegaan voor vier jaar en wordt telkens stilzwijgend met twee jaar verlengd, behoudens opzegging met een termijn van zes maanden.
+
+Artikel 10 — Beëindiging
+Bij beëindiging worden de Datasets ontvlochten volgens het exitplan. De verplichtingen conform artikel 5 lid 1 blijven na beëindiging onverkort van kracht.
+
+Artikel 11 — Rapportage
+De Stuurgroep ontvangt de volgende rapportages:
+Kwartaal\tRapport\tGrondslag
+Q1\tVoortgangsrapport ontwikkeling\tart. 5 lid 2
+Q2\tFinancieel overzicht\tartikel 6
+Q3\tDatakwaliteitsrapport\tBijlage 1
+Q4\tJaarevaluatie\tartikel 9
+
+Artikel 12 — Toepasselijk recht
+Op deze overeenkomst is Nederlands recht van toepassing. Geschillen worden voorgelegd aan de rechtbank Oost-Brabant.
+
+BIJLAGE 1 — DATASETS EN GEBRUIKSVOORWAARDEN
+
+Artikel 1 — Datasets
+De samenwerking omvat de volgende gegevensverzamelingen: regionale mobiliteitsdata, geanonimiseerde demografische data en open geodata.
+
+Artikel 2 — Gebruiksvoorwaarden
+Op het gebruik van de Datasets is artikel 5 van de hoofdovereenkomst van overeenkomstige toepassing. Sublicentiëring aan derden is niet toegestaan.`,
 }
 
 // ── 11. Raamovereenkomst ICT (gegenereerd, > 24.000 tekens) ──────────────────
