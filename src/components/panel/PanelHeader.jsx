@@ -42,7 +42,7 @@ async function refreshToLatest() {
 }
 
 // Paneel-kop: merk + gesprekstitel + vernieuwen + geschiedenis + meer.
-export default function PanelHeader({ title = 'Nieuw gesprek', subtitle, history, onNewChat }) {
+export default function PanelHeader({ title = 'Nieuw gesprek', subtitle, history, onNewChat, onPickChat }) {
   const [histOpen, setHistOpen] = useState(false)
   return (
     <div className="lm-panel-head">
@@ -60,7 +60,10 @@ export default function PanelHeader({ title = 'Nieuw gesprek', subtitle, history
             <Icon name="history" size={18} />
           </button>
           {histOpen && (
-            <HistoryPop history={history} onNew={onNewChat} onClose={() => setHistOpen(false)} style={{ right: 0, top: 38 }} />
+            <HistoryPop history={history}
+              onNew={() => { setHistOpen(false); onNewChat?.() }}
+              onPick={(id) => { setHistOpen(false); onPickChat?.(id) }}
+              onClose={() => setHistOpen(false)} style={{ right: 0, top: 38 }} />
           )}
         </div>
         <button className="lm-iconbtn" title="Op nieuwe versie controleren en herladen" onClick={refreshToLatest}>

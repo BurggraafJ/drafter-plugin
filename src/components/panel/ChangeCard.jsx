@@ -17,6 +17,18 @@ export function StatusChip({ status }) {
   return null
 }
 
+// Compacte regel voor een al afgehandelde wijziging (geaccepteerd/afgewezen): alleen
+// ref + titel + status, zodat de afgehandelde stapel de open voorstellen niet verdringt.
+export function ChangeRowCompact({ change, status }) {
+  return (
+    <div className={`lm-change-compact ${status === 'accepted' ? 'is-accept' : 'is-reject'}`}>
+      {change.ref && <span className="lm-change-ref">{change.ref}</span>}
+      <span className="lm-change-compact-title">{change.title || 'Wijziging'}</span>
+      <StatusChip status={status} />
+    </div>
+  )
+}
+
 // Eén te-reviewen wijziging in het Wijzigingen-tabblad: artikel-ref, titel, diff,
 // rationale + bron, en accepteer/afwijs-knoppen.
 export default function ChangeCard({ change, status, active, onAccept, onReject, onFocus }) {

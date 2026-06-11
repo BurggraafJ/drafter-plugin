@@ -1,8 +1,37 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef, useEffect } from 'react'
 import { askDrafter } from '../lib/drafterApi.js'
 import {
   getContext, applyChange, acceptChange, rejectChange, acceptAllChanges, rejectAllChanges,
 } from '../office/word.js'
+
+// Gespreksgeschiedenis in localStorage (per machine/gebruiker). De webview kan opslag
+// blokkeren → alle toegang via try/catch; zonder opslag werkt de chat gewoon, alleen
+// zonder geschiedenis.
+const HISTORY_KEY = 'lm_drafter_history_v1'
+const HISTORY_MAX = 20
+
+function loadStoredChats() {
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY)
+    const list = raw ? JSON.parse(raw) : []
+    return Array.isArray(list) ? list : []
+  } catch { return [] }
+}
+
+function storeChats(list) {
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(list.slice(0, HISTORY_MAX))) } catch { /* opslag niet beschikbaar */ }
+}
+
+function chatTitle(messages) {
+  const first = messages.find((m) => m.role === 'user')
+  return first ? first.text.slice(0, 48) : 'Gesprek'
+}
+
+function chatMeta(chat) {
+  const when = new Date(chat.at).toLocaleString('nl-NL', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })
+  const n = chat.messages.filter((m) => m.role === 'user').length
+  return `${when} · ${n} vra${n === 1 ? 'ag' : 'gen'}`
+}
 
 // Bezit het gesprek + de wijziging-status en koppelt ze aan de echte Word-acties.
 // Buiten Word (inWord=false) blijven de document-acties no-ops; het gesprek werkt wel.
@@ -15,6 +44,8 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
   const [helpOpen, setHelpOpen] = useState(false)
   const [toast, setToast] = useState(null)
   const [busy, setBusy] = useState(false)
+  const [storedChats, setStoredChats] = useState(loadStoredChats)
+  const chatIdRef = useRef(null)
   const toastTimer = useRef(null)
 
   const showToast = useCallback((node) => {
@@ -23,7 +54,23 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
     toastTimer.current = setTimeout(() => setToast(null), 4200)
   }, [])
 
+  // Bewaar het lopende gesprek (upsert op id, nieuwste bovenaan) bij elke wijziging.
+  useEffect(() => {
+    if (!messages.length || !chatIdRef.current) return
+    setStoredChats((prev) => {
+      const chat = {
+        id: chatIdRef.current,
+        at: prev.find((c) => c.id === chatIdRef.current)?.at || Date.now(),
+        messages, suggestions, statuses, applied,
+      }
+      const next = [chat, ...prev.filter((c) => c.id !== chat.id)]
+      storeChats(next)
+      return next
+    })
+  }, [messages, suggestions, statuses, applied])
+
   const send = useCallback(async (text) => {
+    if (!chatIdRef.current) chatIdRef.current = `chat_${Date.now()}`
     setMessages((m) => [...m, { role: 'user', text }])
     setBusy(true)
     try {
@@ -83,20 +130,42 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
 
   const acceptAll = useCallback(async () => {
     if (inWord) await acceptAllChanges()
-    setStatuses((s) => { const n = { ...s }; suggestions.forEach((c) => (n[c.id] = 'accepted')); return n })
-    showToast('Alle wijzigingen geaccepteerd en toegepast.')
+    setStatuses((s) => { const n = { ...s }; suggestions.forEach((c) => { if (n[c.id] !== 'rejected') n[c.id] = 'accepted' }); return n })
+    showToast('Alle openstaande wijzigingen geaccepteerd en toegepast.')
   }, [inWord, suggestions, showToast])
 
   const rejectAll = useCallback(async () => {
     if (inWord) await rejectAllChanges()
-    setStatuses((s) => { const n = { ...s }; suggestions.forEach((c) => (n[c.id] = 'rejected')); return n })
+    setStatuses((s) => { const n = { ...s }; suggestions.forEach((c) => { if (n[c.id] !== 'accepted') n[c.id] = 'rejected' }); return n })
   }, [inWord, suggestions])
 
   const focusChange = useCallback((id) => setActiveId(id), [])
 
   const newChat = useCallback(() => {
+    // Het lopende gesprek staat al in de geschiedenis (auto-save); alleen schoon beginnen.
+    chatIdRef.current = null
     setMessages([]); setSuggestions([]); setApplied(false); setStatuses({}); setActiveId(null)
   }, [])
+
+  // Een eerder gesprek terugladen. NB: accepteren/afwijzen van oude voorstellen kan alleen
+  // als de bijbehorende track changes nog in het document staan.
+  const loadChat = useCallback((id) => {
+    const chat = storedChats.find((c) => c.id === id)
+    if (!chat) return
+    chatIdRef.current = chat.id
+    setMessages(chat.messages || [])
+    setSuggestions(chat.suggestions || [])
+    setStatuses(chat.statuses || {})
+    setApplied(!!chat.applied)
+    setActiveId(null)
+  }, [storedChats])
+
+  const history = storedChats.map((c) => ({
+    id: c.id,
+    title: chatTitle(c.messages || []),
+    meta: chatMeta(c),
+    active: c.id === chatIdRef.current,
+  }))
 
   const pending = suggestions.filter((c) => statuses[c.id] === 'pending')
   const accepted = suggestions.filter((c) => statuses[c.id] === 'accepted')
@@ -107,6 +176,7 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
     messages, suggestions, applied, statuses, activeId, helpOpen, toast, busy,
     // typing voedt de "Legal Mind denkt na…"-bubble in de thread zolang de AI-call loopt.
     typing: busy,
+    history, loadChat,
     setHelpOpen, send, applyChanges, accept, reject, acceptAll, rejectAll, focusChange, newChat,
     counts: { pending: pending.length, accepted: accepted.length, rejected: rejected.length, resolved, total: suggestions.length },
   }

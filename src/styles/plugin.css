@@ -148,6 +148,23 @@
   text-align: left;
 }
 .lm-proposal-more:hover { color: var(--brand-orange); }
+
+/* ---------- Wijzigingen-tab: secties + compacte afgehandelde regels ------- */
+.lm-section-label {
+  font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase;
+  color: var(--color-text-muted); padding: 8px 2px 0;
+}
+.lm-change-compact {
+  display: flex; align-items: center; gap: 8px; padding: 8px 10px;
+  border: 1px solid var(--color-border-subtle); border-radius: 9px; background: var(--slate-50);
+  font-size: 12px; color: #3a3a3a; min-width: 0;
+}
+.lm-change-compact.is-accept { border-left: 3px solid #16a34a; }
+.lm-change-compact.is-reject { border-left: 3px solid #cbd5e1; opacity: .75; }
+.lm-change-compact-title {
+  flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.lm-change-compact .lm-status-chip { flex-shrink: 0; }
 .lm-pill { font-family: var(--font-mono); font-size: 10px; font-weight: 600; color: #475569; background: #f1f5f9; border-radius: 5px; padding: 2px 6px; flex-shrink: 0; }
 .lm-proposal-foot { display: flex; gap: 8px; padding: 10px 13px 13px; }
 .lm-btn {

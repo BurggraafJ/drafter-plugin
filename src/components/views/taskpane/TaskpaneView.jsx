@@ -5,7 +5,7 @@ import { Icon } from '../../ui/Icon.jsx'
 import PanelHeader from '../../panel/PanelHeader.jsx'
 import Thread from '../../panel/Thread.jsx'
 import Composer from '../../panel/Composer.jsx'
-import ChangeCard from '../../panel/ChangeCard.jsx'
+import ChangeCard, { ChangeRowCompact } from '../../panel/ChangeCard.jsx'
 import HelpModal from '../../panel/HelpModal.jsx'
 import Toast from '../../panel/Toast.jsx'
 
@@ -32,8 +32,9 @@ export default function TaskpaneView() {
         <PanelHeader
           title={title}
           subtitle={office.inWord ? 'In Word' : 'Voorbeeld (open in Word)'}
-          history={[]}
+          history={flow.history}
           onNewChat={flow.newChat}
+          onPickChat={flow.loadChat}
         />
 
         <button className="lm-helpbar" onClick={() => flow.setHelpOpen(true)}>
@@ -66,14 +67,37 @@ export default function TaskpaneView() {
                 </div>
               ) : (
                 <div className="lm-thread" style={{ gap: 10 }}>
-                  <div className="lm-reviewbar-row" style={{ padding: '2px 2px 4px' }}>
-                    <span className="lm-reviewbar-count">{counts.total} voorstel{counts.total === 1 ? '' : 'len'}</span>
-                    <button className="lm-help-link" onClick={flow.rejectAll}>Alles afwijzen</button>
-                  </div>
-                  {flow.suggestions.map((c) => (
-                    <ChangeCard key={c.id} change={c} status={flow.statuses[c.id]} active={flow.activeId === c.id}
-                      onAccept={flow.accept} onReject={flow.reject} onFocus={flow.focusChange} />
-                  ))}
+                  {(() => {
+                    const open = flow.suggestions.filter((c) => flow.statuses[c.id] === 'pending')
+                    const done = flow.suggestions.filter((c) => flow.statuses[c.id] === 'accepted' || flow.statuses[c.id] === 'rejected')
+                    return (
+                      <>
+                        <div className="lm-reviewbar-row" style={{ padding: '2px 2px 0' }}>
+                          <span className="lm-reviewbar-count">
+                            {open.length ? `Nog te beoordelen (${open.length})` : 'Alles afgehandeld'}
+                          </span>
+                          {open.length > 0 && <button className="lm-help-link" onClick={flow.rejectAll}>Alles afwijzen</button>}
+                        </div>
+                        {open.length === 0 && (
+                          <div className="lm-empty" style={{ padding: '10px 2px' }}>
+                            Alle wijzigingen zijn beoordeeld. Stel in het tabblad <strong>Gesprek</strong> een nieuwe vraag.
+                          </div>
+                        )}
+                        {open.map((c) => (
+                          <ChangeCard key={c.id} change={c} status={flow.statuses[c.id]} active={flow.activeId === c.id}
+                            onAccept={flow.accept} onReject={flow.reject} onFocus={flow.focusChange} />
+                        ))}
+                        {done.length > 0 && (
+                          <>
+                            <div className="lm-section-label">Afgehandeld ({done.length})</div>
+                            {done.map((c) => (
+                              <ChangeRowCompact key={c.id} change={c} status={flow.statuses[c.id]} />
+                            ))}
+                          </>
+                        )}
+                      </>
+                    )
+                  })()}
                 </div>
               )}
             </div>
