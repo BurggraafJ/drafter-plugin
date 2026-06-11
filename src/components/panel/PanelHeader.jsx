@@ -50,7 +50,7 @@ export default function PanelHeader({ title = 'Nieuw gesprek', subtitle, history
         <div className="lm-ph-brand">
           <LMMark size={28} />
           <div style={{ minWidth: 0 }}>
-            <div className="lm-ph-title">{title}</div>
+            <div className="lm-ph-title">{title}<span className="lm-beta">Bèta</span></div>
             {subtitle && <div className="lm-ph-sub">{subtitle}</div>}
           </div>
         </div>

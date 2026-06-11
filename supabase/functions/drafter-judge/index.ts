@@ -81,7 +81,7 @@ Deno.serve(async (req) => {
     if (modelOverride && !ALLOWED_JUDGE_MODELS.includes(modelOverride)) {
       return json({ error: `model niet toegestaan (toegestaan: ${ALLOWED_JUDGE_MODELS.join(", ")})` }, 400, CORS)
     }
-    const judgeModel = modelOverride || settings.model
+    const judgeModel = modelOverride || settings.judgeModel || settings.model
 
     const sugText = suggestions.length
       ? suggestions.map((s: any, i: number) => {
@@ -238,7 +238,12 @@ async function sha256Hex(s: string) {
 async function getSettings() {
   const { data } = await supabase.from("drafter_settings").select("key, value")
   const map = new Map((data || []).map((r: { key: string; value: unknown }) => [r.key, r.value]))
-  return { model: (map.get("model") as string) || "gpt-5.5" }
+  return {
+    model: (map.get("model") as string) || "gpt-5.5",
+    // Eigen judge-model, instelbaar via drafter_settings zonder redeploy. De judge mag
+    // goedkoper zijn dan het chat-model; valt terug op het chat-model als de setting ontbreekt.
+    judgeModel: (map.get("judge_model") as string) || null,
+  }
 }
 
 async function resolveOpenAIKey(): Promise<string | null> {

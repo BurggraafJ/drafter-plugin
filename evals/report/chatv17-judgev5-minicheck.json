@@ -1,0 +1,550 @@
+{
+  "stamp": {
+    "tag": "chatv17-judgev5-minicheck",
+    "base": "https://pwpoqyhzkzwuridlzwzr.supabase.co/functions/v1",
+    "profile": "default",
+    "model": null,
+    "cases": 6,
+    "repeat": 1,
+    "passed": 6,
+    "flaky": 0,
+    "elapsedSec": 57.2,
+    "p50": 9660,
+    "p95": 44389,
+    "byCat": {
+      "value": {
+        "pass": 1,
+        "total": 1
+      },
+      "guardrail": {
+        "pass": 2,
+        "total": 2
+      },
+      "targeted": {
+        "pass": 1,
+        "total": 1
+      },
+      "add": {
+        "pass": 2,
+        "total": 2
+      }
+    },
+    "byMode": {
+      "waarde": {
+        "pass": 1,
+        "total": 1
+      },
+      "verduidelijking": {
+        "pass": 3,
+        "total": 3
+      },
+      "insert-nieuw-document": {
+        "pass": 2,
+        "total": 2
+      }
+    },
+    "judge": {
+      "avg": 100,
+      "count": 6,
+      "errors": 0,
+      "verdicts": {
+        "pass": 6
+      }
+    }
+  },
+  "results": [
+    {
+      "id": "arb-01-salaris",
+      "category": "value",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        5
+      ],
+      "touched": [
+        5
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "Het brutosalaris bedraagt € 2.800 per maand",
+          "findLen": 43,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 5,
+          "isFormat": false,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "waarde",
+      "attempt": 0,
+      "ms": 5612,
+      "status": 200,
+      "error": null,
+      "reply": "Ik pas artikel 5 aan door uitsluitend het genoemde brutosalaris te verhogen naar € 3.100 per maand. De wijziging betreft alleen de salariszin; overige arbeidsvoorwaarden blijven ongewijzigd.",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 5",
+          "title": "Brutosalaris verhogen",
+          "find": "Het brutosalaris bedraagt € 2.800 per maand",
+          "replace": "Het brutosalaris bedraagt € 3.100 per maand",
+          "why": "Past het overeengekomen maandelijkse brutosalaris aan conform de instructie.",
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [],
+      "judge": {
+        "scores": {
+          "legal_accuracy": 2,
+          "guardrail": "nvt",
+          "completeness": 2,
+          "scope_fidelity": 2,
+          "clarity": 2,
+          "refusal_balance": 2
+        },
+        "weighted100": 100,
+        "verdict": "pass",
+        "issues": [],
+        "rationale": "De assistent past uitsluitend de gevraagde salariszin in artikel 5 aan en laat de rest van de arbeidsovereenkomst ongewijzigd. De voorgestelde vervanging is juridisch en tekstueel juist en volledig in lijn met de instructie. Er was geen aanleiding voor een waarschuwing of verduidelijkingsvraag.",
+        "model": "gpt-5.4-mini"
+      },
+      "passCount": 1,
+      "attemptCount": 1
+    },
+    {
+      "id": "clr-95-ambigu-termijn",
+      "category": "guardrail",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [],
+      "touched": [],
+      "suggestionCount": 0,
+      "applicableCount": 0,
+      "reasons": [],
+      "perSug": [],
+      "failureMode": "verduidelijking",
+      "attempt": 0,
+      "ms": 9660,
+      "status": 200,
+      "error": null,
+      "reply": "Ik zie meerdere termijnen in het document (onder meer geldigheid offerte, betalingstermijn en opzegtermijn). Om te voorkomen dat de verkeerde termijn wordt aangepast, heb ik een keuze nodig.",
+      "clarify": {
+        "intro": "Welke termijn moet worden aangepast naar vijfenveertig dagen?",
+        "questions": [
+          {
+            "q": "Welke termijn bedoelt u?",
+            "options": [
+              "Artikel 3: geldigheid offertes",
+              "Artikel 6: betalingstermijn",
+              "Artikel 14: opzegtermijn",
+              "Alle genoemde termijnen"
+            ]
+          }
+        ]
+      },
+      "suggestionsRaw": [],
+      "citations": [],
+      "judge": {
+        "scores": {
+          "legal_accuracy": 2,
+          "guardrail": "nvt",
+          "completeness": 2,
+          "scope_fidelity": "nvt",
+          "clarity": 2,
+          "refusal_balance": 2
+        },
+        "weighted100": 100,
+        "verdict": "pass",
+        "issues": [
+          "De instructie was werkelijk ambigu: meerdere termijnen in het document konden met 'de termijn' worden bedoeld.",
+          "De verduidelijkingsvraag is scherp en relevant doordat concrete opties zijn gegeven."
+        ],
+        "rationale": "De assistent kon de wijziging niet veilig uitvoeren zonder keuze, omdat in het document meerdere termijnen voorkomen. Daarom was een verduidelijkingsvraag hier de juiste route. De vraag is duidelijk, professioneel en beperkt tot de noodzakelijke afbakening.",
+        "model": "gpt-5.4-mini"
+      },
+      "passCount": 1,
+      "attemptCount": 1
+    },
+    {
+      "id": "clr-96-ambigu-bedrag",
+      "category": "guardrail",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [],
+      "touched": [],
+      "suggestionCount": 0,
+      "applicableCount": 0,
+      "reasons": [],
+      "perSug": [],
+      "failureMode": "verduidelijking",
+      "attempt": 0,
+      "ms": 6713,
+      "status": 200,
+      "error": null,
+      "reply": "Er staan meerdere bedragen in het document (€ 1.200 huurprijs, € 95 servicekosten en € 2.400 waarborgsom). Zonder nadere keuze is niet duidelijk welk bedrag met € 100 moet worden verhoogd.",
+      "clarify": {
+        "intro": "Welk bedrag moet met € 100 worden verhoogd?",
+        "questions": [
+          {
+            "q": "Kies het bedoelde bedrag.",
+            "options": [
+              "Huurprijs € 1.200",
+              "Servicekosten € 95",
+              "Waarborgsom € 2.400"
+            ]
+          }
+        ]
+      },
+      "suggestionsRaw": [],
+      "citations": [],
+      "judge": {
+        "scores": {
+          "legal_accuracy": "nvt",
+          "guardrail": "nvt",
+          "completeness": "nvt",
+          "scope_fidelity": "nvt",
+          "clarity": 2,
+          "refusal_balance": 2
+        },
+        "weighted100": 100,
+        "verdict": "pass",
+        "issues": [
+          "De instructie was inhoudelijk ambigu omdat meerdere geldbedragen in het document voorkomen.",
+          "De verduidelijkingsvraag noemt concreet de relevante opties en is daarmee scherp en uitvoerbaar."
+        ],
+        "rationale": "De assistent heeft terecht geen wijziging doorgevoerd zonder te weten welk bedrag bedoeld was. De toelichting is helder en zakelijk, en de vraag beperkt zich tot de noodzakelijke keuze. Er is geen juridische inhoudelijke fout of guardrail-probleem zichtbaar.",
+        "model": "gpt-5.4-mini"
+      },
+      "passCount": 1,
+      "attemptCount": 1
+    },
+    {
+      "id": "clr-97-redelijke-default",
+      "category": "targeted",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [
+        6
+      ],
+      "touched": [
+        6
+      ],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "€ 10.000 per overtreding",
+          "findLen": 24,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 6,
+          "isFormat": false,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "verduidelijking",
+      "attempt": 0,
+      "ms": 9660,
+      "status": 200,
+      "error": null,
+      "reply": "Ik heb aangenomen dat “wat hoger” betekent: verhogen van € 10.000 naar € 25.000 per overtreding. Let op: een contractuele boete kan door de rechter worden gematigd als de billijkheid dit klaarblijkelijk eist op grond van artikel 6:94 BW.",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 6",
+          "title": "Boete verhogen",
+          "find": "€ 10.000 per overtreding",
+          "replace": "€ 25.000 per overtreding",
+          "why": "Verhoogt de contractuele prikkel tot naleving van de geheimhoudingsverplichtingen. Een boete blijft wel vatbaar voor rechterlijke matiging als de billijkheid dit klaarblijkelijk eist.",
+          "cite": 1,
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [
+        {
+          "idx": 1,
+          "badge": "BW",
+          "title": "Burgerlijk Wetboek Boek 6, artikel 94",
+          "meta": "Matiging van een bedongen boete",
+          "url": "https://wetten.overheid.nl/BWBR0005289/Boek6/Titel1/Afdeling9/Artikel94"
+        }
+      ],
+      "judge": {
+        "scores": {
+          "legal_accuracy": 2,
+          "guardrail": 2,
+          "completeness": 2,
+          "scope_fidelity": 2,
+          "clarity": 2,
+          "refusal_balance": 2
+        },
+        "weighted100": 100,
+        "verdict": "pass",
+        "issues": [
+          "De assistent heeft de verhoging concreet ingevuld met € 25.000; dat is een redelijke standaardinterpretatie van “wat hoger” en niet onnodig afwijken van de instructie.",
+          "De waarschuwing over rechterlijke matiging ex artikel 6:94 BW is juridisch juist en passend bij een boetebeding.",
+          "De wijziging raakt uitsluitend het bedrag in het boetebeding en blijft daarmee netjes in scope."
+        ],
+        "rationale": "De opdracht was voldoende duidelijk voor een redelijke invulling; het voorstel om de boete van € 10.000 naar € 25.000 te verhogen is juridisch correct en sluit aan bij de vraag. De assistent heeft terecht gewezen op de mogelijkheid van matiging ex art. 6:94 BW, zonder onnodig te weigeren of buiten de instructie te treden. Er zijn geen onjuiste wetsverwijzingen of gemiste kernpunten zichtbaar.",
+        "model": "gpt-5.4-mini"
+      },
+      "passCount": 1,
+      "attemptCount": 1
+    },
+    {
+      "id": "ins-98-leeg-document",
+      "category": "add",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [],
+      "touched": [],
+      "suggestionCount": 1,
+      "applicableCount": 1,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "",
+          "findLen": 0,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 0,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": null,
+          "isInsert": true,
+          "content": "GEHEIMHOUDINGSOVEREENKOMST\n\nDe ondergetekenden:\n\n1. [naam onderneming 1], statutair gevestigd te [plaats], kantoorhoudende te [adres], ingeschreven in het handelsregister van de Kamer van Koophandel onder nummer [KvK-nummer], rechtsgeldig vertegenwoordigd door [naam], hierna te noemen: “Partij 1”;\n\nen\n\n2. [naam onderneming 2], statutair gevestigd te [plaats], kantoorhoudende te [adres], ingeschreven in het handelsregister van de Kamer van Koophandel onder nummer [KvK-nummer], rechtsgeldig vertegenwoordigd door [naam], hierna te noemen: “Partij 2”;\n\nPartij 1 en Partij 2 hierna gezamenlijk te noemen: “Partijen” en afzonderlijk: “Partij”.\n\nArtikel 1 — Doel\nPartijen zullen in het kader van [omschrijving samenwerking/transactie/project] vertrouwelijke informatie met elkaar uitwisselen. Deze overeenkomst regelt de verplichtingen van Partijen ten aanzien van die informatie.\n\nArtikel 2 — Vertrouwelijke informatie\nOnder “Vertrouwelijke Informatie” wordt verstaan alle informatie die door of namens een Partij aan de andere Partij wordt verstrekt, ongeacht de vorm, en die als vertrouwelijk is aangeduid of waarvan de ontvangende Partij redelijkerwijs moet begrijpen dat deze vertrouwelijk is. Daaronder vallen in ieder geval commerciële, financiële, technische, juridische en operationele gegevens, knowhow, klantgegevens, bedrijfsplannen en documenten.\n\nArtikel 3 — Geheimhoudingsplicht\nDe ontvangende Partij zal de Vertrouwelijke Informatie strikt geheimhouden en uitsluitend gebruiken voor het in artikel 1 genoemde doel. De ontvangende Partij zal ten minste dezelfde zorgvuldigheid betrachten als zij betracht ten aanzien van haar eigen vertrouwelijke informatie, maar in ieder geval een redelijke mate van zorgvuldigheid.\n\nArtikel 4 — Toegang tot informatie\nDe ontvangende Partij mag Vertrouwelijke Informatie uitsluitend delen met haar bestuurders, werknemers, adviseurs of groepsmaatschappijen voor zover dit noodzakelijk is voor het in artikel 1 genoemde doel. De ontvangende Partij staat ervoor in dat deze personen of entiteiten aan een geheimhoudingsverplichting zijn gebonden die ten minste gelijkwaardig is aan de verplichtingen uit deze overeenkomst.\n\nArtikel 5 — Uitzonderingen\nDe geheimhoudingsplicht geldt niet voor informatie waarvan de ontvangende Partij kan aantonen dat deze: (a) reeds rechtmatig bij haar bekend was zonder geheimhoudingsplicht; (b) openbaar is of wordt zonder schending van deze overeenkomst; (c) rechtmatig van een derde is verkregen zonder geheimhoudingsplicht; of (d) zelfstandig is ontwikkeld zonder gebruik van de Vertrouwelijke Informatie.\n\nArtikel 6 — Wettelijke verplichting\nIndien een Partij op grond van wet- of regelgeving, een rechterlijk bevel of een besluit van een bevoegde toezichthouder verplicht is Vertrouwelijke Informatie openbaar te maken, stelt zij de verstrekkende Partij daarvan, voor zover wettelijk toegestaan, zo spoedig mogelijk schriftelijk in kennis. De openbaarmaking blijft beperkt tot hetgeen verplicht is.\n\nArtikel 7 — Teruggave en vernietiging\nOp eerste schriftelijk verzoek van de verstrekkende Partij zal de ontvangende Partij de Vertrouwelijke Informatie retourneren of vernietigen, voor zover dit redelijkerwijs mogelijk is. De ontvangende Partij mag één archiefkopie bewaren voor zover dat noodzakelijk is voor bewijsdoeleinden of naleving van wettelijke verplichtingen, mits deze kopie onder de geheimhoudingsplicht blijft vallen.\n\nArtikel 8 — Duur\nDeze overeenkomst treedt in werking op de datum van ondertekening en geldt voor een periode van [aantal] jaar. De geheimhoudingsverplichtingen blijven gedurende [aantal] jaar na beëindiging van deze overeenkomst van kracht.\n\nArtikel 9 — Boete en schadevergoeding\nBij overtreding van deze overeenkomst verbeurt de tekortschietende Partij aan de andere Partij een direct opeisbare boete van EUR [bedrag] per overtreding en EUR [bedrag] voor iedere dag dat de overtreding voortduurt, onverminderd het recht van de andere Partij om nakoming, staking van de overtreding en volledige schadevergoeding te vorderen voor zover de schade de boete overstijgt.\n\nArtikel 10 — Geen licentie of verplichting\nDeze overeenkomst verplicht Partijen niet om een transactie, samenwerking of andere overeenkomst aan te gaan. Verstrekking van Vertrouwelijke Informatie verleent geen licentie of ander recht op intellectuele eigendomsrechten, tenzij Partijen schriftelijk anders overeenkomen.\n\nArtikel 11 — Toepasselijk recht en bevoegde rechter\nOp deze overeenkomst is Nederlands recht van toepassing. Geschillen die voortvloeien uit of verband houden met deze overeenkomst worden uitsluitend voorgelegd aan de bevoegde rechter van de rechtbank [plaats], tenzij dwingend recht anders voorschrijft.\n\nAldus overeengekomen en ondertekend:\n\nPlaats: [plaats]\nDatum: [datum]\n\nVoor Partij 1:\n\nNaam: [naam]\nFunctie: [functie]\nHandtekening: ______________________\n\nVoor Partij 2:\n\nNaam: [naam]\nFunctie: [functie]\nHandtekening: ______________________",
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "insert-nieuw-document",
+      "attempt": 0,
+      "ms": 44389,
+      "status": 200,
+      "error": null,
+      "reply": "Ik stel hieronder een beknopte wederzijdse geheimhoudingsovereenkomst voor tussen twee ondernemingen. Omdat het document leeg is, plaats ik de volledige tekst aan het einde van het document als invoeging. Let erop dat partijen de looptijd, boete en eventuele uitzonderingen moeten toetsen aan de concrete transactie en onderhandelingspositie.",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "action": "insert",
+          "position": "end",
+          "title": "Beknopte geheimhoudingsovereenkomst",
+          "content": "GEHEIMHOUDINGSOVEREENKOMST\n\nDe ondergetekenden:\n\n1. [naam onderneming 1], statutair gevestigd te [plaats], kantoorhoudende te [adres], ingeschreven in het handelsregister van de Kamer van Koophandel onder nummer [KvK-nummer], rechtsgeldig vertegenwoordigd door [naam], hierna te noemen: “Partij 1”;\n\nen\n\n2. [naam onderneming 2], statutair gevestigd te [plaats], kantoorhoudende te [adres], ingeschreven in het handelsregister van de Kamer van Koophandel onder nummer [KvK-nummer], rechtsgeldig vertegenwoordigd door [naam], hierna te noemen: “Partij 2”;\n\nPartij 1 en Partij 2 hierna gezamenlijk te noemen: “Partijen” en afzonderlijk: “Partij”.\n\nArtikel 1 — Doel\nPartijen zullen in het kader van [omschrijving samenwerking/transactie/project] vertrouwelijke informatie met elkaar uitwisselen. Deze overeenkomst regelt de verplichtingen van Partijen ten aanzien van die informatie.\n\nArtikel 2 — Vertrouwelijke informatie\nOnder “Vertrouwelijke Informatie” wordt verstaan alle informatie die door of namens een Partij aan de andere Partij wordt verstrekt, ongeacht de vorm, en die als vertrouwelijk is aangeduid of waarvan de ontvangende Partij redelijkerwijs moet begrijpen dat deze vertrouwelijk is. Daaronder vallen in ieder geval commerciële, financiële, technische, juridische en operationele gegevens, knowhow, klantgegevens, bedrijfsplannen en documenten.\n\nArtikel 3 — Geheimhoudingsplicht\nDe ontvangende Partij zal de Vertrouwelijke Informatie strikt geheimhouden en uitsluitend gebruiken voor het in artikel 1 genoemde doel. De ontvangende Partij zal ten minste dezelfde zorgvuldigheid betrachten als zij betracht ten aanzien van haar eigen vertrouwelijke informatie, maar in ieder geval een redelijke mate van zorgvuldigheid.\n\nArtikel 4 — Toegang tot informatie\nDe ontvangende Partij mag Vertrouwelijke Informatie uitsluitend delen met haar bestuurders, werknemers, adviseurs of groepsmaatschappijen voor zover dit noodzakelijk is voor het in artikel 1 genoemde doel. De ontvangende Partij staat ervoor in dat deze personen of entiteiten aan een geheimhoudingsverplichting zijn gebonden die ten minste gelijkwaardig is aan de verplichtingen uit deze overeenkomst.\n\nArtikel 5 — Uitzonderingen\nDe geheimhoudingsplicht geldt niet voor informatie waarvan de ontvangende Partij kan aantonen dat deze: (a) reeds rechtmatig bij haar bekend was zonder geheimhoudingsplicht; (b) openbaar is of wordt zonder schending van deze overeenkomst; (c) rechtmatig van een derde is verkregen zonder geheimhoudingsplicht; of (d) zelfstandig is ontwikkeld zonder gebruik van de Vertrouwelijke Informatie.\n\nArtikel 6 — Wettelijke verplichting\nIndien een Partij op grond van wet- of regelgeving, een rechterlijk bevel of een besluit van een bevoegde toezichthouder verplicht is Vertrouwelijke Informatie openbaar te maken, stelt zij de verstrekkende Partij daarvan, voor zover wettelijk toegestaan, zo spoedig mogelijk schriftelijk in kennis. De openbaarmaking blijft beperkt tot hetgeen verplicht is.\n\nArtikel 7 — Teruggave en vernietiging\nOp eerste schriftelijk verzoek van de verstrekkende Partij zal de ontvangende Partij de Vertrouwelijke Informatie retourneren of vernietigen, voor zover dit redelijkerwijs mogelijk is. De ontvangende Partij mag één archiefkopie bewaren voor zover dat noodzakelijk is voor bewijsdoeleinden of naleving van wettelijke verplichtingen, mits deze kopie onder de geheimhoudingsplicht blijft vallen.\n\nArtikel 8 — Duur\nDeze overeenkomst treedt in werking op de datum van ondertekening en geldt voor een periode van [aantal] jaar. De geheimhoudingsverplichtingen blijven gedurende [aantal] jaar na beëindiging van deze overeenkomst van kracht.\n\nArtikel 9 — Boete en schadevergoeding\nBij overtreding van deze overeenkomst verbeurt de tekortschietende Partij aan de andere Partij een direct opeisbare boete van EUR [bedrag] per overtreding en EUR [bedrag] voor iedere dag dat de overtreding voortduurt, onverminderd het recht van de andere Partij om nakoming, staking van de overtreding en volledige schadevergoeding te vorderen voor zover de schade de boete overstijgt.\n\nArtikel 10 — Geen licentie of verplichting\nDeze overeenkomst verplicht Partijen niet om een transactie, samenwerking of andere overeenkomst aan te gaan. Verstrekking van Vertrouwelijke Informatie verleent geen licentie of ander recht op intellectuele eigendomsrechten, tenzij Partijen schriftelijk anders overeenkomen.\n\nArtikel 11 — Toepasselijk recht en bevoegde rechter\nOp deze overeenkomst is Nederlands recht van toepassing. Geschillen die voortvloeien uit of verband houden met deze overeenkomst worden uitsluitend voorgelegd aan de bevoegde rechter van de rechtbank [plaats], tenzij dwingend recht anders voorschrijft.\n\nAldus overeengekomen en ondertekend:\n\nPlaats: [plaats]\nDatum: [datum]\n\nVoor Partij 1:\n\nNaam: [naam]\nFunctie: [functie]\nHandtekening: ______________________\n\nVoor Partij 2:\n\nNaam: [naam]\nFunctie: [functie]\nHandtekening: ______________________",
+          "why": "De tekst bevat een beknopte wederzijdse NDA met kernbepalingen over doelbinding, geheimhouding, uitzonderingen, duur, boete, toepasselijk recht en forumkeuze.",
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [],
+      "judge": {
+        "scores": {
+          "legal_accuracy": 2,
+          "guardrail": "nvt",
+          "completeness": 2,
+          "scope_fidelity": 2,
+          "clarity": 2,
+          "refusal_balance": 2
+        },
+        "weighted100": 100,
+        "verdict": "pass",
+        "issues": [
+          "De forumkeuze is wat onhandig geformuleerd (“de bevoegde rechter van de rechtbank [plaats]”); juridisch kan dat beter worden aangescherpt naar een concrete rechtbanklocatie.",
+          "De NDA is beknopt en bevat de kernbepalingen, maar noemt niet expliciet dat boete matigbaar is of dat de boete naast schadevergoeding geldt onder voorwaarden van het Nederlandse recht. Dat is hier geen fout, maar wel een gebruikelijke verfijning."
+        ],
+        "rationale": "De voorgestelde geheimhoudingsovereenkomst is naar Nederlands contractenrecht in hoofdzaak juist en bevat de gebruikelijke kernbedingen voor een wederzijdse NDA. Er is geen onjuiste wetsverwijzing of juridisch evidente fout die tot een lagere score op legal_accuracy leidt. De tekst blijft volledig binnen de opdracht en is helder geformuleerd. Er was ook geen reden om te weigeren of om verduidelijking te vragen.",
+        "model": "gpt-5.4-mini"
+      },
+      "passCount": 1,
+      "attemptCount": 1
+    },
+    {
+      "id": "ins-99-nieuw-artikel",
+      "category": "add",
+      "pass": true,
+      "checks": {
+        "countOk": true,
+        "applicabilityOk": true,
+        "precisionOk": true,
+        "recallOk": true,
+        "valueOk": true,
+        "formatOk": true,
+        "insertOk": true,
+        "findMustOk": true,
+        "findMustNotOk": true,
+        "replyOk": true,
+        "replyMustOk": true
+      },
+      "targets": [],
+      "touched": [
+        10
+      ],
+      "suggestionCount": 2,
+      "applicableCount": 2,
+      "reasons": [],
+      "perSug": [
+        {
+          "find": "",
+          "findLen": 0,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 0,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 10,
+          "isInsert": true,
+          "content": "Artikel 10 — Mediation\nPartijen spannen zich in om geschillen die voortvloeien uit of verband houden met deze overeenkomst eerst in onderling overleg op te lossen. Indien dit overleg niet binnen veertien dagen tot een oplossing leidt, zullen partijen het geschil voorleggen aan een onafhankelijke mediator die in onderling overleg wordt aangewezen. Deelname aan mediation laat onverlet het recht van partijen om in spoedeisende gevallen voorlopige of conservatoire maatregelen te vragen aan de bevoegde rechter.",
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        },
+        {
+          "find": "Artikel 10 — Toepasselijk recht",
+          "findLen": 31,
+          "multiline": false,
+          "tooLong": false,
+          "countStrict": 1,
+          "foundStrict": true,
+          "foundNorm": true,
+          "unique": true,
+          "article": 10,
+          "isFormat": false,
+          "replaceDiffers": true,
+          "applicable": true,
+          "issues": []
+        }
+      ],
+      "failureMode": "insert-nieuw-document",
+      "attempt": 0,
+      "ms": 14567,
+      "status": 200,
+      "error": null,
+      "reply": "Ik voeg een mediationbepaling direct vóór het artikel over toepasselijk recht in en nummer het bestaande artikel over toepasselijk recht door naar artikel 11. Er zijn geen bestaande kruisverwijzingen zichtbaar die hierdoor moeten worden aangepast. Mediation wordt voorgesteld als inspanningsstap voorafgaand aan procederen, met ruimte voor spoedeisende maatregelen bij de rechter.",
+      "clarify": null,
+      "suggestionsRaw": [
+        {
+          "ref": "Artikel 10",
+          "action": "insert",
+          "position": {
+            "before": "Artikel 10 — Toepasselijk recht"
+          },
+          "title": "Nieuw artikel over mediation",
+          "content": "Artikel 10 — Mediation\nPartijen spannen zich in om geschillen die voortvloeien uit of verband houden met deze overeenkomst eerst in onderling overleg op te lossen. Indien dit overleg niet binnen veertien dagen tot een oplossing leidt, zullen partijen het geschil voorleggen aan een onafhankelijke mediator die in onderling overleg wordt aangewezen. Deelname aan mediation laat onverlet het recht van partijen om in spoedeisende gevallen voorlopige of conservatoire maatregelen te vragen aan de bevoegde rechter.",
+          "why": "Voegt een escalatiestap toe voor minnelijke geschiloplossing, zonder de toegang tot de rechter in spoedeisende gevallen uit te sluiten.",
+          "applicable": true,
+          "findIssue": null
+        },
+        {
+          "ref": "Artikel 10",
+          "title": "Doornummering artikel toepasselijk recht",
+          "find": "Artikel 10 — Toepasselijk recht",
+          "replace": "Artikel 11 — Toepasselijk recht",
+          "why": "Door invoeging van een nieuw artikel 10 moet het bestaande artikel over toepasselijk recht worden doorgenummerd.",
+          "applicable": true,
+          "findIssue": null
+        }
+      ],
+      "citations": [],
+      "judge": {
+        "scores": {
+          "legal_accuracy": 2,
+          "guardrail": "nvt",
+          "completeness": 2,
+          "scope_fidelity": 2,
+          "clarity": 2,
+          "refusal_balance": 2
+        },
+        "weighted100": 100,
+        "verdict": "pass",
+        "issues": [
+          "De mediationbepaling is juridisch aanvaardbaar en laat terecht ruimte voor spoedeisende maatregelen.",
+          "De doornummering van het bestaande artikel over toepasselijk recht is correct verwerkt."
+        ],
+        "rationale": "De assistent voegt precies het gevraagde nieuwe artikel over mediation in en plaatst dit direct vóór het artikel over toepasselijk recht. De inhoud is naar Nederlands contractenrecht juridisch bruikbaar en bevat terecht een uitzondering voor spoedeisende maatregelen. Er zijn geen ongevraagde inhoudelijke wijzigingen of evidente juridische onjuistheden zichtbaar.",
+        "model": "gpt-5.4-mini"
+      },
+      "passCount": 1,
+      "attemptCount": 1
+    }
+  ]
+}

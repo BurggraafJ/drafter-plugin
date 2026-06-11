@@ -91,14 +91,18 @@ const WORK_PHASES = [
   'Wijzigingen voorstellen…',
   'Antwoord opstellen…',
 ]
-function Typing() {
-  const [phase, setPhase] = useState(0)
+function Typing({ since }) {
+  // De fase volgt uit de échte verstreken tijd sinds de start van het verzoek (uit de
+  // flow-state), niet uit een lokale teller: zo gaat de indicator bij een tab-switch
+  // (re-mount) gewoon verder waar hij was in plaats van opnieuw te beginnen.
+  const [, setTick] = useState(0)
   useEffect(() => {
-    const t = setInterval(() => {
-      setPhase((p) => Math.min(p + 1, WORK_PHASES.length - 1))
-    }, 3200)
+    const t = setInterval(() => setTick((n) => n + 1), 1000)
     return () => clearInterval(t)
   }, [])
+  const elapsed = Math.max(0, Date.now() - (since || Date.now()))
+  const phase = Math.min(Math.floor(elapsed / 3200), WORK_PHASES.length - 1)
+  const slow = elapsed > 45000
   const done = phase > 0 ? WORK_PHASES[phase - 1] : null
   return (
     <div className="lm-msg">
@@ -117,6 +121,7 @@ function Typing() {
             <span className="lm-working-phase">{WORK_PHASES[phase]}</span>
           </div>
           <div className="lm-working-bar"><span /></div>
+          {slow && <div className="lm-working-slow">Dit duurt langer dan normaal — nog even geduld. Na 2 minuten breek ik af en kun je het opnieuw proberen.</div>}
         </div>
       </div>
     </div>
@@ -155,7 +160,7 @@ export default function Thread({ flow, onCite }) {
             </div>
           )
         })}
-        {flow.typing && <Typing />}
+        {flow.typing && <Typing since={flow.busySince} />}
       </div>
     </div>
   )

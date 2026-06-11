@@ -44,6 +44,9 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
   const [helpOpen, setHelpOpen] = useState(false)
   const [toast, setToast] = useState(null)
   const [busy, setBusy] = useState(false)
+  // Starttijd van het lopende verzoek: de werkindicator leidt zijn fase hieruit af,
+  // zodat een tab-switch (re-mount) de voortgang niet terugzet naar nul.
+  const [busySince, setBusySince] = useState(null)
   const [storedChats, setStoredChats] = useState(loadStoredChats)
   const chatIdRef = useRef(null)
   const toastTimer = useRef(null)
@@ -74,6 +77,7 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
 
   const ask = useCallback(async (text) => {
     setBusy(true)
+    setBusySince(Date.now())
     try {
       const ctx = inWord ? await getContext({ includeBody: true }) : { selection: '', body: '' }
       // Laatste gespreksbeurten meesturen: de server is stateless, maar zo behouden
@@ -88,6 +92,7 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
       setMessages((m) => [...m, { role: 'assistant', text: e?.message || 'Er ging iets mis. Probeer het opnieuw.', error: true }])
     } finally {
       setBusy(false)
+      setBusySince(null)
     }
   }, [inWord, profile])
 
@@ -226,8 +231,9 @@ export function usePluginFlow({ inWord, profile = 'default' }) {
 
   return {
     messages, suggestions, applied, statuses, activeId, helpOpen, toast, busy,
-    // typing voedt de "Legal Mind denkt na…"-bubble in de thread zolang de AI-call loopt.
-    typing: busy,
+    // typing voedt de "Legal Mind denkt na…"-bubble in de thread zolang de AI-call loopt;
+    // busySince laat de indicator zijn fase uit de échte verstreken tijd afleiden.
+    typing: busy, busySince,
     history, loadChat,
     setHelpOpen, send, retry, answerClarify, applyChanges, accept, reject, acceptAll, rejectAll, focusChange, newChat,
     counts: { pending: pending.length, accepted: accepted.length, rejected: rejected.length, resolved, total: suggestions.length },

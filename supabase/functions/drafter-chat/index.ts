@@ -124,8 +124,29 @@ Deno.serve(async (req) => {
       return json({ error: "De AI-dienst is tijdelijk niet bereikbaar. Probeer het zo opnieuw." }, 502, CORS)
     }
 
-    const text = reply?.choices?.[0]?.message?.content || ""
-    const finishReason = reply?.choices?.[0]?.finish_reason || ""
+    let text = reply?.choices?.[0]?.message?.content || ""
+    let finishReason = reply?.choices?.[0]?.finish_reason || ""
+    if (!text.trim()) {
+      // In productie gezien (11 jun, VSO-verzoek): 200-ok maar (vrijwel) lege completion —
+      // het reasoning-budget ging op aan denken zonder zichtbare output. Eén gerichte
+      // herkansing met meer denkruimte; faalt die ook, dan vangt de fallback-toelichting
+      // hieronder het op (de jurist krijgt dan een eerlijk "niet gelukt").
+      try {
+        reply = await callOpenAI({
+          supabase, apiKey,
+          model: usedModel,
+          max_tokens: settings.max_tokens,
+          temperature: settings.temperature,
+          reasoning_effort: "medium",
+          system: systemMsg,
+          messages: [{ role: "user", content: userMsg }],
+          attribution: { edgeFunction: "drafter-chat", profileSlug: profile, skillName: "legalmind-word-addin" },
+          maxRetries: 0,
+        })
+        text = reply?.choices?.[0]?.message?.content || ""
+        finishReason = reply?.choices?.[0]?.finish_reason || ""
+      } catch (_) { /* fallback-reply hieronder */ }
+    }
     const { prose, suggestions, citations, clarify } = splitSuggestions(text)
 
     const body = context.body
@@ -212,7 +233,9 @@ Een INVOEG-suggestie zet NIEUWE tekst in het document (ook in een leeg document)
   [naam] of [datum] mogen wél).
 - Vraagt de jurist om een nieuw document of nieuwe tekst ("schrijf een VSO", "zet dit in het
   document", "maak een artikel over X"): gebruik een insert-suggestie — óók als je de tekst eerder
-  in dit gesprek al als concept toonde (zet hem dan alsnog via insert in het document).
+  in dit gesprek al als concept toonde (zet hem dan alsnog via insert in het document). Voer zo'n
+  schrijfverzoek DIRECT in dezelfde beurt uit: kondig niet alleen aan dat je het gaat doen en
+  vraag geen bevestiging vooraf.
 Eisen aan elke suggestion — KRITISCH voor Track Changes:
 - "ref": het artikel waarin de wijziging valt, exact als "Artikel N" (of "Bijlage M, artikel N").
 - "find": de LETTERLIJKE, nog ongewijzigde tekst uit het document die vervangen wordt.
